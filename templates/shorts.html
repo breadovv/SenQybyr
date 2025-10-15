@@ -1,0 +1,217 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Shorts - SenQubyr</title>
+    <link href="../css/style2.css" rel="stylesheet">
+    <link href="../images/youtubeKZicon.png" rel="icon" type="image/x-icon"/>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <style>
+        .feature-box {
+            background: var(--card);
+            border-radius: 12px;
+            padding: 25px;
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        .datetime-display {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 12px;
+            font-size: 18px;
+            font-weight: 600;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            margin-top: 15px;
+        }
+
+        .datetime-display small {
+            display: block;
+            font-size: 13px;
+            opacity: 0.9;
+            margin-bottom: 8px;
+        }
+    </style>
+</head>
+<body>
+<header class="header">
+    <a href="index.html" class="logo" id="SenQubyr">
+        <img src="../images/youtubeKZicon.png" alt="Logo">
+        SenQubyr
+    </a>
+    <div class="search">
+        <input type="text" id="search" placeholder="Search">
+        <a href="#" type="button" class="icon-btn" title="Search">
+            <img src="../images/search.png" alt="search">
+        </a>
+    </div>
+    <div class="flex">
+        <a href="#" class="icon-btn" title="Create">
+            <img src="../images/plus-black-symbol_icon-icons.com_73453.png" alt="add">
+        </a>
+        <a href="#" class="icon-btn" title="Notifications">
+            <img src="../images/notification_alarm_bell_icon_146863.png" alt="notification">
+        </a>
+        <a href="profile.html" class="icon-btn" title="Profile">
+            <img src="../images/profile_picture_user_icon_153847.png" alt="profile">
+        </a>
+    </div>
+</header>
+
+<div class="layout">
+    <aside class="sidebar">
+        <div class="section">
+            <a class="nav-item" href="index.html"><span><img src="../images/house.png" alt="home"></span>Home</a>
+            <a class="nav-item" href="trending.html"><span><img src="../images/fire.png" alt="trending"></span>Trending</a>
+            <a class="nav-item active" href="shorts.html"><span><img src="../images/shortsicon.png" alt="shorts"></span>Shorts</a>
+            <a class="nav-item" href="subscriptions.html"><span><img src="../images/television.png" alt="subscription"></span>Subscriptions</a>
+        </div>
+        <div class="section">
+            <div style="color:var(--muted);font-size:13px;padding:6px 8px">Library</div>
+            <a class="nav-item" href="history.html">History</a>
+            <a class="nav-item" href="liked.html">Liked</a>
+        </div>
+    </aside>
+
+    <main>
+        <!-- Date & Time Display -->
+        <div class="feature-box">
+            <h3 style="margin-bottom: 15px;">📅 Current Date & Time</h3>
+            <div class="datetime-display">
+                <small>Live Update</small>
+                <div id="currentDateTime">Loading...</div>
+            </div>
+        </div>
+
+        <section class="section-title">
+            <header class="top-header">
+                <nav class="nav-links">
+                    <a href="#" class="icon-btn a hover">All</a>
+                    <a href="#" class="icon-btn a">Music</a>
+                    <a href="#" class="icon-btn a">Comedy</a>
+                    <a href="#" class="icon-btn a">Gaming</a>
+                    <a href="#" class="icon-btn a">Dance</a>
+                    <a href="#" class="icon-btn a">Food</a>
+                    <a href="#" class="icon-btn a">Sports</a>
+                    <a href="#" class="icon-btn a">Beauty</a>
+                </nav>
+            </header>
+            <p class="section-title logo"></p>
+        </section>
+
+        <section>
+            <div class="section-title logo">
+                <img src="../images/shortsicon.png" alt="Shorts">
+                Shorts
+            </div>
+            <div class="grid-2">
+                <div class="tile">
+                    <div class="thumb thumb-shorts"></div>
+                    <div class="tmeta">
+                        <p class="short-title">Funny Cat 😸</p>
+                        <p class="tsub">Cinema Life • 500K views • 10 hours ago</p>
+                    </div>
+                </div>
+                <div class="tile">
+                    <div class="thumb thumb-shorts"></div>
+                    <div class="tmeta">
+                        <p class="short-title">Amazing Dance 💃</p>
+                        <p class="tsub">Dance Channel • 320K views • 8 hours ago</p>
+                    </div>
+                </div>
+                <div class="tile">
+                    <div class="thumb thumb-shorts"></div>
+                    <div class="tmeta">
+                        <p class="short-title">Quick Recipe 🍕</p>
+                        <p class="tsub">Food Network • 150K views • 5 hours ago</p>
+                    </div>
+                </div>
+                <div class="tile">
+                    <div class="thumb thumb-shorts"></div>
+                    <div class="tmeta">
+                        <p class="short-title">Tech Tips 💻</p>
+                        <p class="tsub">Tech Channel • 280K views • 12 hours ago</p>
+                    </div>
+                </div>
+                <div class="tile">
+                    <div class="thumb thumb-shorts"></div>
+                    <div class="tmeta">
+                        <p class="short-title">Workout Routine 💪</p>
+                        <p class="tsub">Fitness Hub • 450K views • 1 day ago</p>
+                    </div>
+                </div>
+                <div class="tile">
+                    <div class="thumb thumb-shorts"></div>
+                    <div class="tmeta">
+                        <p class="short-title">Magic Tricks ✨</p>
+                        <p class="tsub">Magic Show • 380K views • 15 hours ago</p>
+                    </div>
+                </div>
+                <div class="tile">
+                    <div class="thumb thumb-shorts"></div>
+                    <div class="tmeta">
+                        <p class="short-title">Travel Vlog 🌍</p>
+                        <p class="tsub">Travel Guide • 220K views • 20 hours ago</p>
+                    </div>
+                </div>
+                <div class="tile">
+                    <div class="thumb thumb-shorts"></div>
+                    <div class="tmeta">
+                        <p class="short-title">Fashion Tips 👗</p>
+                        <p class="tsub">Style Channel • 190K views • 18 hours ago</p>
+                    </div>
+                </div>
+                <div class="tile">
+                    <div class="thumb thumb-shorts"></div>
+                    <div class="tmeta">
+                        <p class="short-title">Comedy Skit 😂</p>
+                        <p class="tsub">Funny Videos • 670K views • 6 hours ago</p>
+                    </div>
+                </div>
+                <div class="tile">
+                    <div class="thumb thumb-shorts"></div>
+                    <div class="tmeta">
+                        <p class="short-title">Art Tutorial 🎨</p>
+                        <p class="tsub">Art Studio • 140K views • 1 day ago</p>
+                    </div>
+                </div>
+                <div class="tile">
+                    <div class="thumb thumb-shorts"></div>
+                    <div class="tmeta">
+                        <p class="short-title">DIY Project 🔨</p>
+                        <p class="tsub">DIY Channel • 310K views • 22 hours ago</p>
+                    </div>
+                </div>
+                <div class="tile">
+                    <div class="thumb thumb-shorts"></div>
+                    <div class="tmeta">
+                        <p class="short-title">Pet Moments 🐶</p>
+                        <p class="tsub">Pet Lovers • 590K views • 9 hours ago</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+</div>
+
+<footer class="footer">
+    <div class="footer-links">
+        <a href="#">About us</a>
+        <a href="#">Rules</a>
+        <a href="#">Privacy Policy</a>
+        <a href="#">Contacts</a>
+    </div>
+    <div class="footer-copy">
+        © 2025 SenQubyr. Beknur Erdembek, Alisher Bolatkhanov
+    </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+        crossorigin="anonymous"></script>
+<script src="../js/script.js"></script>
+</body>
+</html>

@@ -1,0 +1,489 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>SenQubyr - Home</title>
+    <link href="../css/style2.css" rel="stylesheet">
+    <link href="../images/youtubeKZicon.png" rel="icon" type="image/x-icon" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <style>
+        /* Popup Styles */
+        .popup-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            animation: fadeIn 0.3s;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .popup-content {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            max-width: 500px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+            position: relative;
+            animation: slideUp 0.3s;
+        }
+
+        @keyframes slideUp {
+            from {
+                transform: translateY(50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .popup-close {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            font-size: 28px;
+            cursor: pointer;
+            color: #666;
+            background: none;
+            border: none;
+            width: 35px;
+            height: 35px;
+            line-height: 35px;
+            text-align: center;
+            border-radius: 50%;
+            transition: all 0.3s;
+        }
+
+        .popup-close:hover {
+            background: #f0f0f0;
+            color: #dc3545;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 600;
+        }
+
+        .form-group input, .form-group select, .form-group textarea {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #ddd;
+            border-radius: 6px;
+            font-size: 14px;
+            transition: border-color 0.3s;
+        }
+
+        .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+            outline: none;
+            border-color: #00c5ff;
+        }
+
+        .form-group input.error {
+            border-color: #dc3545;
+        }
+
+        .error-message {
+            color: #dc3545;
+            font-size: 12px;
+            margin-top: 5px;
+        }
+
+        /* Accordion Styles */
+        .accordion-section {
+            background: var(--card);
+            border-radius: 12px;
+            padding: 30px;
+            margin: 30px 0;
+        }
+
+        .accordion-item {
+            background: white;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            overflow: hidden;
+            transition: all 0.3s;
+        }
+
+        .accordion-item:hover {
+            border-color: #00c5ff;
+        }
+
+        .accordion-header {
+            padding: 15px 20px;
+            cursor: pointer;
+            font-weight: 600;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            user-select: none;
+        }
+
+        .accordion-header::after {
+            content: '▼';
+            transition: transform 0.3s;
+        }
+
+        .accordion-item.active .accordion-header::after {
+            transform: rotate(180deg);
+        }
+
+        .accordion-content {
+            padding: 0 20px 15px;
+            display: none;
+        }
+
+        /* Background Changer & DateTime */
+        .feature-box {
+            background: var(--card);
+            border-radius: 12px;
+            padding: 30px;
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        .bg-changer-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            border-radius: 50px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            transition: all 0.3s;
+        }
+
+        .bg-changer-btn:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+        }
+
+        .datetime-display {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 25px;
+            border-radius: 12px;
+            font-size: 20px;
+            font-weight: 600;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            margin-top: 20px;
+        }
+
+        .datetime-display small {
+            display: block;
+            font-size: 14px;
+            opacity: 0.9;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+<header class="header">
+    <a href="index.html" class="logo" id="SenQubyr">
+        <img src="../images/youtubeKZicon.png" alt="Logo">
+        SenQubyr
+    </a>
+    <div class="search">
+        <input type="text" id="search" placeholder="Search">
+        <a href="#" type="button" class="icon-btn" title="Search">
+            <img src="../images/search.png" alt="search">
+        </a>
+    </div>
+    <div class="flex">
+        <a href="#" class="icon-btn" title="Create">
+            <img src="../images/plus-black-symbol_icon-icons.com_73453.png" alt="add">
+        </a>
+        <a href="#" class="icon-btn" title="Notifications">
+            <img src="../images/notification_alarm_bell_icon_146863.png" alt="notification">
+        </a>
+        <a href="profile.html" class="icon-btn" title="Profile">
+            <img src="../images/profile_picture_user_icon_153847.png" alt="profile">
+        </a>
+    </div>
+</header>
+
+<div class="layout flex-grow-1">
+    <aside class="sidebar">
+        <div class="section">
+            <a class="nav-item active" href="index.html"><span><img src="../images/house.png" alt="home"></span>Home</a>
+            <a class="nav-item" href="trending.html"><span><img src="../images/fire.png" alt="trending"></span>Trending</a>
+            <a class="nav-item" href="shorts.html"><span><img src="../images/shortsicon.png" alt="shorts"></span>Shorts</a>
+            <a class="nav-item" href="subscriptions.html"><span><img src="../images/television.png" alt="subscription"></span>Subscriptions</a>
+        </div>
+        <div class="section">
+            <div style="color:var(--muted);font-size:13px;padding:6px 8px">Library</div>
+            <a class="nav-item" href="history.html">History</a>
+            <a class="nav-item" href="liked.html">Liked</a>
+        </div>
+    </aside>
+
+    <main>
+        <!-- Date & Time Display -->
+        <div class="feature-box">
+            <h3 style="margin-bottom: 15px;">📅 Current Date & Time</h3>
+            <div class="datetime-display">
+                <small>Live Update</small>
+                <div id="currentDateTime">Loading...</div>
+            </div>
+        </div>
+
+        <!-- Background Changer -->
+        <div class="feature-box">
+            <h3 style="margin-bottom: 15px;">🎨 Background Color Changer</h3>
+            <p style="color: #666; margin-bottom: 20px;">Click the button to change the page background</p>
+            <button id="bgChangeBtn" class="bg-changer-btn">Change Background Color</button>
+        </div>
+
+        <!-- Popup Trigger -->
+        <div class="feature-box">
+            <h3 style="margin-bottom: 15px;">📧 Subscribe & Contact</h3>
+            <p style="color: #666; margin-bottom: 20px;">Open popup forms to subscribe or contact us</p>
+            <button class="btn btn-primary me-2" data-popup-open="subscriptionPopup">Subscribe Now</button>
+            <button class="btn btn-secondary" data-popup-open="contactPopup">Contact Us</button>
+        </div>
+
+        <!-- FAQ Accordion -->
+        <div class="accordion-section">
+            <h3 style="margin-bottom: 20px;">❓ Frequently Asked Questions</h3>
+
+            <div class="accordion-item">
+                <div class="accordion-header">
+                    What is SenQubyr?
+                </div>
+                <div class="accordion-content">
+                    <p>SenQubyr is a video sharing platform inspired by YouTube, created as part of a web development course at AITU. It features video browsing, subscriptions, and user profiles.</p>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <div class="accordion-header">
+                    How do I create an account?
+                </div>
+                <div class="accordion-content">
+                    <p>Click on the profile icon in the header, then select "Sign Up". Fill in your information including email, password, and preferred content types.</p>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <div class="accordion-header">
+                    Can I upload videos?
+                </div>
+                <div class="accordion-content">
+                    <p>Yes! Once you have an account, click the "+" icon in the header to upload your videos. Supported formats include MP4, AVI, and MOV.</p>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <div class="accordion-header">
+                    How do subscriptions work?
+                </div>
+                <div class="accordion-content">
+                    <p>Subscriptions allow you to follow your favorite channels. When you subscribe, you'll get notifications about new uploads.</p>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <div class="accordion-header">
+                    Is SenQubyr free to use?
+                </div>
+                <div class="accordion-content">
+                    <p>Absolutely! SenQubyr is completely free. You can watch unlimited videos, subscribe to channels, and upload your own content.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Video Categories -->
+        <section class="section-title">
+            <header class="top-header">
+                <nav class="nav-links">
+                    <a href="#" class="icon-btn a">All</a>
+                    <a href="#" class="icon-btn a">Music</a>
+                    <a href="#" class="icon-btn a">Jams</a>
+                    <a href="#" class="icon-btn a">Video Games</a>
+                    <a href="#" class="icon-btn a">Podcasts</a>
+                    <a href="#" class="icon-btn a">Live</a>
+                    <a href="#" class="icon-btn a">Animation</a>
+                    <a href="#" class="icon-btn a">Natural</a>
+                </nav>
+            </header>
+        </section>
+
+        <!-- Featured Videos -->
+        <section>
+            <div class="grid mb-4">
+                <div class="tile">
+                    <div class="thumb-lg"></div>
+                    <div class="tmeta">
+                        <p class="ttitle">New hit 2025</p>
+                        <p class="tsub">Music Channel • 2M views • 1 day ago</p>
+                    </div>
+                </div>
+                <div class="tile">
+                    <div class="thumb-lg"></div>
+                    <div class="tmeta">
+                        <p class="ttitle">Football's best moments</p>
+                        <p class="tsub">SportsHub • 950K views • 5 hours ago</p>
+                    </div>
+                </div>
+                <div class="tile">
+                    <div class="thumb-lg"></div>
+                    <div class="tmeta">
+                        <p class="ttitle">Review of new technologies</p>
+                        <p class="tsub">Tech Today • 1.3M views • 2 days ago</p>
+                    </div>
+                </div>
+                <div class="tile">
+                    <div class="thumb-lg"></div>
+                    <div class="tmeta">
+                        <p class="ttitle">Top TV series of the season</p>
+                        <p class="tsub">Cinema Life • 500K views • 10 hours ago</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Shorts Section -->
+            <div class="section-title logo mb-3">
+                <img src="../images/shortsicon.png" alt="Shorts">
+                Shorts
+            </div>
+            <div class="grid-2 mb-4">
+                <div class="tile">
+                    <div class="thumb thumb-shorts"></div>
+                    <div class="tmeta">
+                        <p class="short-title">Funny Cat 😸</p>
+                        <p class="tsub">Cinema Life • 500K views • 10 hours ago</p>
+                    </div>
+                </div>
+                <div class="tile">
+                    <div class="thumb thumb-shorts"></div>
+                    <div class="tmeta">
+                        <p class="short-title">Amazing Dance 💃</p>
+                        <p class="tsub">Dance Channel • 320K views • 8 hours ago</p>
+                    </div>
+                </div>
+                <div class="tile">
+                    <div class="thumb thumb-shorts"></div>
+                    <div class="tmeta">
+                        <p class="short-title">Quick Recipe 🍕</p>
+                        <p class="tsub">Food Network • 150K views • 5 hours ago</p>
+                    </div>
+                </div>
+                <div class="tile">
+                    <div class="thumb thumb-shorts"></div>
+                    <div class="tmeta">
+                        <p class="short-title">Tech Tips 💻</p>
+                        <p class="tsub">Tech Channel • 280K views • 12 hours ago</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+</div>
+
+<!-- Subscription Popup -->
+<div id="subscriptionPopup" class="popup-overlay">
+    <div class="popup-content">
+        <button class="popup-close" data-popup-close>&times;</button>
+        <h3 class="mb-4">Subscribe to SenQubyr</h3>
+
+        <form id="subscriptionForm">
+            <div class="form-group">
+                <label for="sub-name">Full Name *</label>
+                <input type="text" id="sub-name" name="name" placeholder="Enter your full name" required>
+            </div>
+
+            <div class="form-group">
+                <label for="sub-email">Email Address *</label>
+                <input type="email" id="sub-email" name="email" placeholder="your@email.com" required>
+            </div>
+
+            <div class="form-group">
+                <label for="sub-password">Password * (min 8 characters)</label>
+                <input type="password" id="sub-password" name="password" placeholder="Enter password" required>
+            </div>
+
+            <div class="form-group">
+                <label for="sub-confirm">Confirm Password *</label>
+                <input type="password" id="sub-confirm" name="confirmPassword" placeholder="Confirm password" required>
+            </div>
+
+            <div class="form-group">
+                <label for="sub-channel">Preferred Content</label>
+                <select id="sub-channel" name="channel">
+                    <option value="">Select preference</option>
+                    <option value="music">Music</option>
+                    <option value="gaming">Gaming</option>
+                    <option value="tech">Technology</option>
+                    <option value="education">Education</option>
+                </select>
+            </div>
+
+            <button type="submit" class="btn btn-primary w-100">Subscribe Now</button>
+        </form>
+    </div>
+</div>
+
+<!-- Contact Popup -->
+<div id="contactPopup" class="popup-overlay">
+    <div class="popup-content">
+        <button class="popup-close" data-popup-close>&times;</button>
+        <h3 class="mb-4">Contact Us</h3>
+
+        <form id="contactForm">
+            <div class="form-group">
+                <label for="contact-name">Your Name *</label>
+                <input type="text" id="contact-name" name="name" placeholder="Enter your name" required>
+            </div>
+
+            <div class="form-group">
+                <label for="contact-email">Email *</label>
+                <input type="email" id="contact-email" name="email" placeholder="your@email.com" required>
+            </div>
+
+            <div class="form-group">
+                <label for="message">Message *</label>
+                <textarea id="message" name="message" rows="4" placeholder="Your message..." required></textarea>
+            </div>
+
+            <button type="submit" class="btn btn-primary w-100">Send Message</button>
+        </form>
+    </div>
+</div>
+
+<footer class="footer mt-auto">
+    <div class="footer-links mb-2">
+        <a href="#">About us</a>
+        <a href="#">Rules</a>
+        <a href="#">Privacy Policy</a>
+        <a href="#">Contacts</a>
+    </div>
+    <div class="footer-copy">
+        © 2025 SenQubyr. Beknur Erdembek, Alisher Bolatkhanov
+    </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+<script src="../js/script.js"></script>
+</body>
+</html>

@@ -1,0 +1,367 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Liked Videos - SenQubyr</title>
+    <link href="../css/style2.css" rel="stylesheet">
+    <link href="../images/youtubeKZicon.png" rel="icon" type="image/x-icon" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <style>
+        .liked-tile {
+            transition: all 0.3s ease;
+        }
+
+        .liked-tile:hover {
+            transform: scale(1.02);
+        }
+
+        .empty-state {
+            display: none;
+            text-align: center;
+            padding: 60px 20px;
+            background: var(--card);
+            border-radius: 12px;
+            margin: 40px 0;
+        }
+
+        .empty-state h3 {
+            font-size: 24px;
+            margin-bottom: 10px;
+            color: var(--muted);
+        }
+
+        .empty-state p {
+            color: #666;
+            margin-bottom: 20px;
+        }
+
+        .empty-icon {
+            font-size: 64px;
+            margin-bottom: 20px;
+        }
+
+        .browse-btn {
+            display: inline-block;
+            padding: 12px 30px;
+            background: #00c5ff;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .browse-btn:hover {
+            background: #0099cc;
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body>
+<header class="header">
+    <a href="index.html" class="logo" id="SenQubyr">
+        <img src="../images/youtubeKZicon.png" alt="Logo">
+        SenQubyr
+    </a>
+    <div class="search">
+        <input type="text" id="search" placeholder="Search">
+        <a href="#" type="button" class="icon-btn" title="Search">
+            <img src="../images/search.png" alt="search">
+        </a>
+    </div>
+    <div class="flex">
+        <a href="#" class="icon-btn" title="Create">
+            <img src="../images/plus-black-symbol_icon-icons.com_73453.png" alt="add">
+        </a>
+        <a href="#" class="icon-btn" title="Notifications">
+            <img src="../images/notification_alarm_bell_icon_146863.png" alt="notification">
+        </a>
+        <a href="profile.html" class="icon-btn" title="Profile">
+            <img src="../images/profile_picture_user_icon_153847.png" alt="profile">
+        </a>
+    </div>
+</header>
+
+<div class="layout container-fluid py-3 py-lg-4">
+    <aside class="sidebar">
+        <div class="section">
+            <a class="nav-item" href="index.html"><span><img src="../images/house.png" alt="home"></span>Home</a>
+            <a class="nav-item" href="trending.html"><span><img src="../images/fire.png" alt="trending"></span>Trending</a>
+            <a class="nav-item" href="shorts.html"><span><img src="../images/shortsicon.png" alt="shorts"></span>Shorts</a>
+            <a class="nav-item" href="subscriptions.html"><span><img src="../images/television.png" alt="subscription"></span>Subscriptions</a>
+        </div>
+        <div class="section">
+            <div style="color:var(--muted);font-size:13px;padding:6px 8px">Library</div>
+            <a class="nav-item" href="history.html">History</a>
+            <a class="nav-item active" href="liked.html">Liked</a>
+        </div>
+    </aside>
+
+    <main class="px-sm-2">
+        <section class="section-title mb-2 mt-lg-3">
+            <div class="liked-header d-flex justify-content-between align-items-start flex-wrap gap-2">
+                <div>
+                    <h2 class="h4 m-0" style="color: var(--muted);">❤️ Liked Videos</h2>
+                    <p class="m-0 text-muted small">Videos you've liked and saved</p>
+                </div>
+                <div class="liked-actions d-flex gap-2">
+                    <button class="btn btn-outline-danger btn-sm" onclick="clearAllLiked()">Clear all liked</button>
+                    <button class="btn btn-secondary btn-sm" onclick="toggleSort()">Sort by date</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Liked Filter -->
+        <section class="liked-filters mb-3 mt-3">
+            <div class="filter-tabs d-flex gap-2 flex-wrap border-bottom pb-1">
+                <button class="filter-tab active btn btn-outline-dark btn-sm" data-filter="all">All</button>
+                <button class="filter-tab btn btn-outline-dark btn-sm" data-filter="music">Music</button>
+                <button class="filter-tab btn btn-outline-dark btn-sm" data-filter="tech">Technology</button>
+                <button class="filter-tab btn btn-outline-dark btn-sm" data-filter="gaming">Gaming</button>
+                <button class="filter-tab btn btn-outline-dark btn-sm" data-filter="education">Education</button>
+            </div>
+        </section>
+
+        <!-- Liked Content -->
+        <section class="liked-content mt-3">
+            <div class="grid">
+                <!-- Music Videos -->
+                <div class="tile liked-tile p-2" data-category="music">
+                    <div class="thumb-lg" style="background: url('../images/rec.jpg') center/cover no-repeat;"></div>
+                    <div class="tmeta">
+                        <p class="ttitle">Moldanazar - Өзің ғана (Official Music Video)</p>
+                        <p class="tsub">Moldanazar • 2.3M views • 1 year ago</p>
+                        <div class="liked-actions-tile d-flex gap-2 mt-2">
+                            <button class="btn btn-outline-danger btn-sm" onclick="unlikeVideo(this)">
+                                ❤️ Unlike
+                            </button>
+                            <button class="btn btn-primary btn-sm">Add to playlist</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tile liked-tile p-2" data-category="music">
+                    <div class="thumb-lg" style="background: linear-gradient(45deg, #ff6b6b, #4ecdc4);"></div>
+                    <div class="tmeta">
+                        <p class="ttitle">Kazakh Folk Music - Traditional Instruments</p>
+                        <p class="tsub">Kazakh Music • 850K views • 8 months ago</p>
+                        <div class="liked-actions-tile d-flex gap-2 mt-2">
+                            <button class="btn btn-outline-danger btn-sm" onclick="unlikeVideo(this)">
+                                ❤️ Unlike
+                            </button>
+                            <button class="btn btn-primary btn-sm">Add to playlist</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Technology Videos -->
+                <div class="tile liked-tile p-2" data-category="tech">
+                    <div class="thumb-lg" style="background: url('../images/img.png') center/cover no-repeat;"></div>
+                    <div class="tmeta">
+                        <p class="ttitle">How to Build a YouTube Clone - Complete Tutorial</p>
+                        <p class="tsub">Tech Channel • 125K views • 2 weeks ago</p>
+                        <div class="liked-actions-tile d-flex gap-2 mt-2">
+                            <button class="btn btn-outline-danger btn-sm" onclick="unlikeVideo(this)">
+                                ❤️ Unlike
+                            </button>
+                            <button class="btn btn-primary btn-sm">Add to playlist</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tile liked-tile p-2" data-category="tech">
+                    <div class="thumb-lg" style="background: linear-gradient(45deg, #667eea, #764ba2);"></div>
+                    <div class="tmeta">
+                        <p class="ttitle">React vs Vue.js - Which Framework to Choose?</p>
+                        <p class="tsub">Web Dev Channel • 89K views • 1 month ago</p>
+                        <div class="liked-actions-tile d-flex gap-2 mt-2">
+                            <button class="btn btn-outline-danger btn-sm" onclick="unlikeVideo(this)">
+                                ❤️ Unlike
+                            </button>
+                            <button class="btn btn-primary btn-sm">Add to playlist</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Gaming Videos -->
+                <div class="tile liked-tile p-2" data-category="gaming">
+                    <div class="thumb-lg" style="background: linear-gradient(45deg, #43e97b, #38f9d7);"></div>
+                    <div class="tmeta">
+                        <p class="ttitle">Kazakh Gaming - Best Local Games 2024</p>
+                        <p class="tsub">Gaming Kazakhstan • 45K views • 3 weeks ago</p>
+                        <div class="liked-actions-tile d-flex gap-2 mt-2">
+                            <button class="btn btn-outline-danger btn-sm" onclick="unlikeVideo(this)">
+                                ❤️ Unlike
+                            </button>
+                            <button class="btn btn-primary btn-sm">Add to playlist</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tile liked-tile p-2" data-category="gaming">
+                    <div class="thumb-lg" style="background: linear-gradient(45deg, #f093fb, #f5576c);"></div>
+                    <div class="tmeta">
+                        <p class="ttitle">Top 10 Mobile Games 2025</p>
+                        <p class="tsub">Mobile Gaming • 230K views • 5 days ago</p>
+                        <div class="liked-actions-tile d-flex gap-2 mt-2">
+                            <button class="btn btn-outline-danger btn-sm" onclick="unlikeVideo(this)">
+                                ❤️ Unlike
+                            </button>
+                            <button class="btn btn-primary btn-sm">Add to playlist</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Education Videos -->
+                <div class="tile liked-tile p-2" data-category="education">
+                    <div class="thumb-lg" style="background: linear-gradient(45deg, #fa709a, #fee140);"></div>
+                    <div class="tmeta">
+                        <p class="ttitle">Learn Kazakh Language - Basic Phrases</p>
+                        <p class="tsub">Language Learning • 156K views • 2 months ago</p>
+                        <div class="liked-actions-tile d-flex gap-2 mt-2">
+                            <button class="btn btn-outline-danger btn-sm" onclick="unlikeVideo(this)">
+                                ❤️ Unlike
+                            </button>
+                            <button class="btn btn-primary btn-sm">Add to playlist</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tile liked-tile p-2" data-category="education">
+                    <div class="thumb-lg" style="background: linear-gradient(45deg, #a8edea, #fed6e3);"></div>
+                    <div class="tmeta">
+                        <p class="ttitle">Kazakhstan History - From Nomads to Modern Nation</p>
+                        <p class="tsub">History Channel • 78K views • 4 months ago</p>
+                        <div class="liked-actions-tile d-flex gap-2 mt-2">
+                            <button class="btn btn-outline-danger btn-sm" onclick="unlikeVideo(this)">
+                                ❤️ Unlike
+                            </button>
+                            <button class="btn btn-primary btn-sm">Add to playlist</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- More Music -->
+                <div class="tile liked-tile p-2" data-category="music">
+                    <div class="thumb-lg" style="background: linear-gradient(45deg, #4facfe, #00f2fe);"></div>
+                    <div class="tmeta">
+                        <p class="ttitle">Dimash Kudaibergen - S.O.S (Live Performance)</p>
+                        <p class="tsub">Dimash Official • 3.2M views • 6 months ago</p>
+                        <div class="liked-actions-tile d-flex gap-2 mt-2">
+                            <button class="btn btn-outline-danger btn-sm" onclick="unlikeVideo(this)">
+                                ❤️ Unlike
+                            </button>
+                            <button class="btn btn-primary btn-sm">Add to playlist</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Empty State -->
+        <div id="empty-liked" class="empty-state">
+            <div class="empty-content">
+                <div class="empty-icon">❤️</div>
+                <h3>No liked videos yet</h3>
+                <p>Videos you like will appear here</p>
+                <a href="index.html" class="browse-btn">Browse videos</a>
+            </div>
+        </div>
+
+    </main>
+</div>
+
+<footer class="footer">
+    <div class="footer-links">
+        <a href="#">About us</a>
+        <a href="#">Rules</a>
+        <a href="#">Privacy Policy</a>
+        <a href="#">Contacts</a>
+    </div>
+    <div class="footer-copy">
+        © 2025 SenQubyr. Beknur Erdembek, Alisher Bolatkhanov
+    </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+<script src="../js/script.js"></script>
+<script>
+    let sortByDate = false;
+
+    // Filter functionality
+    document.querySelectorAll('.filter-tab').forEach(tab => {
+        tab.addEventListener('click', function() {
+            const filter = this.getAttribute('data-filter');
+
+            // Update active tab
+            document.querySelectorAll('.filter-tab').forEach(t => t.classList.remove('active'));
+            this.classList.add('active');
+
+            // Filter content
+            filterLikedVideos(filter);
+        });
+    });
+
+    function filterLikedVideos(filter) {
+        const tiles = document.querySelectorAll('.liked-tile');
+
+        tiles.forEach(tile => {
+            if (filter === 'all') {
+                tile.style.display = 'block';
+            } else {
+                const category = tile.getAttribute('data-category');
+                tile.style.display = category === filter ? 'block' : 'none';
+            }
+        });
+    }
+
+    function clearAllLiked() {
+        if (confirm('Are you sure you want to clear all liked videos? This action cannot be undone.')) {
+            const likedContent = document.querySelector('.liked-content');
+            const emptyState = document.getElementById('empty-liked');
+
+            if (likedContent && emptyState) {
+                likedContent.style.display = 'none';
+                emptyState.style.display = 'block';
+                alert('✅ All liked videos cleared!');
+            }
+        }
+    }
+
+    function toggleSort() {
+        sortByDate = !sortByDate;
+        const btn = event.target;
+
+        if (sortByDate) {
+            btn.textContent = 'Sort by title';
+            alert('📅 Sorted by date');
+        } else {
+            btn.textContent = 'Sort by date';
+            alert('🔤 Sorted by title');
+        }
+    }
+
+    function unlikeVideo(btn) {
+        const tile = btn.closest('.tile');
+        const title = tile.querySelector('.ttitle').textContent;
+
+        if (confirm(`Unlike "${title}"?`)) {
+            tile.style.opacity = '0';
+            tile.style.transform = 'scale(0.8)';
+
+            setTimeout(() => {
+                tile.remove();
+
+                // Check if all tiles are removed
+                const remainingTiles = document.querySelectorAll('.liked-tile');
+                if (remainingTiles.length === 0) {
+                    document.querySelector('.liked-content').style.display = 'none';
+                    document.getElementById('empty-liked').style.display = 'block';
+                }
+            }, 300);
+        }
+    }
+</script>
+</body>
+</html>

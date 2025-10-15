@@ -1,0 +1,296 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Subscriptions - SenQubyr</title>
+    <link href="../css/style2.css" rel="stylesheet">
+    <link href="../images/youtubeKZicon.png" rel="icon" type="image/x-icon" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <style>
+        .subscription-tile {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .subscription-tile:hover {
+            transform: translateY(-5px);
+            transition: all 0.3s ease;
+        }
+
+        .accordion-section {
+            background: var(--card);
+            border-radius: 12px;
+            padding: 30px;
+            margin: 30px 0;
+        }
+
+        .accordion-item {
+            background: white;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            overflow: hidden;
+            transition: all 0.3s;
+        }
+
+        .accordion-item:hover {
+            border-color: #00c5ff;
+        }
+
+        .accordion-header {
+            padding: 15px 20px;
+            cursor: pointer;
+            font-weight: 600;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            user-select: none;
+        }
+
+        .accordion-header::after {
+            content: '▼';
+            transition: transform 0.3s;
+        }
+
+        .accordion-item.active .accordion-header::after {
+            transform: rotate(180deg);
+        }
+
+        .accordion-content {
+            padding: 0 20px 15px;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+<header class="header">
+    <a href="index.html" class="logo" id="SenQubyr">
+        <img src="../images/youtubeKZicon.png" alt="Logo">
+        SenQubyr
+    </a>
+    <div class="search">
+        <input type="text" id="search" placeholder="Search">
+        <a href="#" type="button" class="icon-btn" title="Search">
+            <img src="../images/search.png" alt="search">
+        </a>
+    </div>
+    <div class="flex">
+        <a href="#" class="icon-btn" title="Create">
+            <img src="../images/plus-black-symbol_icon-icons.com_73453.png" alt="add">
+        </a>
+        <a href="#" class="icon-btn" title="Notifications">
+            <img src="../images/notification_alarm_bell_icon_146863.png" alt="notification">
+        </a>
+        <a href="profile.html" class="icon-btn" title="Profile">
+            <img src="../images/profile_picture_user_icon_153847.png" alt="profile">
+        </a>
+    </div>
+</header>
+
+<div class="layout container-fluid py-3 py-lg-4">
+    <aside class="sidebar">
+        <div class="section">
+            <a class="nav-item" href="index.html"><span><img src="../images/house.png" alt="home"></span>Home</a>
+            <a class="nav-item" href="trending.html"><span><img src="../images/fire.png" alt="trending"></span>Trending</a>
+            <a class="nav-item" href="shorts.html"><span><img src="../images/shortsicon.png" alt="shorts"></span>Shorts</a>
+            <a class="nav-item active" href="subscriptions.html"><span><img src="../images/television.png" alt="subscription"></span>Subscriptions</a>
+        </div>
+        <div class="section">
+            <div style="color:var(--muted);font-size:13px;padding:6px 8px">Library</div>
+            <a class="nav-item" href="history.html">History</a>
+            <a class="nav-item" href="liked.html">Liked</a>
+        </div>
+    </aside>
+
+    <main class="px-sm-2">
+        <section class="section-title mb-3 mt-lg-4">
+            <h2 class="h4 m-0" style="color: var(--muted);">📺 Your Subscriptions</h2>
+            <p class="text-muted">Channels you're subscribed to</p>
+        </section>
+
+        <!-- FAQ Accordion -->
+        <div class="accordion-section">
+            <h3 style="margin-bottom: 20px;">❓ Subscription FAQs</h3>
+
+            <div class="accordion-item">
+                <div class="accordion-header">
+                    How do subscriptions work?
+                </div>
+                <div class="accordion-content">
+                    <p>When you subscribe to a channel, you'll see their latest videos in your subscriptions feed. You'll also receive notifications about new uploads (if enabled).</p>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <div class="accordion-header">
+                    Can I manage my subscriptions?
+                </div>
+                <div class="accordion-content">
+                    <p>Yes! You can unsubscribe from any channel by clicking the "Unsubscribe" button on their channel tile. Your subscription list is always accessible from the sidebar.</p>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <div class="accordion-header">
+                    Are subscriptions free?
+                </div>
+                <div class="accordion-content">
+                    <p>Absolutely! All subscriptions on SenQubyr are completely free. You can subscribe to unlimited channels without any cost.</p>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <div class="accordion-header">
+                    How do I find new channels to subscribe to?
+                </div>
+                <div class="accordion-content">
+                    <p>Browse the Home, Trending, and Shorts pages to discover new content creators. Click on any video to visit the channel, then hit the Subscribe button.</p>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <div class="accordion-header">
+                    Will I get notifications from subscribed channels?
+                </div>
+                <div class="accordion-content">
+                    <p>You can customize your notification preferences in your account settings. Choose to receive alerts for all uploads, live streams, or only occasional updates.</p>
+                </div>
+            </div>
+        </div>
+
+        <section class="current-subscriptions mt-4">
+            <h3 class="h5 mb-3" style="color: var(--muted);">Your Current Subscriptions</h3>
+            <div class="grid">
+                <div class="tile subscription-tile">
+                    <div class="thumb-lg" style="background: url('../images/img.png') center/cover no-repeat;"></div>
+                    <div class="tmeta">
+                        <p class="ttitle">SenQubyr Official</p>
+                        <p class="tsub">Official Channel • 1.2M subscribers</p>
+                        <div class="subscription-actions mt-2">
+                            <button class="btn btn-outline-danger btn-sm" onclick="unsubscribeChannel(this)">Unsubscribe</button>
+                            <button class="btn btn-outline-primary btn-sm">Visit Channel</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tile subscription-tile">
+                    <div class="thumb-lg" style="background: url('../images/rec.jpg') center/cover no-repeat;"></div>
+                    <div class="tmeta">
+                        <p class="ttitle">Kazakh Music Hub</p>
+                        <p class="tsub">Music Channel • 850K subscribers</p>
+                        <div class="subscription-actions mt-2">
+                            <button class="btn btn-outline-danger btn-sm" onclick="unsubscribeChannel(this)">Unsubscribe</button>
+                            <button class="btn btn-outline-primary btn-sm">Visit Channel</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tile subscription-tile">
+                    <div class="thumb-lg" style="background: linear-gradient(45deg, #ff6b6b, #4ecdc4);"></div>
+                    <div class="tmeta">
+                        <p class="ttitle">Tech Kazakhstan</p>
+                        <p class="tsub">Technology • 320K subscribers</p>
+                        <div class="subscription-actions mt-2">
+                            <button class="btn btn-outline-danger btn-sm" onclick="unsubscribeChannel(this)">Unsubscribe</button>
+                            <button class="btn btn-outline-primary btn-sm">Visit Channel</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tile subscription-tile">
+                    <div class="thumb-lg" style="background: linear-gradient(45deg, #667eea, #764ba2);"></div>
+                    <div class="tmeta">
+                        <p class="ttitle">Kazakh Gaming</p>
+                        <p class="tsub">Gaming • 180K subscribers</p>
+                        <div class="subscription-actions mt-2">
+                            <button class="btn btn-outline-danger btn-sm" onclick="unsubscribeChannel(this)">Unsubscribe</button>
+                            <button class="btn btn-outline-primary btn-sm">Visit Channel</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tile subscription-tile">
+                    <div class="thumb-lg" style="background: linear-gradient(45deg, #f093fb, #f5576c);"></div>
+                    <div class="tmeta">
+                        <p class="ttitle">Cooking Masters KZ</p>
+                        <p class="tsub">Food & Cooking • 560K subscribers</p>
+                        <div class="subscription-actions mt-2">
+                            <button class="btn btn-outline-danger btn-sm" onclick="unsubscribeChannel(this)">Unsubscribe</button>
+                            <button class="btn btn-outline-primary btn-sm">Visit Channel</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tile subscription-tile">
+                    <div class="thumb-lg" style="background: linear-gradient(45deg, #4facfe, #00f2fe);"></div>
+                    <div class="tmeta">
+                        <p class="ttitle">Travel Kazakhstan</p>
+                        <p class="tsub">Travel & Adventure • 420K subscribers</p>
+                        <div class="subscription-actions mt-2">
+                            <button class="btn btn-outline-danger btn-sm" onclick="unsubscribeChannel(this)">Unsubscribe</button>
+                            <button class="btn btn-outline-primary btn-sm">Visit Channel</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tile subscription-tile">
+                    <div class="thumb-lg" style="background: linear-gradient(45deg, #43e97b, #38f9d7);"></div>
+                    <div class="tmeta">
+                        <p class="ttitle">Fitness Zone</p>
+                        <p class="tsub">Health & Fitness • 290K subscribers</p>
+                        <div class="subscription-actions mt-2">
+                            <button class="btn btn-outline-danger btn-sm" onclick="unsubscribeChannel(this)">Unsubscribe</button>
+                            <button class="btn btn-outline-primary btn-sm">Visit Channel</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tile subscription-tile">
+                    <div class="thumb-lg" style="background: linear-gradient(45deg, #fa709a, #fee140);"></div>
+                    <div class="tmeta">
+                        <p class="ttitle">Comedy Central KZ</p>
+                        <p class="tsub">Comedy & Entertainment • 780K subscribers</p>
+                        <div class="subscription-actions mt-2">
+                            <button class="btn btn-outline-danger btn-sm" onclick="unsubscribeChannel(this)">Unsubscribe</button>
+                            <button class="btn btn-outline-primary btn-sm">Visit Channel</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+</div>
+
+<footer class="footer">
+    <div class="footer-links">
+        <a href="#">About us</a>
+        <a href="#">Rules</a>
+        <a href="#">Privacy Policy</a>
+        <a href="#">Contacts</a>
+    </div>
+    <div class="footer-copy">
+        © 2025 SenQubyr. Beknur Erdembek, Alisher Bolatkhanov
+    </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+<script src="../js/script.js"></script>
+<script>
+    function unsubscribeChannel(btn) {
+        const tile = btn.closest('.tile');
+        const channelName = tile.querySelector('.ttitle').textContent;
+
+        if (confirm(`Unsubscribe from ${channelName}?`)) {
+            tile.style.opacity = '0';
+            tile.style.transform = 'scale(0.8)';
+
+            setTimeout(() => {
+                tile.remove();
+                alert(`Successfully unsubscribed from ${channelName}`);
+            }, 300);
+        }
+    }
+</script>
+</body>
+</html>

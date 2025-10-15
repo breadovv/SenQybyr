@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Trending - SenQubyr</title>
+  <link href="../css/style2.css" rel="stylesheet">
+  <link href="../images/youtubeKZicon.png" rel="icon" type="image/x-icon" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+  <style>
+    .bg-changer-btn {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      border: none;
+      padding: 15px 40px;
+      border-radius: 50px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+      transition: all 0.3s;
+    }
+
+    .bg-changer-btn:hover {
+      transform: translateY(-3px) scale(1.05);
+      box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+    }
+
+    .feature-box {
+      background: var(--card);
+      border-radius: 12px;
+      padding: 30px;
+      margin: 20px 0;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+
+<header class="header">
+  <a href="index.html" class="logo" id="SenQubyr">
+    <img src="../images/youtubeKZicon.png" alt="Logo">
+    SenQubyr
+  </a>
+  <div class="search">
+    <input type="text" id="search" placeholder="Search">
+    <a href="#" type="button" class="icon-btn" title="Search">
+      <img src="../images/search.png" alt="search">
+    </a>
+  </div>
+  <div class="flex">
+    <a href="#" class="icon-btn" title="Create">
+      <img src="../images/plus-black-symbol_icon-icons.com_73453.png" alt="add">
+    </a>
+    <a href="#" class="icon-btn" title="Notifications">
+      <img src="../images/notification_alarm_bell_icon_146863.png" alt="notification">
+    </a>
+    <a href="profile.html" class="icon-btn" title="Profile">
+      <img src="../images/profile_picture_user_icon_153847.png" alt="profile">
+    </a>
+  </div>
+</header>
+
+<div class="layout">
+  <aside class="sidebar">
+    <div class="section">
+      <a class="nav-item" href="index.html"><span><img src="../images/house.png" alt="home"></span>Home</a>
+      <a class="nav-item active" href="trending.html"><span><img src="../images/fire.png" alt="trending"></span>Trending</a>
+      <a class="nav-item" href="shorts.html"><span><img src="../images/shortsicon.png" alt="shorts"></span>Shorts</a>
+      <a class="nav-item" href="subscriptions.html"><span><img src="../images/television.png" alt="subscription"></span>Subscriptions</a>
+    </div>
+    <div class="section">
+      <div style="color:var(--muted);font-size:13px;padding:6px 8px">Library</div>
+      <a class="nav-item" href="history.html">History</a>
+      <a class="nav-item" href="liked.html">Liked</a>
+    </div>
+  </aside>
+
+  <main>
+    <!-- Background Changer Feature -->
+    <div class="feature-box">
+      <h3 style="margin-bottom: 15px;">🎨 Background Color Changer</h3>
+      <p style="color: #666; margin-bottom: 20px;">Click the button below to cycle through different background colors</p>
+      <button id="bgChangeBtn" class="bg-changer-btn">Change Background Color</button>
+    </div>
+
+    <!-- Trending Header -->
+    <section class="section-title">
+      <h2 class="h4 mb-3" style="color: var(--muted);">🔥 Trending Now</h2>
+      <p style="color: #666;">Most popular videos right now</p>
+    </section>
+
+    <!-- Trending Videos Grid -->
+    <section>
+      <div class="grid mb-4">
+        <div class="tile">
+          <div class="thumb-lg"></div>
+          <div class="tmeta">
+            <p class="ttitle">New hit 2025</p>
+            <p class="tsub">Music Channel • 2M views • 1 day ago</p>
+          </div>
+        </div>
+        <div class="tile">
+          <div class="thumb-lg"></div>
+          <div class="tmeta">
+            <p class="ttitle">Football's best moments</p>
+            <p class="tsub">SportsHub • 950K views • 5 hours ago</p>
+          </div>
+        </div>
+        <div class="tile">
+          <div class="thumb-lg"></div>
+          <div class="tmeta">
+            <p class="ttitle">Review of new technologies</p>
+            <p class="tsub">Tech Today • 1.3M views • 2 days ago</p>
+          </div>
+        </div>
+        <div class="tile">
+          <div class="thumb-lg"></div>
+          <div class="tmeta">
+            <p class="ttitle">Top TV series of the season</p>
+            <p class="tsub">Cinema Life • 500K views • 10 hours ago</p>
+          </div>
+        </div>
+        <div class="tile">
+          <div class="thumb-lg"></div>
+          <div class="tmeta">
+            <p class="ttitle">Kazakh Music Festival 2025</p>
+            <p class="tsub">Music Channel • 1.8M views • 3 hours ago</p>
+          </div>
+        </div>
+        <div class="tile">
+          <div class="thumb-lg"></div>
+          <div class="tmeta">
+            <p class="ttitle">Gaming Championship Finals</p>
+            <p class="tsub">Esports Hub • 750K views • 6 hours ago</p>
+          </div>
+        </div>
+        <div class="tile">
+          <div class="thumb-lg"></div>
+          <div class="tmeta">
+            <p class="ttitle">Cooking Masterclass</p>
+            <p class="tsub">Chef's Kitchen • 450K views • 1 day ago</p>
+          </div>
+        </div>
+        <div class="tile">
+          <div class="thumb-lg"></div>
+          <div class="tmeta">
+            <p class="ttitle">Travel Kazakhstan Guide</p>
+            <p class="tsub">Travel Channel • 620K views • 8 hours ago</p>
+          </div>
+        </div>
+        <div class="tile">
+          <div class="thumb-lg"></div>
+          <div class="tmeta">
+            <p class="ttitle">Comedy Special 2025</p>
+            <p class="tsub">Comedy Central • 890K views • 4 hours ago</p>
+          </div>
+        </div>
+        <div class="tile">
+          <div class="thumb-lg"></div>
+          <div class="tmeta">
+            <p class="ttitle">Science Explained Simply</p>
+            <p class="tsub">Science Channel • 340K views • 12 hours ago</p>
+          </div>
+        </div>
+        <div class="tile">
+          <div class="thumb-lg"></div>
+          <div class="tmeta">
+            <p class="ttitle">Fashion Week Highlights</p>
+            <p class="tsub">Fashion TV • 580K views • 2 days ago</p>
+          </div>
+        </div>
+        <div class="tile">
+          <div class="thumb-lg"></div>
+          <div class="tmeta">
+            <p class="ttitle">Fitness Transformation</p>
+            <p class="tsub">Fitness Hub • 720K views • 1 day ago</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+</div>
+
+<footer class="footer">
+  <div class="footer-links">
+    <a href="#">About us</a>
+    <a href="#">Rules</a>
+    <a href="#">Privacy Policy</a>
+    <a href="#">Contacts</a>
+  </div>
+  <div class="footer-copy">
+    © 2025 SenQubyr. Beknur Erdembek, Alisher Bolatkhanov
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+<script src="../js/script.js"></script>
+</body>
+</html>
