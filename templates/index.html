@@ -220,6 +220,10 @@
         <a href="profile.html" class="icon-btn" title="Profile">
             <img src="../images/profile_picture_user_icon_153847.png" alt="profile">
         </a>
+        <div class="form-check form-switch ms-2" id="themeSwitchContainer">
+            <input class="form-check-input" type="checkbox" id="themeSwitch">
+            <label class="form-check-label" for="themeSwitch">Night</label>
+        </div>
     </div>
 </header>
 
@@ -239,28 +243,37 @@
     </aside>
 
     <main>
-        <!-- Date & Time Display -->
-        <div class="feature-box">
-            <h3 style="margin-bottom: 15px;">📅 Current Date & Time</h3>
-            <div class="datetime-display">
-                <small>Live Update</small>
-                <div id="currentDateTime">Loading...</div>
-            </div>
-        </div>
 
-        <!-- Background Changer -->
-        <div class="feature-box">
-            <h3 style="margin-bottom: 15px;">🎨 Background Color Changer</h3>
-            <p style="color: #666; margin-bottom: 20px;">Click the button to change the page background</p>
-            <button id="bgChangeBtn" class="bg-changer-btn">Change Background Color</button>
-        </div>
 
-        <!-- Popup Trigger -->
+        <!-- Subscribe & Contact -->
         <div class="feature-box">
             <h3 style="margin-bottom: 15px;">📧 Subscribe & Contact</h3>
             <p style="color: #666; margin-bottom: 20px;">Open popup forms to subscribe or contact us</p>
             <button class="btn btn-primary me-2" data-popup-open="subscriptionPopup">Subscribe Now</button>
             <button class="btn btn-secondary" data-popup-open="contactPopup">Contact Us</button>
+        </div>
+        
+        <!-- Video Categories -->
+        <section class="section-title">
+            <header class="top-header">
+                <nav class="nav-links">
+                    <a href="#" class="icon-btn a">All</a>
+                    <a href="#" class="icon-btn a">Music</a>
+                    <a href="#" class="icon-btn a">Jams</a>
+                    <a href="#" class="icon-btn a">Video Games</a>
+                    <a href="#" class="icon-btn a">Podcasts</a>
+                    <a href="#" class="icon-btn a">Live</a>
+                    <a href="#" class="icon-btn a">Animation</a>
+                    <a href="#" class="icon-btn a">Natural</a>
+                </nav>
+            </header>
+        </section>
+        
+        <!-- Background Changer -->
+        <div class="feature-box">
+            <h3 style="margin-bottom: 15px;">🎨 Background Color Changer</h3>
+            <p style="color: #666; margin-bottom: 20px;">Click the button to change the page background</p>
+            <button id="bgChangeBtn" class="bg-changer-btn">Change Background Color</button>
         </div>
 
         <!-- FAQ Accordion -->
@@ -327,6 +340,103 @@
                     <a href="#" class="icon-btn a">Natural</a>
                 </nav>
             </header>
+        </section>
+
+        <!-- Image Gallery -->
+        <section class="gallery">
+            <h3 style="margin-bottom: 15px;">🖼️ Image Gallery</h3>
+            <div class="gallery-main">
+                <img id="gallery-main" src="../images/img.png" alt="Selected image">
+            </div>
+            <div class="gallery-thumbs">
+                <img class="thumb active" data-src="../images/img.png" src="../images/img.png" alt="thumb 1">
+                <img class="thumb" data-src="../images/aitu.png" src="../images/aitu.png" alt="thumb 2">
+                <img class="thumb" data-src="../images/rec.jpg" src="../images/rec.jpg" alt="thumb 3">
+                <img class="thumb" data-src="../images/kzicon.png" src="../images/kzicon.png" alt="thumb 4">
+            </div>
+            <div class="gallery-time">
+                <button id="showTimeBtn" class="bg-changer-btn">Show Current Time</button>
+                <div id="currentTimeDisplay" class="datetime-display" aria-live="polite"></div>
+            </div>
+        </section>
+
+        <!-- Contact Form Section -->
+        <section class="contact-section">
+            <h2>Contact Us</h2>
+            <form id="contactForm" class="contact-form">
+                <div class="form-group">
+                    <label for="contactName">Name:</label>
+                    <input type="text" id="contactName" name="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="contactEmail">Email:</label>
+                    <input type="email" id="contactEmail" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="contactSubject">Subject:</label>
+                    <input type="text" id="contactSubject" name="subject" required>
+                </div>
+                <div class="form-group">
+                    <label for="contactMessage">Message:</label>
+                    <textarea id="contactMessage" name="message" rows="5" required></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary">Send Message</button>
+                <div id="contactFeedback" class="contact-feedback"></div>
+            </form>
+        </section>
+
+        <!-- Product Filtering Section -->
+        <section class="products-section">
+            <h2>Video Products</h2>
+            <div class="filter-controls">
+                <div class="filter-group">
+                    <label for="categoryFilter">Category:</label>
+                    <select id="categoryFilter">
+                        <option value="all">All Categories</option>
+                        <option value="music">Music</option>
+                        <option value="education">Education</option>
+                        <option value="entertainment">Entertainment</option>
+                        <option value="gaming">Gaming</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label for="priceFilter">Price Range:</label>
+                    <select id="priceFilter">
+                        <option value="all">All Prices</option>
+                        <option value="free">Free</option>
+                        <option value="low">$1 - $10</option>
+                        <option value="medium">$11 - $50</option>
+                        <option value="high">$51+</option>
+                    </select>
+                </div>
+                <button id="clearFilters" class="btn btn-secondary">Clear Filters</button>
+            </div>
+            <div id="productsGrid" class="products-grid">
+                <!-- Products will be dynamically generated here -->
+            </div>
+        </section>
+
+        <!-- Interactive Controls Section -->
+        <section class="interactive-section">
+            <h2>Interactive Controls</h2>
+            <div class="controls-container">
+                <div class="keyboard-demo">
+                    <h3>Keyboard Demo</h3>
+                    <p>Press keys: A, S, D, F, or Arrow keys</p>
+                    <div id="keyDisplay" class="key-display">Press a key...</div>
+                </div>
+                <div class="sound-controls">
+                    <h3>Sound Effects</h3>
+                    <button id="playNotification" class="btn btn-info">Play Notification</button>
+                    <button id="playSuccess" class="btn btn-success">Play Success</button>
+                    <button id="playError" class="btn btn-danger">Play Error</button>
+                </div>
+                <div class="animation-controls">
+                    <h3>Animations</h3>
+                    <button id="animateBox" class="btn btn-warning">Animate Box</button>
+                    <div id="animationBox" class="animation-box">Animate Me!</div>
+                </div>
+            </div>
         </section>
 
         <!-- Featured Videos -->
@@ -477,6 +587,11 @@
         <a href="#">Rules</a>
         <a href="#">Privacy Policy</a>
         <a href="#">Contacts</a>
+    </div>
+    <!-- Date & Time Display -->
+    <div class="datetime-display" style="margin-bottom: 15px;">
+        <small>Live Update</small>
+        <div id="currentDateTime">Loading...</div>
     </div>
     <div class="footer-copy">
         © 2025 SenQubyr. Beknur Erdembek, Alisher Bolatkhanov

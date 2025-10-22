@@ -620,3 +620,280 @@ a {
     opacity: 0.9;
     margin-bottom: 10px;
 }
+
+/* Rating Styles */
+.rating-container { display: inline-flex; flex-direction: column; }
+.rating { display: inline-flex; gap: 8px; cursor: pointer; }
+.star { font-size: 24px; color: #ccc; transition: color 0.2s ease; }
+.star.selected { color: #f5c518; }
+ .rating-value { font-size: 14px; color: var(--muted); margin-top: 6px; }
+
+/* Gallery Styles */
+.gallery { background: var(--card); border-radius: 12px; padding: 20px; margin: 20px 0; }
+.gallery-main { display: block; }
+.gallery-main img { width: 100%; max-height: 300px; object-fit: contain; border-radius: 8px; background: white; }
+.gallery-thumbs { display: flex; gap: 10px; margin-top: 12px; flex-wrap: wrap; }
+.gallery-thumbs .thumb { width: 80px; height: 60px; object-fit: cover; border: 2px solid #ddd; border-radius: 6px; cursor: pointer; transition: transform 0.2s ease, border-color 0.2s ease; }
+.gallery-thumbs .thumb:hover { transform: scale(1.05); border-color: #00c5ff; }
+.gallery-thumbs .thumb.active { border-color: #00c5ff; box-shadow: 0 0 0 2px rgba(0,197,255,0.2); }
+.gallery-time { margin-top: 16px; }
+.gallery-time .datetime-display { margin-top: 12px; }
+ 
+ /* Theme Switch: Dark Mode Overrides */
+ body.theme-dark {
+     --bg: linear-gradient(180deg, #0f0f14, #121212);
+     --card: #1e1e2e;
+     --glass: rgba(255, 255, 255, 0.08);
+     --muted: #cfcfcf;
+     color: #f0f0f0;
+ }
+ 
+ body.theme-dark .icon-btn {
+     background: rgba(255, 255, 255, 0.12);
+     color: #ffffff;
+     border-color: #777;
+ }
+ 
+ body.theme-dark .search input {
+     border-color: #777;
+ }
+ 
+ body.theme-dark .footer {
+     background: #0d0c2a;
+     color: #ddd;
+     border-top-color: #333;
+ }
+ 
+ body.theme-dark .footer-links a {
+     color: #ddd;
+ }
+
+/* Contact Form Styles */
+.contact-section {
+    background: var(--card);
+    padding: 2rem;
+    border-radius: 12px;
+    margin: 2rem 0;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.contact-form {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+    color: var(--text);
+}
+
+.form-group input,
+.form-group textarea,
+.form-group select {
+    width: 100%;
+    padding: 0.75rem;
+    border: 2px solid var(--muted);
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: border-color 0.3s ease;
+    background: var(--bg);
+    color: var(--text);
+}
+
+.form-group input:focus,
+.form-group textarea:focus,
+.form-group select:focus {
+    outline: none;
+    border-color: var(--primary);
+}
+
+.contact-feedback {
+    margin-top: 1rem;
+    padding: 1rem;
+    border-radius: 8px;
+    display: none;
+}
+
+.contact-feedback.success {
+    background: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+    display: block;
+}
+
+.contact-feedback.error {
+    background: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+    display: block;
+}
+
+/* Products Section Styles */
+.products-section {
+    background: var(--card);
+    padding: 2rem;
+    border-radius: 12px;
+    margin: 2rem 0;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.filter-controls {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 2rem;
+    flex-wrap: wrap;
+    align-items: end;
+}
+
+.filter-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.filter-group label {
+    font-weight: 600;
+    color: var(--text);
+}
+
+.products-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.5rem;
+}
+
+.product-card {
+    background: var(--bg);
+    border: 2px solid var(--muted);
+    border-radius: 12px;
+    padding: 1.5rem;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.product-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+    border-color: var(--primary);
+}
+
+.product-card.hidden {
+    display: none;
+}
+
+.product-title {
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    color: var(--text);
+}
+
+.product-category {
+    background: var(--primary);
+    color: white;
+    padding: 0.25rem 0.75rem;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    display: inline-block;
+    margin-bottom: 0.5rem;
+}
+
+.product-price {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--primary);
+    margin-bottom: 0.5rem;
+}
+
+.product-description {
+    color: var(--muted);
+    font-size: 0.9rem;
+    line-height: 1.4;
+}
+
+/* Interactive Controls Styles */
+.interactive-section {
+    background: var(--card);
+    padding: 2rem;
+    border-radius: 12px;
+    margin: 2rem 0;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.controls-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+}
+
+.keyboard-demo,
+.sound-controls,
+.animation-controls {
+    background: var(--bg);
+    padding: 1.5rem;
+    border-radius: 8px;
+    border: 2px solid var(--muted);
+}
+
+.key-display {
+    background: var(--muted);
+    padding: 1rem;
+    border-radius: 8px;
+    text-align: center;
+    font-weight: 600;
+    margin-top: 1rem;
+    min-height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+}
+
+.key-display.active {
+    background: var(--primary);
+    color: white;
+    transform: scale(1.05);
+}
+
+.sound-controls button {
+    margin: 0.5rem 0.5rem 0.5rem 0;
+}
+
+/* Animation Box */
+.animation-box {
+    width: 100px;
+    height: 100px;
+    background: var(--primary);
+    margin: 10px 0;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: bold;
+    transition: all 0.3s ease;
+}
+
+.animation-box.animate {
+    transform: rotate(360deg) scale(1.2);
+    background: #ff6b6b;
+}
+
+/* Dark theme adjustments for new sections */
+body.theme-dark .contact-feedback.success {
+    background: #1e4d2b;
+    color: #a3d9a5;
+    border-color: #2d5a3d;
+}
+
+body.theme-dark .contact-feedback.error {
+    background: #4d1e24;
+    color: #d9a3a8;
+    border-color: #5a2d32;
+}
