@@ -540,12 +540,16 @@ function initContactForm() {
                 showFeedback('success', 'Message sent successfully! We\'ll get back to you soon.');
                 form.reset();
                 playSound('success');
+                // Notify jQuery spinner handler
+                document.dispatchEvent(new Event('contactFormCompleted'));
             } else {
                 throw new Error(response.message || 'Failed to send message');
             }
         } catch (error) {
             showFeedback('error', 'Failed to send message. Please try again.');
             playSound('error');
+            // Notify jQuery spinner handler
+            document.dispatchEvent(new Event('contactFormCompleted'));
         }
     });
     
@@ -647,7 +651,7 @@ function initSoundEffects() {
     const errorBtn = document.getElementById('playError');
     
     if (notificationBtn) {
-        notificationBtn.addEventListener('click', () => playSound('notification'));
+        notificationBtn.addEventListener('click', () => `playSound`('notification'));
     }
     
     if (successBtn) {
@@ -842,4 +846,164 @@ document.addEventListener('DOMContentLoaded', function() {
     console.log('All Product Titles:', productTitles);
 
     console.log('SenQubyr JavaScript initialized successfully!');
+});
+
+// ================= jQuery Tasks =================
+// Here is task 1: Real-time Search and Live Filter
+$(function() {
+    const $searchInput = $('#jqSearchInput');
+    const $searchListItems = $('#jqSearchList li');
+    const $suggestions = $('#jqSuggestions');
+    const suggestionSource = (window.productData || []).map(p => p.title);
+
+    $searchInput.on('keyup', function() {
+        const query = $(this).val().toLowerCase();
+
+        // Filter list items in real-time
+        $searchListItems.filter(function() {
+            $(this).toggle($(this).text().toLowerCase().indexOf(query) > -1);
+        });
+
+        // Here is task 2: Autocomplete Search Suggestions
+        const suggestions = suggestionSource
+            .filter(title => title.toLowerCase().includes(query))
+            .slice(0, 5);
+
+        if (query && suggestions.length) {
+            $suggestions.empty();
+            suggestions.forEach(title => {
+                $suggestions.append(`<li>${title}</li>`);
+            });
+            $suggestions.show();
+        } else {
+            $suggestions.hide();
+        }
+
+        // Here is task 3: Search Highlighting
+        highlightMatches('#jqHighlightArea', query);
+    });
+
+    $suggestions.on('click', 'li', function() {
+        const text = $(this).text();
+        $searchInput.val(text);
+        $suggestions.hide();
+        $searchInput.trigger('keyup');
+    });
+
+    // Highlight helper using regex & .html()
+    function highlightMatches(selector, query) {
+        const $el = $(selector);
+        if (!$el.data('original')) {
+            $el.data('original', $el.html());
+        }
+        const original = $el.data('original');
+        if (!query) {
+            $el.html(original);
+            return;
+        }
+        try {
+            const escaped = query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+            const regex = new RegExp(`(${escaped})`, 'gi');
+            const highlighted = original.replace(regex, '<span class="jq-highlight">$1</span>');
+            $el.html(highlighted);
+        } catch (e) {
+            $el.html(original);
+        }
+    }
+
+    // Here is task 4: Colorful Scroll Progress Bar
+    const $progressBar = $('#scrollProgressBar');
+    const updateProgress = function() {
+        const s = $(window).scrollTop();
+        const docH = $(document).height();
+        const winH = $(window).height();
+        const pct = Math.max(0, Math.min(100, Math.round((s / (docH - winH)) * 100)));
+        $progressBar.css('width', pct + '%');
+    };
+    $(window).on('scroll resize', updateProgress);
+    updateProgress();
+
+    // Here is task 5: Animated Number Counter
+    const $counters = $('.counter');
+    let countersStarted = false;
+    function startCounters() {
+        if (countersStarted) return;
+        countersStarted = true;
+        $counters.each(function() {
+            const $c = $(this);
+            const target = parseInt($c.data('target'), 10) || 0;
+            const duration = 1500;
+            const start = performance.now();
+            function tick(now) {
+                const progress = Math.min(1, (now - start) / duration);
+                const val = Math.floor(progress * target);
+                $c.text(val);
+                if (progress < 1) requestAnimationFrame(tick);
+            }
+            requestAnimationFrame(tick);
+        });
+    }
+    const countersInView = function() {
+        const st = $(window).scrollTop();
+        const wh = $(window).height();
+        const top = $('.jq-counter-section').offset()?.top || 0;
+        if (st + wh >= top + 50) startCounters();
+    };
+    $(window).on('scroll resize', countersInView);
+    countersInView();
+
+    // Here is task 6: Loading spinner on Submit (using jQuery)
+    $('#contactForm').on('submit', function() {
+        const $btn = $(this).find('button[type="submit"]');
+        $btn.addClass('loading').prop('disabled', true).text('Please wait…');
+    });
+    // Revert when the contact form async completes
+    $(document).on('contactFormCompleted', function() {
+        const $btn = $('#contactForm').find('button[type="submit"]');
+        $btn.removeClass('loading').prop('disabled', false).text('Send Message');
+    });
+
+    // Here is task 7: Notification System (Toast)
+    window.jqNotify = function(message, type = 'info') {
+        const $toast = $(`<div class="jq-toast ${type}">${message}</div>`).appendTo('body');
+        setTimeout(() => { $toast.fadeOut(500, () => $toast.remove()); }, 2000);
+    };
+    // Example: show a toast when filters change
+    $('#categoryFilter, #priceFilter').on('change', function() {
+        window.jqNotify('Filters applied', 'info');
+    });
+
+    // Here is task 8: Copied to Clipboard Button
+    $('#copyBtn').on('click', async function() {
+        const text = $('#copyText').text();
+        try {
+            await navigator.clipboard.writeText(text);
+            $(this).addClass('copied').text('Copied!');
+            $('#copyTooltip').addClass('show');
+            setTimeout(() => {
+                $('#copyTooltip').removeClass('show');
+            }, 1200);
+        } catch (e) {
+            window.jqNotify('Failed to copy', 'error');
+        }
+    });
+
+    // Here is task 9: Image Lazy Loading
+    function lazyLoadImages() {
+        $('.lazy-load').each(function() {
+            const $img = $(this);
+            if ($img.data('loaded')) return;
+            const rect = this.getBoundingClientRect();
+            const inView = rect.top < window.innerHeight && rect.bottom > 0;
+            if (inView) {
+                const src = $img.attr('data-src');
+                if (src) {
+                    $img.attr('src', src);
+                    $img.data('loaded', true);
+                }
+            }
+        });
+    }
+    $(window).on('scroll resize', lazyLoadImages);
+    lazyLoadImages();
 });

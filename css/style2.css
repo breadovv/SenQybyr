@@ -897,3 +897,99 @@ body.theme-dark .contact-feedback.error {
     color: #d9a3a8;
     border-color: #5a2d32;
 }
+
+/* ===== jQuery Features Styles ===== */
+/* Here is task 1, 2, 3: Search, Suggestions, Highlighting */
+.jq-search-section {
+    background: var(--card);
+    padding: 2rem;
+    border-radius: 12px;
+    margin: 2rem 0;
+}
+.jq-search-bar { position: relative; max-width: 640px; }
+.jq-search-bar input {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border: 2px solid var(--muted);
+    border-radius: 8px;
+    font-size: 1rem;
+    background: var(--bg);
+    color: var(--text);
+}
+.jq-suggestions {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: var(--bg);
+    border: 2px solid var(--muted);
+    border-top: none;
+    border-radius: 0 0 8px 8px;
+    list-style: none;
+    margin: 0;
+    padding: 0.5rem 0;
+    display: none;
+    z-index: 10;
+}
+.jq-suggestions li {
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+}
+.jq-suggestions li:hover { background: var(--muted); }
+.jq-search-list { margin-top: 1rem; }
+.jq-highlight { background: #ffee7a; padding: 0 2px; border-radius: 3px; }
+
+/* Here is task 4: Scroll Progress Bar */
+#scrollProgress { position: fixed; top: 0; left: 0; width: 100%; height: 6px; background: rgba(0,0,0,0.08); z-index: 9999; }
+#scrollProgressBar { height: 6px; width: 0%; background: linear-gradient(90deg, #00c5ff, #7a5cff, #ff6b6b); transition: width 0.1s ease-out; }
+
+/* Here is task 5: Animated Number Counter */
+.jq-counter-section { background: var(--card); padding: 2rem; border-radius: 12px; margin: 2rem 0; }
+.counter-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1.5rem; }
+.counter-box { background: var(--bg); border: 2px solid var(--muted); border-radius: 12px; padding: 1rem; text-align: center; }
+.counter { font-size: 2rem; font-weight: 700; color: var(--primary); }
+.counter-label { color: var(--text); opacity: 0.8; }
+
+/* Here is task 7: Notification (Toast) */
+.jq-toast {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: var(--bg);
+    border: 2px solid var(--muted);
+    border-radius: 8px;
+    padding: 0.75rem 1rem;
+    box-shadow: 0 6px 16px rgba(0,0,0,0.15);
+    z-index: 10000;
+    opacity: 0.95;
+}
+.jq-toast.success { border-color: #28a745; }
+.jq-toast.error { border-color: #dc3545; }
+.jq-toast.info { border-color: #00c5ff; }
+
+/* Here is task 8: Copy to Clipboard */
+.jq-copy-section { background: var(--card); padding: 2rem; border-radius: 12px; margin: 2rem 0; }
+.copy-container { display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; }
+.copy-btn { border: 2px solid var(--muted); background: var(--bg); color: var(--text); padding: 0.5rem 1rem; border-radius: 8px; cursor: pointer; }
+.copy-btn.copied { border-color: #28a745; color: #28a745; }
+.copy-tooltip { opacity: 0; transform: translateY(-6px); transition: all 0.2s ease; color: var(--muted); }
+.copy-tooltip.show { opacity: 1; transform: translateY(0); }
+
+/* Here is task 6: Loading spinner on Submit */
+.btn.loading { position: relative; pointer-events: none; opacity: 0.8; }
+.btn.loading::after {
+    content: "";
+    position: absolute;
+    width: 16px; height: 16px;
+    border: 2px solid var(--primary);
+    border-top-color: transparent;
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+    left: 10px; top: 50%; transform: translateY(-50%);
+}
+@keyframes spin { to { transform: translateY(-50%) rotate(360deg); } }
+
+/* Here is task 9: Lazy Loaded Images */
+.jq-lazy-section { background: var(--card); padding: 2rem; border-radius: 12px; margin: 2rem 0; }
+.lazy-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1rem; }
+.lazy-load { width: 100%; height: auto; border-radius: 8px; border: 2px solid var(--muted); background: var(--glass); }
