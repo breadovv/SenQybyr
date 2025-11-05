@@ -65,25 +65,28 @@
 </head>
 <body>
 <header class="header">
-    <a href="index.html" class="logo" id="SenQubyr">
+    <a href="../index.html" class="logo" id="SenQubyr">
         <img src="../images/youtubeKZicon.png" alt="Logo">
         SenQubyr
     </a>
     <div class="search">
         <input type="text" id="search" placeholder="Search">
         <a href="#" type="button" class="icon-btn" title="Search">
-            <img src="../images/search.png" alt="search">
+            <img src="/images/search.png" alt="search">
         </a>
     </div>
     <div class="flex">
         <a href="#" class="icon-btn" title="Create">
-            <img src="../images/plus-black-symbol_icon-icons.com_73453.png" alt="add">
+            <img src="/images/plus-black-symbol_icon-icons.com_73453.png" alt="add">
         </a>
         <a href="#" class="icon-btn" title="Notifications">
-            <img src="../images/notification_alarm_bell_icon_146863.png" alt="notification">
+            <img src="/images/notification_alarm_bell_icon_146863.png" alt="notification">
         </a>
-        <a href="profile.html" class="icon-btn" title="Profile">
-            <img src="../images/profile_picture_user_icon_153847.png" alt="profile">
+        <button id="bgChangeBtn" class="icon-btn bg-changer-btn" title="Change Background Color" style="padding: 8px 12px; margin-left: 10px;">
+            🎨
+        </button>
+        <a href="../templates/profile.html" class="icon-btn" title="Profile">
+            <img src="/images/profile_picture_user_icon_153847.png" alt="profile">
         </a>
     </div>
 </header>
@@ -91,7 +94,7 @@
 <div class="layout container-fluid py-3 py-lg-4">
     <aside class="sidebar">
         <div class="section">
-        <a class="nav-item" href="../index.html"><span><img src="../images/house.png" alt="home"></span>Home</a>
+            <a class="nav-item" href="../index.html"><span><img src="../images/house.png" alt="home"></span>Home</a>
             <a class="nav-item" href="trending.html"><span><img src="../images/fire.png" alt="trending"></span>Trending</a>
             <a class="nav-item" href="shorts.html"><span><img src="../images/shortsicon.png" alt="shorts"></span>Shorts</a>
             <a class="nav-item active" href="subscriptions.html"><span><img src="../images/television.png" alt="subscription"></span>Subscriptions</a>
@@ -101,6 +104,11 @@
             <a class="nav-item" href="history.html">History</a>
             <a class="nav-item" href="liked.html">Liked</a>
         </div>
+        <!-- Contact Us in Sidebar -->
+        <div class="section">
+            <div style="color:var(--muted);font-size:13px;padding:6px 8px">Get in Touch</div>
+            <a class="nav-item" href="#" data-popup-open="contactPopup">Contact Us</a>
+        </div>
     </aside>
 
     <main class="px-sm-2">
@@ -108,56 +116,6 @@
             <h2 class="h4 m-0" style="color: var(--muted);">📺 Your Subscriptions</h2>
             <p class="text-muted">Channels you're subscribed to</p>
         </section>
-
-        <!-- FAQ Accordion -->
-        <div class="accordion-section">
-            <h3 style="margin-bottom: 20px;">❓ Subscription FAQs</h3>
-
-            <div class="accordion-item">
-                <div class="accordion-header">
-                    How do subscriptions work?
-                </div>
-                <div class="accordion-content">
-                    <p>When you subscribe to a channel, you'll see their latest videos in your subscriptions feed. You'll also receive notifications about new uploads (if enabled).</p>
-                </div>
-            </div>
-
-            <div class="accordion-item">
-                <div class="accordion-header">
-                    Can I manage my subscriptions?
-                </div>
-                <div class="accordion-content">
-                    <p>Yes! You can unsubscribe from any channel by clicking the "Unsubscribe" button on their channel tile. Your subscription list is always accessible from the sidebar.</p>
-                </div>
-            </div>
-
-            <div class="accordion-item">
-                <div class="accordion-header">
-                    Are subscriptions free?
-                </div>
-                <div class="accordion-content">
-                    <p>Absolutely! All subscriptions on SenQubyr are completely free. You can subscribe to unlimited channels without any cost.</p>
-                </div>
-            </div>
-
-            <div class="accordion-item">
-                <div class="accordion-header">
-                    How do I find new channels to subscribe to?
-                </div>
-                <div class="accordion-content">
-                    <p>Browse the Home, Trending, and Shorts pages to discover new content creators. Click on any video to visit the channel, then hit the Subscribe button.</p>
-                </div>
-            </div>
-
-            <div class="accordion-item">
-                <div class="accordion-header">
-                    Will I get notifications from subscribed channels?
-                </div>
-                <div class="accordion-content">
-                    <p>You can customize your notification preferences in your account settings. Choose to receive alerts for all uploads, live streams, or only occasional updates.</p>
-                </div>
-            </div>
-        </div>
 
         <section class="current-subscriptions mt-4">
             <h3 class="h5 mb-3" style="color: var(--muted);">Your Current Subscriptions</h3>
@@ -262,17 +220,36 @@
     </main>
 </div>
 
-<footer class="footer">
-    <div class="footer-links">
+<footer class="footer mt-auto">
+    <div class="footer-links mb-2">
         <a href="#">About us</a>
         <a href="#">Rules</a>
         <a href="#">Privacy Policy</a>
         <a href="#">Contacts</a>
     </div>
+    <!-- Our Stats in Footer -->
+    <section class="jq-counter-section">
+        <h2>Our Stats</h2>
+        <div class="counter-grid">
+            <div class="counter-box">
+                <div class="counter" data-target="1000">0</div>
+                <div class="counter-label">Users</div>
+            </div>
+            <div class="counter-box">
+                <div class="counter" data-target="250">0</div>
+                <div class="counter-label">Videos</div>
+            </div>
+            <div class="counter-box">
+                <div class="counter" data-target="75">0</div>
+                <div class="counter-label">Projects</div>
+            </div>
+        </div>
+    </section>
     <div class="footer-copy">
         © 2025 SenQubyr. Beknur Erdembek, Alisher Bolatkhanov
     </div>
 </footer>
+
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
 <script src="../js/script.js"></script>
