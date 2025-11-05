@@ -197,6 +197,100 @@
             opacity: 0.9;
             margin-bottom: 10px;
         }
+
+        /* Styles for the "Our Stats" section in the footer */
+        .footer .jq-counter-section {
+            background: none; /* Remove background if it was present */
+            padding: 0; /* Remove padding */
+            margin-top: 20px; /* Add some margin from other footer elements */
+            text-align: center;
+        }
+
+        .footer .jq-counter-section h2 {
+            font-size: 18px;
+            color: var(--muted);
+            margin-bottom: 15px;
+        }
+
+        .footer .counter-grid {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .footer .counter-box {
+            background: var(--card); /* Example: Add a light background to each box */
+            padding: 15px 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            min-width: 100px; /* Ensure boxes have some size */
+        }
+
+        .footer .counter {
+            font-size: 28px;
+            font-weight: 700;
+            color: #00c5ff; /* A distinct color for numbers */
+            margin-bottom: 5px;
+        }
+
+        .footer .counter-label {
+            font-size: 14px;
+            color: #666;
+        }
+
+        /* New styles for the time display button in header */
+        .header .time-display-container {
+            position: relative;
+            display: flex;
+            align-items: center;
+            margin-left: 10px;
+        }
+
+        .header .time-display-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            color: var(--text-color);
+            font-weight: 500;
+            font-size: 14px;
+            transition: color 0.2s;
+        }
+
+        .header .time-display-btn img {
+            width: 20px;
+            height: 20px;
+            margin-right: 5px;
+            filter: var(--icon-filter);
+        }
+
+        .header .time-display-btn:hover {
+            color: #00c5ff;
+        }
+
+        .header .current-time-popup {
+            position: absolute;
+            background: var(--card);
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 10px 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            top: calc(100% + 10px); /* Position below the button */
+            right: 0;
+            min-width: 180px;
+            text-align: center;
+            font-size: 14px;
+            display: none; /* Hidden by default */
+            z-index: 100;
+        }
+
+        .header .current-time-popup.active {
+            display: block;
+        }
+
     </style>
 </head>
 <body>
@@ -208,19 +302,31 @@
     <div class="search">
         <input type="text" id="search" placeholder="Search">
         <a href="#" type="button" class="icon-btn" title="Search">
-        <img src="images/search.png" alt="search">
+            <img src="images/search.png" alt="search">
         </a>
     </div>
     <div class="flex">
         <a href="#" class="icon-btn" title="Create">
-        <img src="images/plus-black-symbol_icon-icons.com_73453.png" alt="add">
+            <img src="images/plus-black-symbol_icon-icons.com_73453.png" alt="add">
         </a>
         <a href="#" class="icon-btn" title="Notifications">
-        <img src="images/notification_alarm_bell_icon_146863.png" alt="notification">
+            <img src="images/notification_alarm_bell_icon_146863.png" alt="notification">
         </a>
-        <a href="profile.html" class="icon-btn" title="Profile">
-        <img src="images/profile_picture_user_icon_153847.png" alt="profile">
+        <a href="./templates/profile.html" class="icon-btn" title="Profile">
+            <img src="images/profile_picture_user_icon_153847.png" alt="profile">
         </a>
+        <!-- Background Changer Button -->
+        <button id="bgChangeBtn" class="icon-btn bg-changer-btn" title="Change Background Color" style="padding: 8px 12px; margin-left: 10px;">
+            🎨
+        </button>
+        <!-- Time Display Button -->
+        <div class="time-display-container">
+            <button id="showTimeBtn" class="time-display-btn" title="Toggle Current Time">
+                <img src="images/time_icon.png" alt="Time">
+                Time
+            </button>
+            <div id="currentTimeDisplay" class="current-time-popup" aria-live="polite"></div>
+        </div>
         <div class="form-check form-switch ms-2" id="themeSwitchContainer">
             <input class="form-check-input" type="checkbox" id="themeSwitch">
             <label class="form-check-label" for="themeSwitch">Night</label>
@@ -231,169 +337,25 @@
 <div class="layout flex-grow-1">
     <aside class="sidebar">
         <div class="section">
-        <a class="nav-item active" href="index.html"><span><img src="images/house.png" alt="home"></span>Home</a>
-        <a class="nav-item" href="templates/trending.html"><span><img src="images/fire.png" alt="trending"></span>Trending</a>
-        <a class="nav-item" href="templates/shorts.html"><span><img src="images/shortsicon.png" alt="shorts"></span>Shorts</a>
-        <a class="nav-item" href="templates/subscriptions.html"><span><img src="images/television.png" alt="subscription"></span>Subscriptions</a>
+            <a class="nav-item active" href="index.html"><span><img src="images/house.png" alt="home"></span>Home</a>
+            <a class="nav-item" href="./templates/trending.html"><span><img src="images/fire.png" alt="trending"></span>Trending</a>
+            <a class="nav-item" href="templates/shorts.html"><span><img src="images/shortsicon.png" alt="shorts"></span>Shorts</a>
+            <a class="nav-item" href="templates/subscriptions.html"><span><img src="images/television.png" alt="subscription"></span>Subscriptions</a>
         </div>
         <div class="section">
             <div style="color:var(--muted);font-size:13px;padding:6px 8px">Library</div>
-            <a class="nav-item" href="history.html">History</a>
-            <a class="nav-item" href="liked.html">Liked</a>
+            <a class="nav-item" href="./templates/history.html">History</a>
+            <a class="nav-item" href="./templates/liked.html">Liked</a>
+        </div>
+        <div class="section">
+            <div style="color:var(--muted);font-size:13px;padding:6px 8px">Get in Touch</div>
+            <a class="nav-item" href="#" data-popup-open="contactPopup">Contact Us</a>
         </div>
     </aside>
 
     <main>
-
-
-        <!-- Subscribe & Contact -->
-        <div class="feature-box">
-            <h3 style="margin-bottom: 15px;">📧 Subscribe & Contact</h3>
-            <p style="color: #666; margin-bottom: 20px;">Open popup forms to subscribe or contact us</p>
-            <button class="btn btn-primary me-2" data-popup-open="subscriptionPopup">Subscribe Now</button>
-            <button class="btn btn-secondary" data-popup-open="contactPopup">Contact Us</button>
-        </div>
-        
-        <!-- Video Categories -->
-        <section class="section-title">
-            <header class="top-header">
-                <nav class="nav-links">
-                    <a href="#" class="icon-btn a">All</a>
-                    <a href="#" class="icon-btn a">Music</a>
-                    <a href="#" class="icon-btn a">Jams</a>
-                    <a href="#" class="icon-btn a">Video Games</a>
-                    <a href="#" class="icon-btn a">Podcasts</a>
-                    <a href="#" class="icon-btn a">Live</a>
-                    <a href="#" class="icon-btn a">Animation</a>
-                    <a href="#" class="icon-btn a">Natural</a>
-                </nav>
-            </header>
-    </section>
-
-    <!-- Here is task 1: jQuery Real-time Search & Live Filter -->
-    <section class="jq-search-section">
-        <h2>jQuery Search Demo</h2>
-        <div class="jq-search-bar">
-            <input type="text" id="jqSearchInput" placeholder="Type to filter products, blogs, or users...">
-            <!-- Here is task 2: Autocomplete Search Suggestions -->
-            <ul id="jqSuggestions" class="jq-suggestions"></ul>
-        </div>
-        <ul id="jqSearchList" class="jq-search-list">
-            <li>Music Production Course</li>
-            <li>JavaScript Fundamentals</li>
-            <li>Gaming Highlights Compilation</li>
-            <li>Comedy Special</li>
-            <li>Advanced React Tutorial</li>
-            <li>Indie Music Playlist</li>
-        </ul>
-        <!-- Here is task 3: Search Highlighting -->
-        <div class="jq-highlight-container">
-            <h3>Search Highlight Area</h3>
-            <p id="jqHighlightArea">
-                Welcome to SenQybyr! This demo shows how search highlighting works. 
-                Try typing words like "music", "JavaScript", or "React" to see matching terms highlighted.
-            </p>
-        </div>
-    </section>
-
-    <!-- Here is task 4: Scroll Progress Bar -->
-    <div id="scrollProgress"><div id="scrollProgressBar"></div></div>
-
-    <!-- Here is task 5: Animated Number Counter -->
-    <section class="jq-counter-section">
-        <h2>Our Stats</h2>
-        <div class="counter-grid">
-            <div class="counter-box">
-                <div class="counter" data-target="1000">0</div>
-                <div class="counter-label">Users</div>
-            </div>
-            <div class="counter-box">
-                <div class="counter" data-target="250">0</div>
-                <div class="counter-label">Videos</div>
-            </div>
-            <div class="counter-box">
-                <div class="counter" data-target="75">0</div>
-                <div class="counter-label">Projects</div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Here is task 8: Copied to Clipboard Button -->
-    <section class="jq-copy-section">
-        <h2>Copy to Clipboard Demo</h2>
-        <div class="copy-container">
-            <span id="copyText">https://senqybyr.example.com/invite?code=ABC123</span>
-            <button id="copyBtn" class="btn copy-btn" aria-label="Copy to clipboard">Copy</button>
-            <span id="copyTooltip" class="copy-tooltip" role="tooltip">Copied to clipboard!</span>
-        </div>
-    </section>
-
-    <!-- Here is task 9: Image Lazy Loading -->
-    <section class="jq-lazy-section">
-        <h2>Lazy Loaded Images</h2>
-        <div class="lazy-grid">
-    <img class="lazy-load" alt="Lazy image 1" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==" data-src="images/rec.jpg">
-    <img class="lazy-load" alt="Lazy image 2" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==" data-src="images/aitu.png">
-    <img class="lazy-load" alt="Lazy image 3" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==" data-src="images/img.png">
-        </div>
-    </section>
-        
-        <!-- Background Changer -->
-        <div class="feature-box">
-            <h3 style="margin-bottom: 15px;">🎨 Background Color Changer</h3>
-            <p style="color: #666; margin-bottom: 20px;">Click the button to change the page background</p>
-            <button id="bgChangeBtn" class="bg-changer-btn">Change Background Color</button>
-        </div>
-
-        <!-- FAQ Accordion -->
-        <div class="accordion-section">
-            <h3 style="margin-bottom: 20px;">❓ Frequently Asked Questions</h3>
-
-            <div class="accordion-item">
-                <div class="accordion-header">
-                    What is SenQubyr?
-                </div>
-                <div class="accordion-content">
-                    <p>SenQubyr is a video sharing platform inspired by YouTube, created as part of a web development course at AITU. It features video browsing, subscriptions, and user profiles.</p>
-                </div>
-            </div>
-
-            <div class="accordion-item">
-                <div class="accordion-header">
-                    How do I create an account?
-                </div>
-                <div class="accordion-content">
-                    <p>Click on the profile icon in the header, then select "Sign Up". Fill in your information including email, password, and preferred content types.</p>
-                </div>
-            </div>
-
-            <div class="accordion-item">
-                <div class="accordion-header">
-                    Can I upload videos?
-                </div>
-                <div class="accordion-content">
-                    <p>Yes! Once you have an account, click the "+" icon in the header to upload your videos. Supported formats include MP4, AVI, and MOV.</p>
-                </div>
-            </div>
-
-            <div class="accordion-item">
-                <div class="accordion-header">
-                    How do subscriptions work?
-                </div>
-                <div class="accordion-content">
-                    <p>Subscriptions allow you to follow your favorite channels. When you subscribe, you'll get notifications about new uploads.</p>
-                </div>
-            </div>
-
-            <div class="accordion-item">
-                <div class="accordion-header">
-                    Is SenQubyr free to use?
-                </div>
-                <div class="accordion-content">
-                    <p>Absolutely! SenQubyr is completely free. You can watch unlimited videos, subscribe to channels, and upload your own content.</p>
-                </div>
-            </div>
-        </div>
+        <!-- Scroll Progress Bar -->
+        <div id="scrollProgress"><div id="scrollProgressBar"></div></div>
 
         <!-- Video Categories -->
         <section class="section-title">
@@ -411,50 +373,7 @@
             </header>
         </section>
 
-        <!-- Image Gallery -->
-        <section class="gallery">
-            <h3 style="margin-bottom: 15px;">🖼️ Image Gallery</h3>
-            <div class="gallery-main">
-    <img id="gallery-main" src="images/img.png" alt="Selected image">
-            </div>
-            <div class="gallery-thumbs">
-    <img class="thumb active" data-src="images/img.png" src="images/img.png" alt="thumb 1">
-    <img class="thumb" data-src="images/aitu.png" src="images/aitu.png" alt="thumb 2">
-    <img class="thumb" data-src="images/rec.jpg" src="images/rec.jpg" alt="thumb 3">
-    <img class="thumb" data-src="images/kzicon.png" src="images/kzicon.png" alt="thumb 4">
-            </div>
-            <div class="gallery-time">
-                <button id="showTimeBtn" class="bg-changer-btn">Show Current Time</button>
-                <div id="currentTimeDisplay" class="datetime-display" aria-live="polite"></div>
-            </div>
-        </section>
-
-        <!-- Contact Form Section -->
-        <section class="contact-section">
-            <h2>Contact Us</h2>
-            <form id="contactForm" class="contact-form">
-                <div class="form-group">
-                    <label for="contactName">Name:</label>
-                    <input type="text" id="contactName" name="name" required>
-                </div>
-                <div class="form-group">
-                    <label for="contactEmail">Email:</label>
-                    <input type="email" id="contactEmail" name="email" required>
-                </div>
-                <div class="form-group">
-                    <label for="contactSubject">Subject:</label>
-                    <input type="text" id="contactSubject" name="subject" required>
-                </div>
-                <div class="form-group">
-                    <label for="contactMessage">Message:</label>
-                    <textarea id="contactMessage" name="message" rows="5" required></textarea>
-                </div>
-                <button type="submit" class="btn btn-primary">Send Message</button>
-                <div id="contactFeedback" class="contact-feedback"></div>
-            </form>
-        </section>
-
-        <!-- Product Filtering Section -->
+        <!-- Product Filtering Section (Renamed from Contact Form Section to follow the structure) -->
         <section class="products-section">
             <h2>Video Products</h2>
             <div class="filter-controls">
@@ -482,29 +401,6 @@
             </div>
             <div id="productsGrid" class="products-grid">
                 <!-- Products will be dynamically generated here -->
-            </div>
-        </section>
-
-        <!-- Interactive Controls Section -->
-        <section class="interactive-section">
-            <h2>Interactive Controls</h2>
-            <div class="controls-container">
-                <div class="keyboard-demo">
-                    <h3>Keyboard Demo</h3>
-                    <p>Press keys: A, S, D, F, or Arrow keys</p>
-                    <div id="keyDisplay" class="key-display">Press a key...</div>
-                </div>
-                <div class="sound-controls">
-                    <h3>Sound Effects</h3>
-                    <button id="playNotification" class="btn btn-info">Play Notification</button>
-                    <button id="playSuccess" class="btn btn-success">Play Success</button>
-                    <button id="playError" class="btn btn-danger">Play Error</button>
-                </div>
-                <div class="animation-controls">
-                    <h3>Animations</h3>
-                    <button id="animateBox" class="btn btn-warning">Animate Box</button>
-                    <div id="animationBox" class="animation-box">Animate Me!</div>
-                </div>
             </div>
         </section>
 
@@ -543,7 +439,7 @@
 
             <!-- Shorts Section -->
             <div class="section-title logo mb-3">
-    <img src="images/shortsicon.png" alt="Shorts">
+                <img src="images/shortsicon.png" alt="Shorts">
                 Shorts
             </div>
             <div class="grid-2 mb-4">
@@ -580,7 +476,7 @@
     </main>
 </div>
 
-<!-- Subscription Popup -->
+<!-- Subscription Popup (retained as per instruction to only remove button, not popup) -->
 <div id="subscriptionPopup" class="popup-overlay">
     <div class="popup-content">
         <button class="popup-close" data-popup-close>&times;</button>
@@ -623,7 +519,7 @@
     </div>
 </div>
 
-<!-- Contact Popup -->
+<!-- Contact Popup (retained as per instruction to only remove button, not popup) -->
 <div id="contactPopup" class="popup-overlay">
     <div class="popup-content">
         <button class="popup-close" data-popup-close>&times;</button>
@@ -657,11 +553,24 @@
         <a href="#">Privacy Policy</a>
         <a href="#">Contacts</a>
     </div>
-    <!-- Date & Time Display -->
-    <div class="datetime-display" style="margin-bottom: 15px;">
-        <small>Live Update</small>
-        <div id="currentDateTime">Loading...</div>
-    </div>
+    <!-- Our Stats in Footer -->
+    <section class="jq-counter-section">
+        <h2>Our Stats</h2>
+        <div class="counter-grid">
+            <div class="counter-box">
+                <div class="counter" data-target="1000">0</div>
+                <div class="counter-label">Users</div>
+            </div>
+            <div class="counter-box">
+                <div class="counter" data-target="250">0</div>
+                <div class="counter-label">Videos</div>
+            </div>
+            <div class="counter-box">
+                <div class="counter" data-target="75">0</div>
+                <div class="counter-label">Projects</div>
+            </div>
+        </div>
+    </section>
     <div class="footer-copy">
         © 2025 SenQubyr. Beknur Erdembek, Alisher Bolatkhanov
     </div>
@@ -669,5 +578,71 @@
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
 <script src="js/script.js"></script>
+<script>
+    // Placeholder for JavaScript to handle the time display logic (since script.js is not to be changed)
+    document.addEventListener('DOMContentLoaded', function() {
+        const showTimeBtn = document.getElementById('showTimeBtn');
+        const currentTimeDisplay = document.getElementById('currentTimeDisplay');
+        let intervalId;
+
+        function updateTime() {
+            const now = new Date();
+            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit', second: '2-digit' };
+            currentTimeDisplay.innerHTML = `<small>Live Update</small>${now.toLocaleDateString('en-US', options)}`;
+        }
+
+        if (showTimeBtn && currentTimeDisplay) {
+            showTimeBtn.addEventListener('click', function(event) {
+                event.stopPropagation(); // Prevent document click from immediately closing it
+                if (currentTimeDisplay.classList.contains('active')) {
+                    currentTimeDisplay.classList.remove('active');
+                    clearInterval(intervalId);
+                } else {
+                    currentTimeDisplay.classList.add('active');
+                    updateTime(); // Update immediately
+                    intervalId = setInterval(updateTime, 1000); // Update every second
+                }
+            });
+
+            // Close when clicking outside
+            document.addEventListener('click', function(event) {
+                if (!currentTimeDisplay.contains(event.target) && !showTimeBtn.contains(event.target)) {
+                    currentTimeDisplay.classList.remove('active');
+                    clearInterval(intervalId);
+                }
+            });
+        }
+
+        // --- Background Changer Logic (if not already in script.js and needs to be here) ---
+        const bgChangeBtn = document.getElementById('bgChangeBtn');
+        const colors = ['#f0f2f5', '#e0f7fa', '#ffe0b2', '#c8e6c9', '#f3e5f5']; // Example colors
+        let currentColorIndex = 0;
+
+        if (bgChangeBtn) {
+            bgChangeBtn.addEventListener('click', function() {
+                currentColorIndex = (currentColorIndex + 1) % colors.length;
+                document.body.style.backgroundColor = colors[currentColorIndex];
+            });
+        }
+    });
+
+    // jQuery Popup logic (assuming it's handled by script.js, but adding a fallback if it was removed)
+    $(document).ready(function() {
+        $('[data-popup-open]').on('click', function() {
+            var popupId = $(this).data('popup-open');
+            $('#' + popupId).fadeIn();
+        });
+
+        $('[data-popup-close]').on('click', function() {
+            $(this).closest('.popup-overlay').fadeOut();
+        });
+
+        $('.popup-overlay').on('click', function(e) {
+            if ($(e.target).is('.popup-overlay')) {
+                $(this).fadeOut();
+            }
+        });
+    });
+</script>
 </body>
 </html>
