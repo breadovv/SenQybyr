@@ -6,13 +6,13 @@
   <component name="ChangeListManager">
     <list default="true" id="5d4b96c3-680b-4ed0-b417-ba6ca6a88f4a" name="Changes" comment="67">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/css/style2.css" beforeDir="false" afterPath="$PROJECT_DIR$/css/style2.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/js/script.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/script.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/history.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/history.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/liked.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/liked.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/profile.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/profile.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/shorts.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/shorts.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/subscriptions.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/subscriptions.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/trending.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/trending.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/shorts.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/subscriptions.html" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -50,27 +50,27 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "DefaultHtmlFileTemplate": "HTML File",
-    "JavaScript Debug.index.html.executor": "Run",
-    "ModuleVcsDetector.initialDetectionPerformed": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "disable.download.node.interpreter.editor.notification": "true",
-    "git-widget-placeholder": "22c17571",
-    "last_opened_file_path": "C:/Users/12345/WebstormProjects/SenQybyr/js",
-    "list.type.of.created.stylesheet": "CSS",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_interpreter_path": "C:/Users/12345/AppData/Roaming/JetBrains/WebStorm2025.2/node/versions/22.20.0/node",
-    "nodejs_package_manager_path": "npm",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;DefaultHtmlFileTemplate&quot;: &quot;HTML File&quot;,
+    &quot;JavaScript Debug.index.html.executor&quot;: &quot;Run&quot;,
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;disable.download.node.interpreter.editor.notification&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/12345/WebstormProjects/SenQybyr/js&quot;,
+    &quot;list.type.of.created.stylesheet&quot;: &quot;CSS&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_interpreter_path&quot;: &quot;C:/Users/12345/AppData/Roaming/JetBrains/WebStorm2025.2/node/versions/22.20.0/node&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\12345\WebstormProjects\SenQybyr\js" />
@@ -104,6 +104,9 @@
       <workItem from="1761134824329" duration="2666000" />
       <workItem from="1761295376019" duration="483000" />
       <workItem from="1761723482448" duration="2748000" />
+      <workItem from="1762345397592" duration="1343000" />
+      <workItem from="1762350265688" duration="459000" />
+      <workItem from="1762766387596" duration="668000" />
     </task>
     <task id="LOCAL-00001" summary="update">
       <option name="closed" value="true" />

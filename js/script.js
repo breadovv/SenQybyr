@@ -1007,3 +1007,70 @@ $(function() {
     $(window).on('scroll resize', lazyLoadImages);
     lazyLoadImages();
 });
+/* ========== TASK 6 ========== */
+// Dark/Light Mode Toggle with Local Storage
+$(document).ready(function() {
+    const toggleBtn = $("#themeToggle");
+    const savedTheme = localStorage.getItem("theme");
+    if (savedTheme) $("body").attr("data-theme", savedTheme);
+
+    toggleBtn.on("click", function() {
+        const current = $("body").attr("data-theme") === "dark" ? "light" : "dark";
+        $("body").attr("data-theme", current);
+        localStorage.setItem("theme", current);
+    });
+});
+
+/* ========== TASK 7 (Toast continuation) ========== */
+function showToast(message, type="info") {
+    const toast = $(`
+      <div class="jq-toast ${type}">
+        ${message}
+        <span class="close-btn">&times;</span>
+      </div>`);
+    $("body").append(toast);
+    setTimeout(() => toast.addClass("show"), 100);
+
+    toast.find(".close-btn").click(() => toast.remove());
+    setTimeout(() => {
+        toast.css("animation", "toast-fadeout 0.5s forwards");
+        setTimeout(() => toast.remove(), 500);
+    }, 3000);
+}
+
+/* ========== TASK 8 ========== */
+// Image gallery popup
+$(document).on("click", ".image-gallery img", function() {
+    const src = $(this).attr("src");
+    const popup = $(`
+        <div class="gallery-popup">
+            <span class="close">&times;</span>
+            <img src="${src}" alt="Preview">
+        </div>
+    `);
+    $("body").append(popup);
+    setTimeout(() => popup.addClass("show"), 100);
+
+    popup.find(".close").click(() => popup.removeClass("show"));
+    popup.on("click", (e) => {
+        if ($(e.target).is(".gallery-popup")) popup.removeClass("show");
+    });
+    setTimeout(() => popup.remove(), 600);
+});
+
+/* ========== TASK 9 ========== */
+// Back to top button
+$(document).ready(function() {
+    const btn = $('<div class="back-to-top">↑</div>');
+    $("body").append(btn);
+
+    $(window).scroll(function() {
+        if ($(window).scrollTop() > 300) {
+            btn.addClass("show");
+        } else {
+            btn.removeClass("show");
+        }
+    });
+
+    btn.click(() => $("html, body").animate({ scrollTop: 0 }, "smooth"));
+});

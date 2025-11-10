@@ -993,3 +993,133 @@ body.theme-dark .contact-feedback.error {
 .jq-lazy-section { background: var(--card); padding: 2rem; border-radius: 12px; margin: 2rem 0; }
 .lazy-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1rem; }
 .lazy-load { width: 100%; height: auto; border-radius: 8px; border: 2px solid var(--muted); background: var(--glass); }
+
+/* ========== TASK 7 (continued) ========== */
+.jq-toast {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: var(--bg);
+    border: 2px solid var(--muted);
+    border-radius: 8px;
+    padding: 0.75rem 1rem;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+    color: var(--text);
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.4s ease;
+    z-index: 9999;
+}
+
+.jq-toast.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Toast close button */
+.jq-toast .close-btn {
+    float: right;
+    font-weight: bold;
+    cursor: pointer;
+    margin-left: 1rem;
+}
+
+/* Toast color variations */
+.jq-toast.success { border-color: #28a745; color: #28a745; }
+.jq-toast.error { border-color: #dc3545; color: #dc3545; }
+.jq-toast.info { border-color: #17a2b8; color: #17a2b8; }
+
+/* Fadeout animation */
+@keyframes toast-fadeout {
+    from { opacity: 1; transform: translateY(0); }
+    to { opacity: 0; transform: translateY(20px); }
+}
+
+/* ========== TASK 8 ========== */
+/* Gallery popup styling */
+.image-gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 1rem;
+}
+
+.image-gallery img {
+    width: 100%;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: transform 0.3s;
+}
+
+.image-gallery img:hover {
+    transform: scale(1.05);
+}
+
+/* Popup overlay */
+.gallery-popup {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10000;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease;
+}
+
+.gallery-popup.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+.gallery-popup img {
+    max-width: 80%;
+    max-height: 80%;
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(255,255,255,0.3);
+}
+
+.gallery-popup .close {
+    position: absolute;
+    top: 30px;
+    right: 40px;
+    font-size: 2rem;
+    color: white;
+    cursor: pointer;
+}
+
+/* ========== TASK 9 ========== */
+/* Smooth scroll & Back-to-top button */
+html {
+    scroll-behavior: smooth;
+}
+
+.back-to-top {
+    position: fixed;
+    bottom: 40px;
+    right: 40px;
+    background: var(--accent);
+    color: #fff;
+    padding: 10px 14px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 1.3rem;
+    box-shadow: 0 3px 8px rgba(0,0,0,0.3);
+    opacity: 0;
+    transform: scale(0);
+    transition: all 0.3s ease;
+    z-index: 1000;
+}
+
+.back-to-top.show {
+    opacity: 1;
+    transform: scale(1);
+}
+
+/* Hover effect */
+.back-to-top:hover {
+    background: var(--muted);
+}
+
+/* End of CSS section */
