@@ -9,7 +9,6 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <style>
-        /* Popup Styles */
         .popup-overlay {
             display: none;
             position: fixed;
@@ -108,7 +107,6 @@
             margin-top: 5px;
         }
 
-        /* Accordion Styles */
         .accordion-section {
             background: var(--card);
             border-radius: 12px;
@@ -153,7 +151,6 @@
             display: none;
         }
 
-        /* Background Changer & DateTime */
         .feature-box {
             background: var(--card);
             border-radius: 12px;
@@ -198,11 +195,10 @@
             margin-bottom: 10px;
         }
 
-        /* Styles for the "Our Stats" section in the footer */
         .footer .jq-counter-section {
-            background: none; /* Remove background if it was present */
-            padding: 0; /* Remove padding */
-            margin-top: 20px; /* Add some margin from other footer elements */
+            background: none;
+            padding: 0;
+            margin-top: 20px;
             text-align: center;
         }
 
@@ -220,17 +216,17 @@
         }
 
         .footer .counter-box {
-            background: var(--card); /* Example: Add a light background to each box */
+            background: var(--card);
             padding: 15px 20px;
             border-radius: 8px;
             box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-            min-width: 100px; /* Ensure boxes have some size */
+            min-width: 100px;
         }
 
         .footer .counter {
             font-size: 28px;
             font-weight: 700;
-            color: #00c5ff; /* A distinct color for numbers */
+            color: #00c5ff;
             margin-bottom: 5px;
         }
 
@@ -239,7 +235,6 @@
             color: #666;
         }
 
-        /* New styles for the time display button in header */
         .header .time-display-container {
             position: relative;
             display: flex;
@@ -254,7 +249,6 @@
             padding: 0;
             display: flex;
             align-items: center;
-            color: var(--text-color);
             font-weight: 500;
             font-size: 14px;
             transition: color 0.2s;
@@ -264,7 +258,6 @@
             width: 20px;
             height: 20px;
             margin-right: 5px;
-            filter: var(--icon-filter);
         }
 
         .header .time-display-btn:hover {
@@ -278,12 +271,12 @@
             border-radius: 8px;
             padding: 10px 15px;
             box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-            top: calc(100% + 10px); /* Position below the button */
+            top: calc(100% + 10px);
             right: 0;
             min-width: 180px;
             text-align: center;
             font-size: 14px;
-            display: none; /* Hidden by default */
+            display: none;
             z-index: 100;
         }
 
@@ -291,6 +284,38 @@
             display: block;
         }
 
+        .thumb-lg img, .thumb-shorts img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: inherit;
+        }
+        .thumb-lg, .thumb-shorts {
+            background-image: none;
+        }
+        .search {
+            position: relative;
+        }
+        #search-suggestions {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: var(--bg);
+            border: 1px solid #ccc;
+            border-top: none;
+            z-index: 100;
+            max-height: 250px;
+            overflow-y: auto;
+            display: none;
+        }
+        .suggestion-item {
+            padding: 10px;
+            cursor: pointer;
+        }
+        .suggestion-item:hover {
+            background-color: var(--hover-bg);
+        }
     </style>
 </head>
 <body>
@@ -300,33 +325,16 @@
         SenQubyr
     </a>
     <div class="search">
-        <input type="text" id="search" placeholder="Search">
-        <a href="#" type="button" class="icon-btn" title="Search">
+        <input type="text" id="search" placeholder="Search" autocomplete="off">
+        <a href="#" type="button" class="icon-btn" title="Search" id="searchBtn">
             <img src="images/search.png" alt="search">
         </a>
+        <div id="search-suggestions"></div>
     </div>
     <div class="flex">
-        <a href="#" class="icon-btn" title="Create">
-            <img src="images/plus-black-symbol_icon-icons.com_73453.png" alt="add">
-        </a>
-        <a href="#" class="icon-btn" title="Notifications">
-            <img src="images/notification_alarm_bell_icon_146863.png" alt="notification">
-        </a>
         <a href="./templates/profile.html" class="icon-btn" title="Profile">
             <img src="images/profile_picture_user_icon_153847.png" alt="profile">
         </a>
-        <!-- Background Changer Button -->
-        <button id="bgChangeBtn" class="icon-btn bg-changer-btn" title="Change Background Color" style="padding: 8px 12px; margin-left: 10px;">
-            🎨
-        </button>
-        <!-- Time Display Button -->
-        <div class="time-display-container">
-            <button id="showTimeBtn" class="time-display-btn" title="Toggle Current Time">
-                <img src="images/time_icon.png" alt="Time">
-                Time
-            </button>
-            <div id="currentTimeDisplay" class="current-time-popup" aria-live="polite"></div>
-        </div>
         <div class="form-check form-switch ms-2" id="themeSwitchContainer">
             <input class="form-check-input" type="checkbox" id="themeSwitch">
             <label class="form-check-label" for="themeSwitch">Night</label>
@@ -339,25 +347,17 @@
         <div class="section">
             <a class="nav-item active" href="index.html"><span><img src="images/house.png" alt="home"></span>Home</a>
             <a class="nav-item" href="./templates/trending.html"><span><img src="images/fire.png" alt="trending"></span>Trending</a>
-            <a class="nav-item" href="templates/shorts.html"><span><img src="images/shortsicon.png" alt="shorts"></span>Shorts</a>
-            <a class="nav-item" href="templates/subscriptions.html"><span><img src="images/television.png" alt="subscription"></span>Subscriptions</a>
         </div>
         <div class="section">
             <div style="color:var(--muted);font-size:13px;padding:6px 8px">Library</div>
             <a class="nav-item" href="./templates/history.html">History</a>
             <a class="nav-item" href="./templates/liked.html">Liked</a>
         </div>
-        <div class="section">
-            <div style="color:var(--muted);font-size:13px;padding:6px 8px">Get in Touch</div>
-            <a class="nav-item" href="#" data-popup-open="contactPopup">Contact Us</a>
-        </div>
     </aside>
 
-    <main>
-        <!-- Scroll Progress Bar -->
+    <main id="main-content">
         <div id="scrollProgress"><div id="scrollProgressBar"></div></div>
 
-        <!-- Video Categories -->
         <section class="section-title">
             <header class="top-header">
                 <nav class="nav-links">
@@ -373,110 +373,23 @@
             </header>
         </section>
 
-        <!-- Product Filtering Section (Renamed from Contact Form Section to follow the structure) -->
-        <section class="products-section">
-            <h2>Video Products</h2>
-            <div class="filter-controls">
-                <div class="filter-group">
-                    <label for="categoryFilter">Category:</label>
-                    <select id="categoryFilter">
-                        <option value="all">All Categories</option>
-                        <option value="music">Music</option>
-                        <option value="education">Education</option>
-                        <option value="entertainment">Entertainment</option>
-                        <option value="gaming">Gaming</option>
-                    </select>
-                </div>
-                <div class="filter-group">
-                    <label for="priceFilter">Price Range:</label>
-                    <select id="priceFilter">
-                        <option value="all">All Prices</option>
-                        <option value="free">Free</option>
-                        <option value="low">$1 - $10</option>
-                        <option value="medium">$11 - $50</option>
-                        <option value="high">$51+</option>
-                    </select>
-                </div>
-                <button id="clearFilters" class="btn btn-secondary">Clear Filters</button>
-            </div>
-            <div id="productsGrid" class="products-grid">
-                <!-- Products will be dynamically generated here -->
-            </div>
-        </section>
-
-        <!-- Featured Videos -->
-        <section>
-            <div class="grid mb-4">
-                <div class="tile">
-                    <div class="thumb-lg"></div>
-                    <div class="tmeta">
-                        <p class="ttitle">New hit 2025</p>
-                        <p class="tsub">Music Channel • 2M views • 1 day ago</p>
-                    </div>
-                </div>
-                <div class="tile">
-                    <div class="thumb-lg"></div>
-                    <div class="tmeta">
-                        <p class="ttitle">Football's best moments</p>
-                        <p class="tsub">SportsHub • 950K views • 5 hours ago</p>
-                    </div>
-                </div>
-                <div class="tile">
-                    <div class="thumb-lg"></div>
-                    <div class="tmeta">
-                        <p class="ttitle">Review of new technologies</p>
-                        <p class="tsub">Tech Today • 1.3M views • 2 days ago</p>
-                    </div>
-                </div>
-                <div class="tile">
-                    <div class="thumb-lg"></div>
-                    <div class="tmeta">
-                        <p class="ttitle">Top TV series of the season</p>
-                        <p class="tsub">Cinema Life • 500K views • 10 hours ago</p>
-                    </div>
-                </div>
+        <section id="video-display-area">
+            <h2 id="grid-title" class="mb-3">Featured Videos</h2>
+            <div id="video-grid-main" class="grid mb-4"></div>
+            <div id="loading-indicator" style="display: none; text-align: center; padding: 20px;">
+                <p>Loading...</p>
             </div>
 
-            <!-- Shorts Section -->
             <div class="section-title logo mb-3">
                 <img src="images/shortsicon.png" alt="Shorts">
                 Shorts
             </div>
-            <div class="grid-2 mb-4">
-                <div class="tile">
-                    <div class="thumb thumb-shorts"></div>
-                    <div class="tmeta">
-                        <p class="short-title">Funny Cat 😸</p>
-                        <p class="tsub">Cinema Life • 500K views • 10 hours ago</p>
-                    </div>
-                </div>
-                <div class="tile">
-                    <div class="thumb thumb-shorts"></div>
-                    <div class="tmeta">
-                        <p class="short-title">Amazing Dance 💃</p>
-                        <p class="tsub">Dance Channel • 320K views • 8 hours ago</p>
-                    </div>
-                </div>
-                <div class="tile">
-                    <div class="thumb thumb-shorts"></div>
-                    <div class="tmeta">
-                        <p class="short-title">Quick Recipe 🍕</p>
-                        <p class="tsub">Food Network • 150K views • 5 hours ago</p>
-                    </div>
-                </div>
-                <div class="tile">
-                    <div class="thumb thumb-shorts"></div>
-                    <div class="tmeta">
-                        <p class="short-title">Tech Tips 💻</p>
-                        <p class="tsub">Tech Channel • 280K views • 12 hours ago</p>
-                    </div>
-                </div>
+            <div id="shorts-grid" class="grid-2 mb-4">
             </div>
         </section>
     </main>
 </div>
 
-<!-- Subscription Popup (retained as per instruction to only remove button, not popup) -->
 <div id="subscriptionPopup" class="popup-overlay">
     <div class="popup-content">
         <button class="popup-close" data-popup-close>&times;</button>
@@ -519,7 +432,6 @@
     </div>
 </div>
 
-<!-- Contact Popup (retained as per instruction to only remove button, not popup) -->
 <div id="contactPopup" class="popup-overlay">
     <div class="popup-content">
         <button class="popup-close" data-popup-close>&times;</button>
@@ -548,29 +460,11 @@
 
 <footer class="footer mt-auto">
     <div class="footer-links mb-2">
-        <a href="#">About us</a>
-        <a href="#">Rules</a>
-        <a href="#">Privacy Policy</a>
-        <a href="#">Contacts</a>
+        <a href="#" id="aboutBtn">About us</a>
+        <a href="#" id="rulesBtn">Rules</a>
+        <a href="#" id="privacyBtn">Privacy Policy</a>
+        <a href="#" data-popup-open="contactPopup">Contact Us</a>
     </div>
-    <!-- Our Stats in Footer -->
-    <section class="jq-counter-section">
-        <h2>Our Stats</h2>
-        <div class="counter-grid">
-            <div class="counter-box">
-                <div class="counter" data-target="1000">0</div>
-                <div class="counter-label">Users</div>
-            </div>
-            <div class="counter-box">
-                <div class="counter" data-target="250">0</div>
-                <div class="counter-label">Videos</div>
-            </div>
-            <div class="counter-box">
-                <div class="counter" data-target="75">0</div>
-                <div class="counter-label">Projects</div>
-            </div>
-        </div>
-    </section>
     <div class="footer-copy">
         © 2025 SenQubyr. Beknur Erdembek, Alisher Bolatkhanov
     </div>
@@ -579,55 +473,12 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
 <script src="js/script.js"></script>
 <script>
-    // Placeholder for JavaScript to handle the time display logic (since script.js is not to be changed)
-    document.addEventListener('DOMContentLoaded', function() {
-        const showTimeBtn = document.getElementById('showTimeBtn');
-        const currentTimeDisplay = document.getElementById('currentTimeDisplay');
-        let intervalId;
-
-        function updateTime() {
-            const now = new Date();
-            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit', second: '2-digit' };
-            currentTimeDisplay.innerHTML = `<small>Live Update</small>${now.toLocaleDateString('en-US', options)}`;
-        }
-
-        if (showTimeBtn && currentTimeDisplay) {
-            showTimeBtn.addEventListener('click', function(event) {
-                event.stopPropagation(); // Prevent document click from immediately closing it
-                if (currentTimeDisplay.classList.contains('active')) {
-                    currentTimeDisplay.classList.remove('active');
-                    clearInterval(intervalId);
-                } else {
-                    currentTimeDisplay.classList.add('active');
-                    updateTime(); // Update immediately
-                    intervalId = setInterval(updateTime, 1000); // Update every second
-                }
-            });
-
-            // Close when clicking outside
-            document.addEventListener('click', function(event) {
-                if (!currentTimeDisplay.contains(event.target) && !showTimeBtn.contains(event.target)) {
-                    currentTimeDisplay.classList.remove('active');
-                    clearInterval(intervalId);
-                }
-            });
-        }
-
-        // --- Background Changer Logic (if not already in script.js and needs to be here) ---
-        const bgChangeBtn = document.getElementById('bgChangeBtn');
-        const colors = ['#f0f2f5', '#e0f7fa', '#ffe0b2', '#c8e6c9', '#f3e5f5']; // Example colors
-        let currentColorIndex = 0;
-
-        if (bgChangeBtn) {
-            bgChangeBtn.addEventListener('click', function() {
-                currentColorIndex = (currentColorIndex + 1) % colors.length;
-                document.body.style.backgroundColor = colors[currentColorIndex];
-            });
-        }
-    });
-
-    // jQuery Popup logic (assuming it's handled by script.js, but adding a fallback if it was removed)
     $(document).ready(function() {
+        let nextPageToken = null;
+        let currentQuery = 'new kazakh music';
+        let isLoading = false;
+        const API_KEY = 'AIzaSyD5fRLyb7XGYinVF6a-xdUgcCofxw5s5iQ';
+
         $('[data-popup-open]').on('click', function() {
             var popupId = $(this).data('popup-open');
             $('#' + popupId).fadeIn();
@@ -642,6 +493,178 @@
                 $(this).fadeOut();
             }
         });
+
+        $('#aboutBtn').on('click', function(e) {
+            e.preventDefault();
+            alert('SenQubyr is a project by Beknur Erdembek and Alisher Bolatkhanov created in 2025.');
+        });
+        $('#rulesBtn').on('click', function(e) {
+            e.preventDefault();
+            alert('Rules: Be respectful to other users. No spamming or posting inappropriate content.');
+        });
+        $('#privacyBtn').on('click', function(e) {
+            e.preventDefault();
+            alert('Privacy Policy: We value your privacy. Your data is not shared with third parties.');
+        });
+
+        function fetchMainVideos(query, isAppending = false, pageToken = null) {
+            if (isLoading) return;
+            isLoading = true;
+            $('#loading-indicator').show();
+
+            let apiUrl = `https://www.googleapis.com/youtube/v3/search?part=snippet&q=${encodeURIComponent(query)}&maxResults=8&type=video&key=${API_KEY}`;
+            if (pageToken) {
+                apiUrl += `&pageToken=${pageToken}`;
+            }
+
+            $.ajax({
+                url: apiUrl,
+                method: 'GET',
+                success: function(response) {
+                    nextPageToken = response.nextPageToken || null;
+                    let videoHtml = '';
+                    if (response.items.length === 0 && !isAppending) {
+                        $('#video-grid-main').html('<p>No videos found.</p>');
+                        return;
+                    }
+                    response.items.forEach(item => {
+                        const videoId = item.id.videoId;
+                        const title = item.snippet.title;
+                        const channelTitle = item.snippet.channelTitle;
+                        const thumbnailUrl = item.snippet.thumbnails.high.url;
+                        const publishedAt = new Date(item.snippet.publishedAt).toLocaleDateString();
+
+                        videoHtml += `
+                            <div class="tile">
+                                <a href="https://www.youtube.com/watch?v=${videoId}" target="_blank" style="text-decoration: none;">
+                                    <div class="thumb thumb-lg">
+                                        <img src="${thumbnailUrl}" alt="${title}">
+                                    </div>
+                                    <div class="tmeta">
+                                        <p class="ttitle">${title}</p>
+                                        <p class="tsub">${channelTitle} • ${publishedAt}</p>
+                                    </div>
+                                </a>
+                            </div>
+                        `;
+                    });
+
+                    if (isAppending) {
+                        $('#video-grid-main').append(videoHtml);
+                    } else {
+                        $('#video-grid-main').html(videoHtml);
+                    }
+                },
+                error: function() {
+                    $('#video-grid-main').html('<p>Error loading videos. Please check your API key or network connection.</p>');
+                },
+                complete: function() {
+                    isLoading = false;
+                    $('#loading-indicator').hide();
+                }
+            });
+        }
+
+        function fetchShorts() {
+            const shortsQuery = 'latest #shorts';
+            const apiUrl = `https://www.googleapis.com/youtube/v3/search?part=snippet&q=${encodeURIComponent(shortsQuery)}&maxResults=4&type=video&key=${API_KEY}`;
+            $.ajax({
+                url: apiUrl,
+                method: 'GET',
+                success: function(response) {
+                    let videoHtml = '';
+                    response.items.forEach(item => {
+                        const videoId = item.id.videoId;
+                        const title = item.snippet.title;
+                        const channelTitle = item.snippet.channelTitle;
+                        const thumbnailUrl = item.snippet.thumbnails.high.url;
+                        videoHtml += `
+                            <div class="tile">
+                                <a href="https://www.youtube.com/watch?v=${videoId}" target="_blank" style="text-decoration: none;">
+                                    <div class="thumb thumb-shorts">
+                                        <img src="${thumbnailUrl}" alt="${title}">
+                                    </div>
+                                    <div class="tmeta">
+                                        <p class="short-title">${title}</p>
+                                        <p class="tsub">${channelTitle}</p>
+                                    </div>
+                                </a>
+                            </div>
+                        `;
+                    });
+                    $('#shorts-grid').html(videoHtml);
+                },
+                error: function() {
+                    $('#shorts-grid').html('<p>Error loading shorts.</p>');
+                }
+            });
+        }
+
+        function handleSearch() {
+            const query = $('#search').val().trim();
+            $('#search-suggestions').hide();
+            if (query !== '') {
+                currentQuery = query;
+                nextPageToken = null;
+                $('#grid-title').text(`Search Results for "${query}"`);
+                fetchMainVideos(currentQuery, false, null);
+            }
+        }
+
+        $('#searchBtn').on('click', function(e) {
+            e.preventDefault();
+            handleSearch();
+        });
+
+        $('#search').on('keypress', function(e) {
+            if (e.which === 13) {
+                e.preventDefault();
+                handleSearch();
+            }
+        });
+
+        $('#search').on('keyup', function() {
+            const query = $(this).val();
+            if (query.length < 2) {
+                $('#search-suggestions').hide();
+                return;
+            }
+
+            $.ajax({
+                url: 'https://suggestqueries.google.com/complete/search',
+                dataType: 'jsonp',
+                data: { client: 'youtube', ds: 'yt', q: query },
+                success: function(data) {
+                    const suggestions = data[1];
+                    let suggestionsHtml = '';
+                    suggestions.forEach(suggestion => {
+                        suggestionsHtml += `<div class="suggestion-item">${suggestion[0]}</div>`;
+                    });
+                    $('#search-suggestions').html(suggestionsHtml).show();
+                }
+            });
+        });
+
+        $(document).on('click', '.suggestion-item', function() {
+            $('#search').val($(this).text());
+            $('#search-suggestions').hide();
+            handleSearch();
+        });
+
+        $(document).on('click', function(e) {
+            if (!$(e.target).closest('.search').length) {
+                $('#search-suggestions').hide();
+            }
+        });
+
+        $(window).on('scroll', function() {
+            if (!isLoading && nextPageToken && ($(window).scrollTop() + $(window).height() >= $(document).height() - 250)) {
+                fetchMainVideos(currentQuery, true, nextPageToken);
+            }
+        });
+
+        fetchMainVideos(currentQuery);
+        fetchShorts();
     });
 </script>
 </body>

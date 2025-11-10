@@ -7,8 +7,8 @@
     <link href="../css/style2.css" rel="stylesheet">
     <link href="../images/youtubeKZicon.png" rel="icon" type="image/x-icon" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <style>
-        /* Existing styles for profile.html */
         .profile-header {
             background: var(--card);
             border-radius: 12px;
@@ -69,8 +69,7 @@
             display: block;
             margin-bottom: 5px;
             font-weight: 600;
-            /* Make form text more contrasting */
-            color: var(--text-color, #333); /* Use CSS variable if defined, fallback to dark grey */
+            color: var(--text-color, #333);
         }
 
         .form-group input, .form-group select, .form-group textarea {
@@ -80,7 +79,6 @@
             border-radius: 6px;
             font-size: 14px;
             transition: border-color 0.3s;
-            /* Ensure input text is visible */
             color: var(--text-color, #333);
             background-color: var(--input-bg, white);
         }
@@ -101,128 +99,56 @@
         }
 
         .subscription-form-container {
-            background: var(--card); /* Use card variable for consistency */
+            background: var(--card);
             border-radius: 12px;
             padding: 30px;
             box-shadow: 0 2px 10px rgba(0,0,0,0.1);
         }
 
-        /* Styles from index.html for consistency */
-        .bg-changer-btn {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            border: none;
-            padding: 15px 40px;
-            border-radius: 50px;
-            font-size: 16px;
-            font-weight: 600;
-            cursor: pointer;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-            transition: all 0.3s;
+        .popup-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.6);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1050;
         }
 
-        .bg-changer-btn:hover {
-            transform: translateY(-3px) scale(1.05);
-            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
-        }
-
-        /* Adjust button padding for icon-btn */
-        .header .icon-btn.bg-changer-btn {
-            padding: 8px 12px;
-            margin-left: 10px;
-            border-radius: 50%; /* Make it circular like other icon-btns */
-        }
-
-        .time-display-container {
+        .popup-content {
+            background: var(--card);
+            padding: 30px;
+            border-radius: 12px;
+            width: 90%;
+            max-width: 500px;
             position: relative;
-            display: inline-block;
-            margin-left: 10px; /* Adjust as needed */
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
         }
 
-        .time-display-btn {
+        .popup-close {
+            position: absolute;
+            top: 15px;
+            right: 15px;
             background: none;
             border: none;
-            color: var(--text-color); /* Or a specific color */
+            font-size: 1.5rem;
             cursor: pointer;
-            display: flex;
-            align-items: center;
-            padding: 8px 12px;
-            border-radius: 8px;
-            transition: background-color 0.3s;
-        }
-
-        .time-display-btn:hover {
-            background-color: var(--hover-bg);
-        }
-
-        .time-display-btn img {
-            width: 20px;
-            height: 20px;
-            margin-right: 5px;
-        }
-
-        .current-time-popup {
-            display: none;
-            position: absolute;
-            top: 100%; /* Position below the button */
-            right: 0; /* Align to the right of the button */
-            background: var(--card);
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
-            padding: 10px 15px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-            white-space: nowrap;
-            z-index: 100;
-            margin-top: 5px; /* Space between button and popup */
             color: var(--text-color);
         }
 
-        .jq-counter-section {
-            background: var(--card);
-            border-radius: 12px;
-            padding: 30px;
-            margin: 20px auto; /* Center it in the footer if possible */
-            text-align: center;
+        .dark-theme .subscription-form-container h3,
+        .dark-theme .subscription-form-container p,
+        .dark-theme .subscription-form-container .form-group label,
+        .dark-theme .subscription-form-container .form-check-label {
+            color: #e9ecef !important;
         }
 
-        .jq-counter-section h2 {
-            margin-bottom: 20px;
-            color: var(--muted);
-        }
-
-        .counter-grid {
-            display: flex;
-            justify-content: space-around;
-            gap: 20px;
-            flex-wrap: wrap;
-        }
-
-        .counter-box {
-            flex: 1;
-            min-width: 100px;
-            max-width: 150px;
-            padding: 15px;
-            background: var(--primary-bg);
-            border-radius: 10px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-            color: var(--text-color);
-        }
-
-        .counter {
-            font-size: 2em;
-            font-weight: bold;
-            color: #00c5ff; /* Or another accent color */
-            margin-bottom: 5px;
-        }
-
-        .counter-label {
-            font-size: 0.9em;
-            color: var(--muted);
-        }
-
-        /* Adjust footer padding to accommodate new section */
-        .footer {
-            padding-top: 20px; /* Add some space above the counter section */
+        .dark-theme .form-group input::placeholder,
+        .dark-theme .form-group textarea::placeholder {
+            color: #6c757d;
         }
     </style>
 </head>
@@ -239,27 +165,9 @@
         </a>
     </div>
     <div class="flex">
-        <a href="#" class="icon-btn" title="Create">
-            <img src="../images/plus-black-symbol_icon-icons.com_73453.png" alt="add">
-        </a>
-        <a href="#" class="icon-btn" title="Notifications">
-            <img src="../images/notification_alarm_bell_icon_146863.png" alt="notification">
-        </a>
         <a href="profile.html" class="icon-btn" title="Profile">
             <img src="../images/profile_picture_user_icon_153847.png" alt="profile">
         </a>
-        <!-- Background Changer Button -->
-        <button id="bgChangeBtn" class="icon-btn bg-changer-btn" title="Change Background Color" style="padding: 8px 12px; margin-left: 10px;">
-            🎨
-        </button>
-        <!-- Time Display Button -->
-        <div class="time-display-container">
-            <button id="showTimeBtn" class="time-display-btn" title="Toggle Current Time">
-                <img src="../images/time_icon.png" alt="Time">
-                Time
-            </button>
-            <div id="currentTimeDisplay" class="current-time-popup" aria-live="polite"></div>
-        </div>
         <div class="form-check form-switch ms-2" id="themeSwitchContainer">
             <input class="form-check-input" type="checkbox" id="themeSwitch">
             <label class="form-check-label" for="themeSwitch">Night</label>
@@ -272,23 +180,15 @@
         <div class="section">
             <a class="nav-item" href="../index.html"><span><img src="../images/house.png" alt="home"></span>Home</a>
             <a class="nav-item" href="trending.html"><span><img src="../images/fire.png" alt="trending"></span>Trending</a>
-            <a class="nav-item" href="shorts.html"><span><img src="../images/shortsicon.png" alt="shorts"></span>Shorts</a>
-            <a class="nav-item" href="subscriptions.html"><span><img src="../images/television.png" alt="subscription"></span>Subscriptions</a>
         </div>
         <div class="section">
             <div style="color:var(--muted);font-size:13px;padding:6px 8px">Library</div>
             <a class="nav-item" href="history.html">History</a>
             <a class="nav-item" href="liked.html">Liked</a>
         </div>
-        <!-- Contact Us in Sidebar -->
-        <div class="section">
-            <div style="color:var(--muted);font-size:13px;padding:6px 8px">Get in Touch</div>
-            <a class="nav-item" href="#" data-popup-open="contactPopup">Contact Us</a>
-        </div>
     </aside>
 
     <main>
-        <!-- Profile Header -->
         <section class="profile-header mb-4 mt-lg-3">
             <div class="profile-card">
                 <div class="profile-avatar">
@@ -311,8 +211,6 @@
                             <span class="stat-label text-muted"> Views</span>
                         </div>
                     </div>
-
-                    <!-- Star Rating UI -->
                     <div class="rating-container mt-2">
                         <div class="rating" id="profile-rating" aria-label="Rate profile">
                             <span class="star" data-value="1">★</span>
@@ -327,7 +225,6 @@
             </div>
         </section>
 
-        <!-- Profile Tabs -->
         <section class="profile-tabs mb-3">
             <div class="tab-navigation d-flex gap-2 flex-wrap">
                 <button class="tab-btn active btn btn-outline-primary" data-tab="subscription">📧 Subscribe Form</button>
@@ -336,34 +233,28 @@
             </div>
         </section>
 
-        <!-- Subscription Tab -->
         <div id="subscription-tab" class="tab-content active">
             <section class="subscription-section mb-4">
                 <div class="subscription-form-container">
                     <h3 class="h5 mb-3" style="color: var(--muted);">📧 Subscribe to SenQubyr Channel</h3>
                     <p class="text-muted mb-4">Fill out the form below to subscribe. All fields marked with * are required.</p>
-
                     <form id="profileSubscriptionForm">
                         <div class="form-group">
                             <label for="sub-name">Full Name *</label>
                             <input type="text" id="sub-name" name="name" placeholder="Enter your full name" required>
                         </div>
-
                         <div class="form-group">
                             <label for="sub-email">Email Address *</label>
                             <input type="email" id="sub-email" name="email" placeholder="example@email.com" required>
                         </div>
-
                         <div class="form-group">
                             <label for="sub-password">Password * (minimum 8 characters)</label>
                             <input type="password" id="sub-password" name="password" placeholder="Enter secure password" required>
                         </div>
-
                         <div class="form-group">
                             <label for="sub-confirm">Confirm Password *</label>
                             <input type="password" id="sub-confirm" name="confirmPassword" placeholder="Confirm your password" required>
                         </div>
-
                         <div class="form-group">
                             <label for="sub-channel">Preferred Content Type</label>
                             <select id="sub-channel" name="channel" class="form-select">
@@ -376,7 +267,6 @@
                                 <option value="entertainment">🎭 Entertainment</option>
                             </select>
                         </div>
-
                         <div class="form-group">
                             <label class="form-label">Notification Preferences</label>
                             <div class="d-flex flex-column gap-2">
@@ -386,46 +276,38 @@
                                 </div>
                             </div>
                         </div>
-
                         <div class="form-group">
                             <label for="comments">Additional Comments</label>
                             <textarea id="comments" name="comments" rows="3" placeholder="Tell us what content you'd like to see..." class="form-control"></textarea>
                         </div>
-
                         <button type="submit" class="btn btn-primary btn-lg w-100">Subscribe Now</button>
                     </form>
                 </div>
             </section>
         </div>
 
-        <!-- Contact Tab -->
         <div id="contact-tab" class="tab-content">
             <section class="contact-section mb-4">
                 <div class="subscription-form-container">
                     <h3 class="h5 mb-3" style="color: var(--muted);">💬 Contact Us</h3>
                     <p class="text-muted mb-4">Have a question or feedback? Send us a message and we'll get back to you soon!</p>
-
                     <form id="profileContactForm">
                         <div class="form-group">
                             <label for="contact-name">Full Name *</label>
                             <input type="text" id="contact-name" name="name" placeholder="Enter your name" required>
                         </div>
-
                         <div class="form-group">
                             <label for="contact-email">Email Address *</label>
                             <input type="email" id="contact-email" name="email" placeholder="your@email.com" required>
                         </div>
-
                         <div class="form-group">
                             <label for="contact-subject">Subject</label>
                             <input type="text" id="contact-subject" name="subject" placeholder="What is this about?" class="form-control">
                         </div>
-
                         <div class="form-group">
                             <label for="contact-message">Message *</label>
                             <textarea id="contact-message" name="message" rows="5" placeholder="Your message here..." required class="form-control"></textarea>
                         </div>
-
                         <div class="form-group">
                             <label class="form-label">Message Type</label>
                             <div class="d-flex flex-column gap-2">
@@ -443,7 +325,6 @@
                                 </div>
                             </div>
                         </div>
-
                         <div class="form-group">
                             <div class="form-check">
                                 <input class="form-check-input" type="checkbox" id="contact-agree" name="agree" required>
@@ -452,14 +333,12 @@
                                 </label>
                             </div>
                         </div>
-
                         <button type="submit" class="btn btn-primary btn-lg w-100">Send Message</button>
                     </form>
                 </div>
             </section>
         </div>
 
-        <!-- Videos Tab -->
         <div id="videos-tab" class="tab-content">
             <section class="my-videos-section">
                 <h3 style="margin:0 0 16px; color: var(--muted);">🎥 My Videos</h3>
@@ -511,8 +390,34 @@
                 </div>
             </section>
         </div>
-
     </main>
+</div>
+
+<div id="contactPopup" class="popup-overlay">
+    <div class="popup-content">
+        <button class="popup-close" data-popup-close>&times;</button>
+        <h3 class="h5 mb-3" style="color: var(--muted);">💬 Contact Us</h3>
+        <p class="text-muted mb-4">Have a question or feedback? Send us a message and we'll get back to you soon!</p>
+        <form id="popupContactForm">
+            <div class="form-group">
+                <label for="popup-contact-name">Full Name *</label>
+                <input type="text" id="popup-contact-name" name="name" placeholder="Enter your name" required>
+            </div>
+            <div class="form-group">
+                <label for="popup-contact-email">Email Address *</label>
+                <input type="email" id="popup-contact-email" name="email" placeholder="your@email.com" required>
+            </div>
+            <div class="form-group">
+                <label for="popup-contact-subject">Subject</label>
+                <input type="text" id="popup-contact-subject" name="subject" placeholder="What is this about?" class="form-control">
+            </div>
+            <div class="form-group">
+                <label for="popup-contact-message">Message *</label>
+                <textarea id="popup-contact-message" name="message" rows="5" placeholder="Your message here..." required class="form-control"></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary btn-lg w-100">Send Message</button>
+        </form>
+    </div>
 </div>
 
 <footer class="footer mt-auto">
@@ -520,26 +425,8 @@
         <a href="#">About us</a>
         <a href="#">Rules</a>
         <a href="#">Privacy Policy</a>
-        <a href="#">Contacts</a>
+        <a href="#" data-popup-open="contactPopup">Contact Us</a>
     </div>
-    <!-- Our Stats in Footer -->
-    <section class="jq-counter-section">
-        <h2>Our Stats</h2>
-        <div class="counter-grid">
-            <div class="counter-box">
-                <div class="counter" data-target="1000">0</div>
-                <div class="counter-label">Users</div>
-            </div>
-            <div class="counter-box">
-                <div class="counter" data-target="250">0</div>
-                <div class="counter-label">Videos</div>
-            </div>
-            <div class="counter-box">
-                <div class="counter" data-target="75">0</div>
-                <div class="counter-label">Projects</div>
-            </div>
-        </div>
-    </section>
     <div class="footer-copy">
         © 2025 SenQubyr. Beknur Erdembek, Alisher Bolatkhanov
     </div>
@@ -548,56 +435,59 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
 <script src="../js/script.js"></script>
 <script>
-    // Tab switching functionality
+    $(document).ready(function(){
+        $("#search").on("keyup", function() {
+            var value = $(this).val().toLowerCase();
+            $("#videos-tab .tile").filter(function() {
+                $(this).toggle($(this).find('.ttitle').text().toLowerCase().indexOf(value) > -1)
+            });
+        });
+        $('.search .icon-btn').on('click', function(e){
+            e.preventDefault();
+            $("#search").trigger('keyup');
+        });
+    });
+
     document.querySelectorAll('.tab-btn').forEach(btn => {
         btn.addEventListener('click', function() {
             const tabId = this.getAttribute('data-tab');
-
-            // Remove active class from all tabs and content
             document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
             document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
-
-            // Add active class to clicked tab and corresponding content
             this.classList.add('active');
             document.getElementById(tabId + '-tab').classList.add('active');
         });
     });
 
-    // Star Rating functionality (if not already in script.js)
     const stars = document.querySelectorAll('#profile-rating .star');
     const ratingValueDisplay = document.getElementById('rating-value').querySelector('span');
-
     stars.forEach(star => {
         star.addEventListener('click', function() {
             const value = parseInt(this.getAttribute('data-value'));
             ratingValueDisplay.textContent = value;
-
             stars.forEach((s, index) => {
                 if (index < value) {
-                    s.style.color = 'gold'; // Highlight selected stars
+                    s.style.color = 'gold';
                 } else {
-                    s.style.color = '#ccc'; // Reset unselected stars
+                    s.style.color = '#ccc';
                 }
             });
             alert(`You rated this profile ${value} stars!`);
         });
-
         star.addEventListener('mouseover', function() {
             const value = parseInt(this.getAttribute('data-value'));
             stars.forEach((s, index) => {
                 if (index < value) {
-                    s.style.color = 'orange'; // Hover effect
+                    s.style.color = 'orange';
                 } else {
                     s.style.color = '#ccc';
                 }
             });
         });
-
         star.addEventListener('mouseout', function() {
             const currentValue = parseInt(ratingValueDisplay.textContent);
             stars.forEach((s, index) => {
                 if (index < currentValue) {
-                    s.style.color = 'gold'; // Revert to selected state
+                    s.style.color = 'gold';
                 } else {
                     s.style.color = '#ccc';
                 }
@@ -605,7 +495,6 @@
         });
     });
 
-    // Simple Popup functionality (if not already in script.js)
     document.querySelectorAll('[data-popup-open]').forEach(button => {
         button.addEventListener('click', function(event) {
             event.preventDefault();
@@ -613,8 +502,6 @@
             const popup = document.getElementById(popupId);
             if (popup) {
                 popup.style.display = 'flex';
-                // Optional: Add a class for animation if needed
-                // popup.classList.add('active');
             }
         });
     });
@@ -624,86 +511,25 @@
             const popup = this.closest('.popup-overlay');
             if (popup) {
                 popup.style.display = 'none';
-                // Optional: Remove animation class
-                // popup.classList.remove('active');
             }
         });
     });
 
-    // Theme switch functionality (if not already in script.js)
+    document.querySelectorAll('.footer-links a').forEach(link => {
+        if (!link.hasAttribute('data-popup-open')) {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                alert('Notification: You clicked on ' + this.textContent);
+            });
+        }
+    });
+
     const themeSwitch = document.getElementById('themeSwitch');
     if (themeSwitch) {
         themeSwitch.addEventListener('change', function() {
             document.body.classList.toggle('dark-theme', this.checked);
         });
     }
-
-    // Live date and time functionality (if not already in script.js)
-    function updateDateTime(elementId) {
-        const dateTimeElement = document.getElementById(elementId);
-        if (dateTimeElement) {
-            const now = new Date();
-            const options = {
-                weekday: 'long', year: 'numeric', month: 'long', day: 'numeric',
-                hour: '2-digit', minute: '2-digit', second: '2-digit'
-            };
-            dateTimeElement.textContent = now.toLocaleDateString('en-US', options);
-        }
-    }
-
-    const showTimeBtn = document.getElementById('showTimeBtn');
-    const currentTimeDisplay = document.getElementById('currentTimeDisplay');
-
-    if (showTimeBtn && currentTimeDisplay) {
-        let timeDisplayInterval;
-        showTimeBtn.addEventListener('click', () => {
-            if (currentTimeDisplay.style.display === 'block') {
-                currentTimeDisplay.style.display = 'none';
-                clearInterval(timeDisplayInterval);
-            } else {
-                currentTimeDisplay.style.display = 'block';
-                updateDateTime('currentTimeDisplay'); // Initial update
-                timeDisplayInterval = setInterval(() => updateDateTime('currentTimeDisplay'), 1000); // Update every second
-            }
-        });
-    }
-
-    // Animated Number Counter (if not already in script.js)
-    const counters = document.querySelectorAll('.counter');
-    const speed = 200; // The lower the speed, the faster the count
-
-    const animateCounter = (counter) => {
-        const target = +counter.getAttribute('data-target');
-        let current = 0;
-        const increment = target / speed;
-
-        const updateCount = () => {
-            if (current < target) {
-                current += increment;
-                counter.textContent = Math.ceil(current);
-                requestAnimationFrame(updateCount);
-            } else {
-                counter.textContent = target;
-            }
-        };
-        updateCount();
-    };
-
-    // Observe counters when they enter the viewport
-    const observer = new IntersectionObserver((entries, observer) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                animateCounter(entry.target);
-                observer.unobserve(entry.target); // Stop observing once animated
-            }
-        });
-    }, {
-        threshold: 0.5 // Trigger when 50% of the item is visible
-    });
-
-    counters.forEach(counter => {
-        observer.observe(counter);
-    });
 </script>
 </body>
 </html>
