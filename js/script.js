@@ -1222,3 +1222,176 @@ $(document).ready(function() {
     }
 
 });
+
+$(document).ready(function() {
+    // --- Общая логика для всех страниц ---
+
+    // Переключение темы
+    const themeSwitch = document.getElementById('themeSwitch');
+    if (themeSwitch) {
+        // Применяем тему при загрузке
+        if (localStorage.getItem('theme') === 'dark') {
+            document.body.classList.add('dark-theme');
+            themeSwitch.checked = true;
+        }
+        // Слушатель на переключение
+        themeSwitch.addEventListener('change', function() {
+            if (this.checked) {
+                document.body.classList.add('dark-theme');
+                localStorage.setItem('theme', 'dark');
+            } else {
+                document.body.classList.remove('dark-theme');
+                localStorage.setItem('theme', 'light');
+            }
+        });
+    }
+
+    // Логика для попапов (например, "Contact Us")
+    document.querySelectorAll('[data-popup-open]').forEach(button => {
+        button.addEventListener('click', function(event) {
+            event.preventDefault();
+            const popupId = this.getAttribute('data-popup-open');
+            const popup = document.getElementById(popupId);
+            if(popup) popup.style.display = 'flex';
+        });
+    });
+
+    document.querySelectorAll('[data-popup-close]').forEach(button => {
+        button.addEventListener('click', function() {
+            this.closest('.popup-overlay').style.display = 'none';
+        });
+    });
+
+    // --- Логика Авторизации ---
+
+    const usersDBKey = 'senqubyr_users';
+    const currentUserKey = 'senqubyr_currentUser';
+
+    // Функция получения текущего пользователя
+    function getCurrentUser() {
+        const userJson = localStorage.getItem(currentUserKey);
+        return userJson ? JSON.parse(userJson) : null;
+    }
+
+    // Функция выхода из системы
+    function logout() {
+        localStorage.removeItem(currentUserKey);
+        window.location.href = 'login.html'; // Перенаправляем на страницу входа
+    }
+
+    // Проверка статуса логина и обновление UI
+    function checkLoginStatus() {
+        const user = getCurrentUser();
+        const profileLink = document.querySelector('a[href="profile.html"]');
+        const headerFlexContainer = document.querySelector('header .flex');
+
+        if (user) {
+            // Пользователь вошел
+            profileLink.style.display = 'block';
+
+            // Проверяем, нет ли уже кнопки выхода, чтобы не дублировать
+            if (!document.getElementById('logoutBtn')) {
+                const logoutButton = document.createElement('a');
+                logoutButton.href = '#';
+                logoutButton.id = 'logoutBtn';
+                logoutButton.textContent = 'Logout';
+                logoutButton.classList.add('btn', 'btn-outline-primary', 'btn-sm', 'ms-3');
+                logoutButton.onclick = function(e) {
+                    e.preventDefault();
+                    logout();
+                };
+                headerFlexContainer.insertBefore(logoutButton, document.getElementById('themeSwitchContainer'));
+            }
+        } else {
+            // Пользователь не вошел
+            profileLink.style.display = 'block'; // Оставляем иконку, она ведет на профиль, который предложит войти
+        }
+    }
+
+    // Запускаем проверку на всех страницах
+    checkLoginStatus();
+
+
+    // --- Логика для конкретных страниц ---
+
+    // Страница РЕГИСТРАЦИИ
+    if (document.getElementById('registerForm')) {
+        $('#registerForm').on('submit', function(e) {
+            e.preventDefault();
+            const username = $('#register-username').val();
+            const email = $('#register-email').val();
+            const password = $('#register-password').val();
+            const confirmPassword = $('#register-confirm-password').val();
+
+            if (password !== confirmPassword) {
+                alert('Passwords do not match.');
+                return;
+            }
+
+            let users = JSON.parse(localStorage.getItem(usersDBKey)) || [];
+
+            if (users.find(user => user.email === email)) {
+                alert('User with this email already exists.');
+                return;
+            }
+
+            const newUser = {
+                username: username,
+                email: email,
+                password: password, // В реальном приложении пароли нужно хешировать!
+                fullName: username, // По умолчанию
+                bio: "Welcome to my SenQubyr channel!"
+            };
+
+            users.push(newUser);
+            localStorage.setItem(usersDBKey, JSON.stringify(users));
+            localStorage.setItem(currentUserKey, JSON.stringify(newUser)); // Сразу логиним
+
+            window.location.href = 'profile.html';
+        });
+    }
+
+    // Страница ЛОГИНА
+    if (document.getElementById('loginForm')) {
+        $('#loginForm').on('submit', function(e) {
+            e.preventDefault();
+            const email = $('#login-email').val();
+            const password = $('#login-password').val();
+
+            let users = JSON.parse(localStorage.getItem(usersDBKey)) || [];
+            const foundUser = users.find(user => user.email === email && user.password === password);
+
+            if (foundUser) {
+                localStorage.setItem(currentUserKey, JSON.stringify(foundUser));
+                window.location.href = 'profile.html';
+            } else {
+                alert('Invalid email or password.');
+            }
+        });
+    }
+
+    // Страница ПРОФИЛЯ
+    if (document.getElementById('profile-content')) {
+        const user = getCurrentUser();
+        if (user) {
+            // Пользователь вошел, показываем данные
+            $('#profile-content').show();
+            $('#auth-prompt').hide();
+
+            // Заполняем данными
+            $('.profile-name').text(user.fullName);
+            $('.profile-username').text(`@${user.username}`);
+            $('.profile-bio').text(user.bio);
+
+            // Заполняем форму настроек
+            $('#fullName').val(user.fullName);
+            $('#username').val(user.username);
+            $('#profileBio').val(user.bio);
+
+        } else {
+            // Пользователь не вошел, показываем предложение войти
+            $('#profile-content').hide();
+            $('#auth-prompt').show();
+        }
+    }
+});

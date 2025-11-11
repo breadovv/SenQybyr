@@ -9,106 +9,27 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <style>
-        .profile-header, .settings-card, .danger-zone {
+        .profile-header, .settings-card, .danger-zone, #auth-prompt {
             background-color: var(--background-secondary);
             border: 1px solid var(--border-color);
             border-radius: 12px;
             padding: 2rem;
             margin-bottom: 2rem;
         }
-
-        .profile-card {
-            display: flex;
-            gap: 2rem;
-            align-items: center;
-            flex-wrap: wrap;
-        }
-
-        .profile-avatar-wrapper {
-            position: relative;
-            cursor: pointer;
-        }
-
-        .avatar-img {
-            width: 120px;
-            height: 120px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 3px solid var(--bs-primary);
-        }
-
-        .avatar-upload-overlay {
-            position: absolute;
-            bottom: 0;
-            right: 0;
-            background-color: rgba(0,0,0,0.6);
-            color: white;
-            border-radius: 50%;
-            width: 36px;
-            height: 36px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.2rem;
-            border: 2px solid white;
-            transition: opacity 0.2s ease;
-            opacity: 0;
-        }
-
-        .profile-avatar-wrapper:hover .avatar-upload-overlay {
-            opacity: 1;
-        }
-
-        .profile-name, .profile-bio, .profile-stats, .profile-username {
-            color: var(--text-primary) !important;
-        }
-
-        .profile-stats .text-muted {
-            color: var(--text-secondary) !important;
-        }
-
-        .nav-tabs .nav-link {
-            color: var(--text-secondary);
-            border-color: transparent;
-        }
-
-        .nav-tabs .nav-link.active {
-            color: var(--text-primary);
-            background-color: transparent;
-            border-bottom: 2px solid var(--bs-primary);
-        }
-
-        .form-group {
-            margin-bottom: 1.25rem;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 0.5rem;
-            font-weight: 600;
-            color: var(--text-secondary);
-        }
-
-        .form-group input, .form-group textarea {
-            width: 100%;
-            padding: 0.75rem 1rem;
-            border-radius: 8px;
-            background-color: var(--background-primary);
-            border: 1px solid var(--border-color);
-            color: var(--text-primary);
-        }
-
-        .form-group input:focus, .form-group textarea:focus {
-            outline: none;
-            border-color: var(--bs-primary);
-            box-shadow: 0 0 0 3px rgba(var(--bs-primary-rgb), 0.2);
-        }
-
-        .danger-zone {
-            margin-top: 2rem;
-            padding: 1.5rem;
-            border-color: var(--bs-danger);
-        }
+        .profile-card { display: flex; gap: 2rem; align-items: center; flex-wrap: wrap; }
+        .profile-avatar-wrapper { position: relative; cursor: pointer; }
+        .avatar-img { width: 120px; height: 120px; border-radius: 50%; object-fit: cover; border: 3px solid var(--bs-primary); }
+        .avatar-upload-overlay { position: absolute; bottom: 0; right: 0; background-color: rgba(0,0,0,0.6); color: white; border-radius: 50%; width: 36px; height: 36px; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; border: 2px solid white; transition: opacity 0.2s ease; opacity: 0; }
+        .profile-avatar-wrapper:hover .avatar-upload-overlay { opacity: 1; }
+        .profile-name, .profile-bio, .profile-stats, .profile-username { color: var(--text-primary) !important; }
+        .profile-stats .text-muted { color: var(--text-secondary) !important; }
+        .nav-tabs .nav-link { color: var(--text-secondary); border-color: transparent; }
+        .nav-tabs .nav-link.active { color: var(--text-primary); background-color: transparent; border-bottom: 2px solid var(--bs-primary); }
+        .form-group { margin-bottom: 1.25rem; }
+        .form-group label { display: block; margin-bottom: 0.5rem; font-weight: 600; color: var(--text-secondary); }
+        .form-group input, .form-group textarea { width: 100%; padding: 0.75rem 1rem; border-radius: 8px; background-color: var(--background-primary); border: 1px solid var(--border-color); color: var(--text-primary); }
+        .form-group input:focus, .form-group textarea:focus { outline: none; border-color: var(--bs-primary); box-shadow: 0 0 0 3px rgba(var(--bs-primary-rgb), 0.2); }
+        .danger-zone { margin-top: 2rem; padding: 1.5rem; border-color: var(--bs-danger); }
     </style>
 </head>
 <body class="">
@@ -119,14 +40,10 @@
     </a>
     <div class="search">
         <input type="text" id="search" placeholder="Search my videos..." autocomplete="off">
-        <a href="#" type="button" class="icon-btn" title="Search">
-            <img src="../images/search.png" alt="search">
-        </a>
+        <a href="#" type="button" class="icon-btn" title="Search"><img src="../images/search.png" alt="search"></a>
     </div>
     <div class="flex">
-        <a href="profile.html" class="icon-btn" title="Profile">
-            <img src="../images/profile_picture_user_icon_153847.png" alt="profile">
-        </a>
+        <a href="profile.html" class="icon-btn" title="Profile"><img src="../images/profile_picture_user_icon_153847.png" alt="profile"></a>
         <div class="form-check form-switch ms-2" id="themeSwitchContainer">
             <input class="form-check-input" type="checkbox" id="themeSwitch">
             <label class="form-check-label" for="themeSwitch">Night</label>
@@ -148,126 +65,75 @@
     </aside>
 
     <main id="main-content">
-        <section class="profile-header">
-            <div class="profile-card">
-                <div class="profile-avatar-wrapper" title="Change avatar">
-                    <img src="../images/Alisher.jpg" alt="Profile Avatar" class="avatar-img">
-                    <div class="avatar-upload-overlay">📷</div>
-                </div>
-                <div class="profile-info flex-grow-1">
-                    <h2 class="profile-name h3">Alisher Bolatkhanov</h2>
-                    <p class="profile-username text-muted">@alisher_bolatkhanov</p>
-                    <p class="profile-bio mt-2">Web developer and content creator from Kazakhstan. Passionate about coding and music.</p>
-                    <div class="profile-stats d-flex gap-4 my-3">
-                        <div><span class="fw-bold">1.2K</span><span class="text-muted ms-1">Subscribers</span></div>
-                        <div><span class="fw-bold">15</span><span class="text-muted ms-1">Videos</span></div>
-                        <div><span class="fw-bold">2.5M</span><span class="text-muted ms-1">Views</span></div>
-                    </div>
-                </div>
-            </div>
-        </section>
+        <!-- Блок для неавторизованных пользователей -->
+        <div id="auth-prompt" style="display: none; text-align: center;">
+            <h2 class="h4">Access Your Content</h2>
+            <p class="text-muted">Please log in to see your profile, videos, and settings.</p>
+            <a href="login.html" class="btn btn-primary mt-2">Login</a>
+            <p class="mt-3 small">Don't have an account? <a href="register.html">Create one now!</a></p>
+        </div>
 
-        <ul class="nav nav-tabs mb-4" id="profileTab" role="tablist">
-            <li class="nav-item" role="presentation">
-                <button class="nav-link active" id="videos-tab-btn" data-bs-toggle="tab" data-bs-target="#videos-tab-pane" type="button" role="tab">My Videos</button>
-            </li>
-            <li class="nav-item" role="presentation">
-                <button class="nav-link" id="settings-tab-btn" data-bs-toggle="tab" data-bs-target="#settings-tab-pane" type="button" role="tab">Settings</button>
-            </li>
-        </ul>
-
-        <div class="tab-content" id="profileTabContent">
-            <div class="tab-pane fade show active" id="videos-tab-pane" role="tabpanel">
-                <div class="d-flex justify-content-between align-items-center mb-3">
-                    <h3 class="h5 mb-0" style="color: var(--text-secondary);">My Content</h3>
-                    <button class="btn btn-primary">Upload Video</button>
-                </div>
-                <div id="video-grid" class="grid">
-                    <div class="tile">
-                        <div class="thumb-lg" style="background: url('../images/img.png') center/cover no-repeat;"></div>
-                        <div class="tmeta">
-                            <p class="ttitle">How to Create YouTube Clone</p>
-                            <p class="tsub">2.1K views • 3 days ago</p>
-                            <div class="mt-2"><button class="btn btn-sm btn-outline-primary">Edit</button> <button class="btn btn-sm btn-outline-danger">Delete</button></div>
-                        </div>
+        <!-- Основной контент профиля (будет показан после логина) -->
+        <div id="profile-content" style="display: none;">
+            <section class="profile-header">
+                <div class="profile-card">
+                    <div class="profile-avatar-wrapper" title="Change avatar">
+                        <img src="../images/Alisher.jpg" alt="Profile Avatar" class="avatar-img">
+                        <div class="avatar-upload-overlay">📷</div>
                     </div>
-                    <div class="tile">
-                        <div class="thumb-lg" style="background: url('../images/rec.jpg') center/cover no-repeat;"></div>
-                        <div class="tmeta">
-                            <p class="ttitle">Kazakh Music Tutorial</p>
-                            <p class="tsub">850 views • 1 week ago</p>
-                            <div class="mt-2"><button class="btn btn-sm btn-outline-primary">Edit</button> <button class="btn btn-sm btn-outline-danger">Delete</button></div>
-                        </div>
-                    </div>
-                    <div class="tile">
-                        <div class="thumb-lg" style="background: linear-gradient(45deg, #ff6b6b, #4ecdc4);"></div>
-                        <div class="tmeta">
-                            <p class="ttitle">Web Development Tips</p>
-                            <p class="tsub">1.5K views • 2 weeks ago</p>
-                            <div class="mt-2"><button class="btn btn-sm btn-outline-primary">Edit</button> <button class="btn btn-sm btn-outline-danger">Delete</button></div>
-                        </div>
-                    </div>
-                    <div class="tile">
-                        <div class="thumb-lg" style="background: linear-gradient(45deg, #667eea, #764ba2);"></div>
-                        <div class="tmeta">
-                            <p class="ttitle">JavaScript Basics</p>
-                            <p class="tsub">3.2K views • 1 month ago</p>
-                            <div class="mt-2"><button class="btn btn-sm btn-outline-primary">Edit</button> <button class="btn btn-sm btn-outline-danger">Delete</button></div>
+                    <div class="profile-info flex-grow-1">
+                        <h2 class="profile-name h3"></h2>
+                        <p class="profile-username text-muted"></p>
+                        <p class="profile-bio mt-2"></p>
+                        <div class="profile-stats d-flex gap-4 my-3">
+                            <div><span class="fw-bold">1.2K</span><span class="text-muted ms-1">Subscribers</span></div>
+                            <div><span class="fw-bold">15</span><span class="text-muted ms-1">Videos</span></div>
+                            <div><span class="fw-bold">2.5M</span><span class="text-muted ms-1">Views</span></div>
                         </div>
                     </div>
                 </div>
-            </div>
+            </section>
 
-            <div class="tab-pane fade" id="settings-tab-pane" role="tabpanel">
-                <div class="settings-card">
-                    <h3 class="h5 mb-4" style="color: var(--text-secondary);">Profile Information</h3>
-                    <form id="profileSettingsForm">
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="fullName">Full Name</label>
-                                    <input type="text" id="fullName" class="form-control" value="Alisher Bolatkhanov">
-                                </div>
+            <ul class="nav nav-tabs mb-4" id="profileTab" role="tablist">
+                <li class="nav-item" role="presentation"><button class="nav-link active" data-bs-toggle="tab" data-bs-target="#videos-tab-pane" type="button">My Videos</button></li>
+                <li class="nav-item" role="presentation"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#settings-tab-pane" type="button">Settings</button></li>
+            </ul>
+
+            <div class="tab-content" id="profileTabContent">
+                <div class="tab-pane fade show active" id="videos-tab-pane">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h3 class="h5 mb-0" style="color: var(--text-secondary);">My Content</h3>
+                        <button class="btn btn-primary">Upload Video</button>
+                    </div>
+                    <div id="video-grid" class="grid">
+                        <!-- Видео остаются как есть -->
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="settings-tab-pane">
+                    <div class="settings-card">
+                        <h3 class="h5 mb-4" style="color: var(--text-secondary);">Profile Information</h3>
+                        <form id="profileSettingsForm">
+                            <div class="row">
+                                <div class="col-md-6"><div class="form-group"><label for="fullName">Full Name</label><input type="text" id="fullName" class="form-control"></div></div>
+                                <div class="col-md-6"><div class="form-group"><label for="username">Username</label><input type="text" id="username" class="form-control"></div></div>
                             </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="username">Username</label>
-                                    <input type="text" id="username" class="form-control" value="@alisher_bolatkhanov">
-                                </div>
+                            <div class="form-group"><label for="profileBio">Your Bio</label><textarea id="profileBio" rows="3" class="form-control"></textarea></div>
+                            <button type="submit" class="btn btn-primary">Save Changes</button>
+                        </form>
+                        <hr class="my-4">
+                        <h3 class="h5 mb-4" style="color: var(--text-secondary);">Change Password</h3>
+                        <form id="passwordChangeForm">
+                            <div class="row">
+                                <div class="col-md-6"><div class="form-group"><label for="currentPassword">Current Password</label><input type="password" id="currentPassword" class="form-control" placeholder="••••••••"></div></div>
+                                <div class="col-md-6"><div class="form-group"><label for="newPassword">New Password</label><input type="password" id="newPassword" class="form-control" placeholder="••••••••"></div></div>
                             </div>
+                            <button type="submit" class="btn btn-primary">Update Password</button>
+                        </form>
+                        <div class="danger-zone">
+                            <h4 class="h6 text-danger">Danger Zone</h4>
+                            <p class="text-muted small">Once you delete your account, there is no going back. Please be certain.</p>
+                            <button class="btn btn-outline-danger">Delete My Account</button>
                         </div>
-                        <div class="form-group">
-                            <label for="profileBio">Your Bio</label>
-                            <textarea id="profileBio" rows="3" class="form-control">Web developer and content creator from Kazakhstan. Passionate about coding and music.</textarea>
-                        </div>
-                        <button type="submit" class="btn btn-primary">Save Changes</button>
-                    </form>
-
-                    <hr class="my-4">
-
-                    <h3 class="h5 mb-4" style="color: var(--text-secondary);">Change Password</h3>
-                    <form id="passwordChangeForm">
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="currentPassword">Current Password</label>
-                                    <input type="password" id="currentPassword" class="form-control" placeholder="••••••••">
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="newPassword">New Password</label>
-                                    <input type="password" id="newPassword" class="form-control" placeholder="••••••••">
-                                </div>
-                            </div>
-                        </div>
-                        <button type="submit" class="btn btn-primary">Update Password</button>
-                    </form>
-
-                    <div class="danger-zone">
-                        <h4 class="h6 text-danger">Danger Zone</h4>
-                        <p class="text-muted small">Once you delete your account, there is no going back. Please be certain.</p>
-                        <button class="btn btn-outline-danger">Delete My Account</button>
                     </div>
                 </div>
             </div>
