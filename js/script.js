@@ -305,14 +305,32 @@ function initThemeToggle() {
     const checkbox = document.getElementById('themeSwitch');
     const label = document.querySelector('label[for="themeSwitch"]');
 
+    const safeGetTheme = () => {
+        try {
+            const value = localStorage.getItem('theme');
+            return value === 'night' || value === 'day' ? value : 'day';
+        } catch (err) {
+            console.error('Failed to read theme from storage:', err);
+            return 'day';
+        }
+    };
+
+    const safeSetTheme = (theme) => {
+        try {
+            localStorage.setItem('theme', theme);
+        } catch (err) {
+            console.error('Failed to save theme to storage:', err);
+        }
+    };
+
     const applyTheme = (theme) => {
         document.body.classList.toggle('theme-dark', theme === 'night');
-        localStorage.setItem('theme', theme);
+        safeSetTheme(theme);
         if (checkbox) checkbox.checked = (theme === 'night');
         if (label) label.textContent = theme === 'night' ? 'Night' : 'Day';
     };
 
-    const saved = localStorage.getItem('theme') || 'day';
+    const saved = safeGetTheme();
     applyTheme(saved);
 
     if (checkbox) {
@@ -1226,24 +1244,11 @@ $(document).ready(function() {
 $(document).ready(function() {
     // --- Общая логика для всех страниц ---
 
-    // Переключение темы
-    const themeSwitch = document.getElementById('themeSwitch');
-    if (themeSwitch) {
-        // Применяем тему при загрузке
-        if (localStorage.getItem('theme') === 'dark') {
-            document.body.classList.add('dark-theme');
-            themeSwitch.checked = true;
-        }
-        // Слушатель на переключение
-        themeSwitch.addEventListener('change', function() {
-            if (this.checked) {
-                document.body.classList.add('dark-theme');
-                localStorage.setItem('theme', 'dark');
-            } else {
-                document.body.classList.remove('dark-theme');
-                localStorage.setItem('theme', 'light');
-            }
-        });
+    // Переключение темы (унифицировано)
+    try {
+        initThemeToggle();
+    } catch (e) {
+        console.error('Theme initialization error:', e);
     }
 
     // Логика для попапов (например, "Contact Us")
