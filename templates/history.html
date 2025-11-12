@@ -1,19 +1,20 @@
- <!doctype html>
+<!doctype html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>History - SenQubyr</title>
-    <link href="../css/style2.css" rel="stylesheet">
-    <link href="../images/youtubeKZicon.png" rel="icon" type="image/x-icon" />
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <link href="../css/style.css" rel="stylesheet">
+    <link href="../images/youtubeKZicon.png" rel="icon" type="image/x-icon"/>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <style>
         .history-tile {
             transition: all 0.3s ease;
         }
 
         .history-tile:hover {
-            transform: translateX(5px);
+            transform: scale(1.02);
         }
 
         .empty-state {
@@ -39,7 +40,7 @@
         .browse-btn {
             display: inline-block;
             padding: 12px 30px;
-            background: #00c5ff;
+            background: #007bff;
             color: white;
             text-decoration: none;
             border-radius: 6px;
@@ -48,45 +49,33 @@
         }
 
         .browse-btn:hover {
-            background: #0099cc;
+            background: #0056b3;
             transform: translateY(-2px);
-        }
-
-        .history-date {
-            font-size: 18px;
-            font-weight: 600;
-            color: var(--muted);
-            margin: 30px 0 15px 0;
-            padding-bottom: 8px;
-            border-bottom: 2px solid #ddd;
         }
     </style>
 </head>
 <body>
+
 <header class="header">
     <a href="../index.html" class="logo" id="SenQubyr">
-        <img src="/images/youtubeKZicon.png" alt="Logo">
+        <img src="../images/youtubeKZicon.png" alt="Logo">
         SenQubyr
     </a>
     <div class="search">
-        <input type="text" id="search" placeholder="Search">
-        <a href="#" type="button" class="icon-btn" title="Search">
-            <img src="/images/search.png" alt="search">
+        <input type="text" id="search" placeholder="Search" autocomplete="off">
+        <a href="#" type="button" class="icon-btn" title="Search" id="searchBtn">
+            <img src="../images/search.png" alt="search">
         </a>
+        <div id="search-suggestions"></div>
     </div>
     <div class="flex">
-        <a href="#" class="icon-btn" title="Create">
-            <img src="/images/plus-black-symbol_icon-icons.com_73453.png" alt="add">
-        </a>
-        <a href="#" class="icon-btn" title="Notifications">
-            <img src="/images/notification_alarm_bell_icon_146863.png" alt="notification">
-        </a>
-        <button id="bgChangeBtn" class="icon-btn bg-changer-btn" title="Change Background Color" style="padding: 8px 12px; margin-left: 10px;">
-            🎨
-        </button>
-        <a href="../templates/profile.html" class="icon-btn" title="Profile">
+        <a href="profile.html" class="icon-btn" title="Profile">
             <img src="../images/profile_picture_user_icon_153847.png" alt="profile">
         </a>
+        <div class="form-check form-switch ms-2" id="themeSwitchContainer">
+            <input class="form-check-input" type="checkbox" id="themeSwitch">
+            <label class="form-check-label" for="themeSwitch">Night</label>
+        </div>
     </div>
 </header>
 
@@ -101,244 +90,164 @@
             <a class="nav-item active" href="history.html">History</a>
             <a class="nav-item" href="liked.html">Liked</a>
         </div>
-        <!-- Contact Us in Sidebar -->
-        <div class="section">
-            <div style="color:var(--muted);font-size:13px;padding:6px 8px">Get in Touch</div>
-            <a class="nav-item" href="#" data-popup-open="contactPopup">Contact Us</a>
-        </div>
     </aside>
 
-    <main class="px-sm-2">
-        <section class="section-title mb-2 mt-lg-3">
-            <div class="history-header d-flex justify-content-between align-items-start flex-wrap gap-2">
+    <main id="main-content">
+        <div id="scrollProgress">
+            <div id="scrollProgressBar"></div>
+        </div>
+
+        <section class="section-title">
+            <div class="d-flex justify-content-between align-items-start flex-wrap gap-2">
                 <div>
-                    <h2 class="h4 m-0" style="color: var(--muted);">📜 Watch History</h2>
-                    <p class="m-0 text-muted small">Videos you've watched recently</p>
+                    <h2 class="h4 m-0" style="color: var(--muted);">Watch History</h2>
+                    <p style="color: #666;" class="m-0">Videos you've watched recently</p>
                 </div>
-                <div class="history-actions d-flex gap-2">
+                <div class="d-flex gap-2">
                     <button class="btn btn-outline-danger btn-sm" onclick="clearHistory()">Clear all history</button>
                     <button class="btn btn-secondary btn-sm" onclick="toggleHistory()">Pause history</button>
                 </div>
             </div>
         </section>
 
-        <!-- History Filter -->
-        <section class="history-filters mb-3 mt-3">
-            <div class="filter-tabs d-flex gap-2 flex-wrap border-bottom pb-1">
-                <button class="filter-tab active btn btn-outline-dark btn-sm" data-filter="all">All</button>
-                <button class="filter-tab btn btn-outline-dark btn-sm" data-filter="today">Today</button>
-                <button class="filter-tab btn btn-outline-dark btn-sm" data-filter="week">This week</button>
-                <button class="filter-tab btn btn-outline-dark btn-sm" data-filter="month">This month</button>
-            </div>
-        </section>
-
-        <!-- History Content -->
-        <section class="history-content mt-3">
-            <div class="grid">
-                <!-- Today's History -->
-                <div class="history-group" data-date="today">
-                    <h3 class="history-date">Today</h3>
-                    <div class="tile history-tile p-2">
-                        <div class="thumb-lg" style="background: url('../images/img.png') center/cover no-repeat;"></div>
-                        <div class="tmeta">
-                            <p class="ttitle">How to Create YouTube Clone - Complete Tutorial</p>
-                            <p class="tsub">Tech Channel • 2.1K views • 2 hours ago</p>
-                            <div class="history-actions-tile d-flex gap-2 mt-2">
-                                <button class="btn btn-outline-danger btn-sm" onclick="removeFromHistory(this)">Remove</button>
-                                <button class="btn btn-primary btn-sm">Watch again</button>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="tile history-tile p-2">
-                        <div class="thumb-lg" style="background: url('../images/rec.jpg') center/cover no-repeat;"></div>
-                        <div class="tmeta">
-                            <p class="ttitle">Kazakh Music - Traditional Songs Collection</p>
-                            <p class="tsub">Music Channel • 850 views • 4 hours ago</p>
-                            <div class="history-actions-tile d-flex gap-2 mt-2">
-                                <button class="btn btn-outline-danger btn-sm" onclick="removeFromHistory(this)">Remove</button>
-                                <button class="btn btn-primary btn-sm">Watch again</button>
-                            </div>
+        <section id="video-display-area" class="mt-4">
+            <div id="video-grid-main" class="grid mb-4">
+                <div class="tile history-tile p-2">
+                    <a href="#" class="thumb-container">
+                        <div class="thumb-lg"
+                             style="background: url('../images/img.png') center/cover no-repeat;"></div>
+                    </a>
+                    <div class="tmeta">
+                        <p class="ttitle">How to Create YouTube Clone - Complete Tutorial</p>
+                        <p class="tsub">Tech Channel • 2.1K views • 2 hours ago</p>
+                        <div class="d-flex gap-2 mt-2">
+                            <button class="btn btn-outline-danger btn-sm" onclick="removeFromHistory(this)">Remove
+                            </button>
+                            <button class="btn btn-primary btn-sm">Watch again</button>
                         </div>
                     </div>
                 </div>
-
-                <!-- Yesterday's History -->
-                <div class="history-group" data-date="yesterday">
-                    <h3 class="history-date">Yesterday</h3>
-                    <div class="tile history-tile p-2">
-                        <div class="thumb-lg" style="background: linear-gradient(45deg, #ff6b6b, #4ecdc4);"></div>
-                        <div class="tmeta">
-                            <p class="ttitle">Web Development Tips for Beginners</p>
-                            <p class="tsub">Coding Channel • 1.5K views • 1 day ago</p>
-                            <div class="history-actions-tile d-flex gap-2 mt-2">
-                                <button class="btn btn-outline-danger btn-sm" onclick="removeFromHistory(this)">Remove</button>
-                                <button class="btn btn-primary btn-sm">Watch again</button>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="tile history-tile p-2">
-                        <div class="thumb-lg" style="background: linear-gradient(45deg, #667eea, #764ba2);"></div>
-                        <div class="tmeta">
-                            <p class="ttitle">Gaming Setup Tour - Ultimate Workspace</p>
-                            <p class="tsub">Gaming Channel • 3.2K views • 1 day ago</p>
-                            <div class="history-actions-tile d-flex gap-2 mt-2">
-                                <button class="btn btn-outline-danger btn-sm" onclick="removeFromHistory(this)">Remove</button>
-                                <button class="btn btn-primary btn-sm">Watch again</button>
-                            </div>
+                <div class="tile history-tile p-2">
+                    <a href="#" class="thumb-container">
+                        <div class="thumb-lg"
+                             style="background: url('../images/rec.jpg') center/cover no-repeat;"></div>
+                    </a>
+                    <div class="tmeta">
+                        <p class="ttitle">Kazakh Music - Traditional Songs Collection</p>
+                        <p class="tsub">Music Channel • 850 views • 4 hours ago</p>
+                        <div class="d-flex gap-2 mt-2">
+                            <button class="btn btn-outline-danger btn-sm" onclick="removeFromHistory(this)">Remove
+                            </button>
+                            <button class="btn btn-primary btn-sm">Watch again</button>
                         </div>
                     </div>
                 </div>
-
-                <!-- This Week's History -->
-                <div class="history-group" data-date="week">
-                    <h3 class="history-date">This Week</h3>
-                    <div class="tile history-tile p-2">
+                <div class="tile history-tile p-2">
+                    <a href="#" class="thumb-container">
                         <div class="thumb-lg" style="background: linear-gradient(45deg, #f093fb, #f5576c);"></div>
-                        <div class="tmeta">
-                            <p class="ttitle">CSS Grid vs Flexbox - Which to Choose?</p>
-                            <p class="tsub">Web Design • 4.8K views • 3 days ago</p>
-                            <div class="history-actions-tile d-flex gap-2 mt-2">
-                                <button class="btn btn-outline-danger btn-sm" onclick="removeFromHistory(this)">Remove</button>
-                                <button class="btn btn-primary btn-sm">Watch again</button>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="tile history-tile p-2">
-                        <div class="thumb-lg" style="background: linear-gradient(45deg, #4facfe, #00f2fe);"></div>
-                        <div class="tmeta">
-                            <p class="ttitle">JavaScript ES6 Features Explained</p>
-                            <p class="tsub">Programming Channel • 6.1K views • 5 days ago</p>
-                            <div class="history-actions-tile d-flex gap-2 mt-2">
-                                <button class="btn btn-outline-danger btn-sm" onclick="removeFromHistory(this)">Remove</button>
-                                <button class="btn btn-primary btn-sm">Watch again</button>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="tile history-tile p-2">
-                        <div class="thumb-lg" style="background: linear-gradient(45deg, #43e97b, #38f9d7);"></div>
-                        <div class="tmeta">
-                            <p class="ttitle">Kazakhstan Travel Guide - Must Visit Places</p>
-                            <p class="tsub">Travel Channel • 12.3K views • 6 days ago</p>
-                            <div class="history-actions-tile d-flex gap-2 mt-2">
-                                <button class="btn btn-outline-danger btn-sm" onclick="removeFromHistory(this)">Remove</button>
-                                <button class="btn btn-primary btn-sm">Watch again</button>
-                            </div>
+                    </a>
+                    <div class="tmeta">
+                        <p class="ttitle">CSS Grid vs Flexbox - Which to Choose?</p>
+                        <p class="tsub">Web Design • 4.8K views • 3 days ago</p>
+                        <div class="d-flex gap-2 mt-2">
+                            <button class="btn btn-outline-danger btn-sm" onclick="removeFromHistory(this)">Remove
+                            </button>
+                            <button class="btn btn-primary btn-sm">Watch again</button>
                         </div>
                     </div>
                 </div>
-
-                <!-- Older History -->
-                <div class="history-group" data-date="older">
-                    <h3 class="history-date">Earlier</h3>
-                    <div class="tile history-tile p-2">
-                        <div class="thumb-lg" style="background: linear-gradient(45deg, #fa709a, #fee140);"></div>
-                        <div class="tmeta">
-                            <p class="ttitle">React vs Vue - Frontend Framework Comparison</p>
-                            <p class="tsub">Tech Reviews • 8.9K views • 1 week ago</p>
-                            <div class="history-actions-tile d-flex gap-2 mt-2">
-                                <button class="btn btn-outline-danger btn-sm" onclick="removeFromHistory(this)">Remove</button>
-                                <button class="btn btn-primary btn-sm">Watch again</button>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="tile history-tile p-2">
-                        <div class="thumb-lg" style="background: linear-gradient(45deg, #a8edea, #fed6e3);"></div>
-                        <div class="tmeta">
-                            <p class="ttitle">Kazakh Culture and Traditions</p>
-                            <p class="tsub">Cultural Channel • 15.7K views • 2 weeks ago</p>
-                            <div class="history-actions-tile d-flex gap-2 mt-2">
-                                <button class="btn btn-outline-danger btn-sm" onclick="removeFromHistory(this)">Remove</button>
-                                <button class="btn btn-primary btn-sm">Watch again</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+            </div>
+            <div id="empty-history" class="empty-state">
+                <h3>No watch history</h3>
+                <p>When you watch videos, they'll appear here</p>
+                <a href="../index.html" class="browse-btn">Browse videos</a>
             </div>
         </section>
-
-        <!-- Empty State -->
-        <div id="empty-history" class="empty-state">
-            <div class="empty-content">
-                <h3>📭 No watch history</h3>
-                <p>When you watch videos, they'll appear here</p>
-                <a href="index.html" class="browse-btn">Browse videos</a>
-            </div>
-        </div>
-
     </main>
+</div>
+
+<div id="contactPopup" class="popup-overlay">
+    <div class="popup-content">
+        <button class="popup-close" data-popup-close>&times;</button>
+        <h3 class="mb-4">Contact Us</h3>
+        <form id="contactForm">
+            <div class="form-group"><label for="contact-name">Your Name *</label><input type="text" id="contact-name"
+                                                                                        name="name"
+                                                                                        placeholder="Enter your name"
+                                                                                        required></div>
+            <div class="form-group"><label for="contact-email">Email *</label><input type="email" id="contact-email"
+                                                                                     name="email"
+                                                                                     placeholder="your@email.com"
+                                                                                     required></div>
+            <div class="form-group"><label for="message">Message *</label><textarea id="message" name="message" rows="4"
+                                                                                    placeholder="Your message..."
+                                                                                    required></textarea></div>
+            <button type="submit" class="btn btn-primary w-100">Send Message</button>
+        </form>
+    </div>
 </div>
 
 <footer class="footer mt-auto">
     <div class="footer-links mb-2">
-        <a href="#">About us</a>
-        <a href="#">Rules</a>
-        <a href="#">Privacy Policy</a>
-        <a href="#">Contacts</a>
+        <a href="#" id="aboutBtn">About us</a>
+        <a href="#" id="rulesBtn">Rules</a>
+        <a href="#" id="privacyBtn">Privacy Policy</a>
+        <a href="#" data-popup-open="contactPopup">Contact Us</a>
     </div>
-    <!-- Our Stats in Footer -->
-    <section class="jq-counter-section">
-        <h2>Our Stats</h2>
-        <div class="counter-grid">
-            <div class="counter-box">
-                <div class="counter" data-target="1000">0</div>
-                <div class="counter-label">Users</div>
-            </div>
-            <div class="counter-box">
-                <div class="counter" data-target="250">0</div>
-                <div class="counter-label">Videos</div>
-            </div>
-            <div class="counter-box">
-                <div class="counter" data-target="75">0</div>
-                <div class="counter-label">Projects</div>
-            </div>
-        </div>
-    </section>
     <div class="footer-copy">
         © 2025 SenQubyr. Beknur Erdembek, Alisher Bolatkhanov
     </div>
 </footer>
 
-
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
 <script src="../js/script.js"></script>
 <script>
-    function clearHistory() {
-        if (confirm('Are you sure you want to clear your watch history? This action cannot be undone.')) {
-            const historyContent = document.querySelector('.history-content');
-            const emptyState = document.getElementById('empty-history');
+    document.addEventListener('DOMContentLoaded', function () {
 
-            if (historyContent && emptyState) {
-                historyContent.style.display = 'none';
+        function checkEmptyState() {
+            const videoGrid = document.getElementById('video-grid-main');
+            const emptyState = document.getElementById('empty-history');
+            if (!videoGrid || !emptyState) return;
+
+            const remainingTiles = videoGrid.querySelectorAll('.history-tile');
+            if (remainingTiles.length === 0) {
+                videoGrid.style.display = 'none';
                 emptyState.style.display = 'block';
-                alert('✅ History cleared successfully!');
+            } else {
+                videoGrid.style.display = 'grid';
+                emptyState.style.display = 'none';
             }
         }
-    }
 
-    function toggleHistory() {
-        alert('⏸️ History tracking has been paused. You can resume it anytime from settings.');
-    }
-
-    function removeFromHistory(btn) {
-        const tile = btn.closest('.tile');
-        const title = tile.querySelector('.ttitle').textContent;
-
-        if (confirm(`Remove "${title}" from history?`)) {
-            tile.style.opacity = '0';
-            tile.style.transform = 'translateX(-100%)';
-
-            setTimeout(() => {
-                tile.remove();
-
-                // Check if all tiles are removed
-                const remainingTiles = document.querySelectorAll('.history-tile');
-                if (remainingTiles.length === 0) {
-                    document.querySelector('.history-content').style.display = 'none';
-                    document.getElementById('empty-history').style.display = 'block';
-                }
-            }, 300);
+        window.clearHistory = function () {
+            if (confirm('Are you sure you want to clear your watch history? This action cannot be undone.')) {
+                const videoGrid = document.getElementById('video-grid-main');
+                videoGrid.innerHTML = '';
+                checkEmptyState();
+            }
         }
-    }
+
+        window.toggleHistory = function () {
+            alert('History tracking has been paused. You can resume it anytime from settings.');
+        }
+
+        window.removeFromHistory = function (btn) {
+            const tile = btn.closest('.tile');
+            const title = tile.querySelector('.ttitle').textContent;
+
+            if (confirm(`Remove "${title}" from history?`)) {
+                tile.style.transition = 'opacity 0.3s, transform 0.3s';
+                tile.style.opacity = '0';
+                tile.style.transform = 'scale(0.8)';
+                setTimeout(() => {
+                    tile.remove();
+                    checkEmptyState();
+                }, 300);
+            }
+        }
+
+        checkEmptyState();
+    });
 </script>
 </body>
 </html>

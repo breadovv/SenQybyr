@@ -1,220 +1,110 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Trending - SenQubyr</title>
-  <link href="../css/style2.css" rel="stylesheet">
-  <link href="../images/youtubeKZicon.png" rel="icon" type="image/x-icon" />
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
-  <style>
-    .bg-changer-btn {
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      color: white;
-      border: none;
-      padding: 15px 40px;
-      border-radius: 50px;
-      font-size: 16px;
-      font-weight: 600;
-      cursor: pointer;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-      transition: all 0.3s;
-    }
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title>Trending - SenQubyr</title>
 
-    .bg-changer-btn:hover {
-      transform: translateY(-3px) scale(1.05);
-      box-shadow: 0 6px 20px rgba(0,0,0,0.3);
-    }
+    <link href="../css/style.css" rel="stylesheet">
+    <link href="../images/youtubeKZicon.png" rel="icon" type="image/x-icon"/>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 
-    .feature-box {
-      background: var(--card);
-      border-radius: 12px;
-      padding: 30px;
-      margin: 20px 0;
-      text-align: center;
-    }
-  </style>
 </head>
-<body>
+
+<body class="">
 
 <header class="header">
-  <a href="../index.html" class="logo" id="SenQubyr">
-    <img src="/images/youtubeKZicon.png" alt="Logo">
-    SenQubyr
-  </a>
-  <div class="search">
-    <input type="text" id="search" placeholder="Search">
-    <a href="#" type="button" class="icon-btn" title="Search">
-      <img src="../images/search.png" alt="search">
+    <a href="../index.html" class="logo" id="SenQubyr">
+        <img src="../images/youtubeKZicon.png" alt="Logo">
+        SenQubyr
     </a>
-  </div>
-  <div class="flex">
-    <a href="#" class="icon-btn" title="Create">
-      <img src="/images/plus-black-symbol_icon-icons.com_73453.png" alt="add">
-    </a>
-    <a href="#" class="icon-btn" title="Notifications">
-      <img src="/images/notification_alarm_bell_icon_146863.png" alt="notification">
-    </a>
-    <button id="bgChangeBtn" class="icon-btn bg-changer-btn" title="Change Background Color" style="padding: 8px 12px; margin-left: 10px;">
-      🎨
-    </button>
-    <a href="../templates/profile.html" class="icon-btn" title="Profile">
-      <img src="../images/profile_picture_user_icon_153847.png" alt="profile">
-    </a>
-  </div>
+    <div class="search">
+        <input type="text" id="search" placeholder="Search" autocomplete="off">
+        <a href="#" type="button" class="icon-btn" title="Search" id="searchBtn">
+            <img src="../images/search.png" alt="search">
+        </a>
+        <div id="search-suggestions"></div>
+    </div>
+    <div class="flex">
+        <a href="profile.html" class="icon-btn" title="Profile">
+            <img src="../images/profile_picture_user_icon_153847.png" alt="profile">
+        </a>
+        <div class="form-check form-switch ms-2" id="themeSwitchContainer">
+            <input class="form-check-input" type="checkbox" id="themeSwitch">
+            <label class="form-check-label" for="themeSwitch">Night</label>
+        </div>
+    </div>
 </header>
 
-<div class="layout">
-  <aside class="sidebar">
-    <div class="section">
-      <a class="nav-item" href="../index.html"><span><img src="../images/house.png" alt="home"></span>Home</a>
-      <a class="nav-item active" href="trending.html"><span><img src="../images/fire.png" alt="trending"></span>Trending</a>
-      <a class="nav-item" href="shorts.html"><span><img src="../images/shortsicon.png" alt="shorts"></span>Shorts</a>
-      <a class="nav-item" href="subscriptions.html"><span><img src="../images/television.png" alt="subscription"></span>Subscriptions</a>
-    </div>
-    <div class="section">
-      <div style="color:var(--muted);font-size:13px;padding:6px 8px">Library</div>
-      <a class="nav-item" href="history.html">History</a>
-      <a class="nav-item" href="liked.html">Liked</a>
-    </div>
-    <!-- Contact Us in Sidebar -->
-    <div class="section">
-      <div style="color:var(--muted);font-size:13px;padding:6px 8px">Get in Touch</div>
-      <a class="nav-item" href="#" data-popup-open="contactPopup">Contact Us</a>
-    </div>
-  </aside>
+<div class="layout container-fluid py-3 py-lg-4">
+    <aside class="sidebar">
+        <div class="section">
+            <a class="nav-item" href="../index.html"><span><img src="../images/house.png" alt="home"></span>Home</a>
+            <a class="nav-item active" href="trending.html"><span><img src="../images/fire.png" alt="trending"></span>Trending</a>
+        </div>
+        <div class="section">
+            <div style="color:var(--muted);font-size:13px;padding:6px 8px">Library</div>
+            <a class="nav-item" href="history.html">History</a>
+            <a class="nav-item" href="liked.html">Liked</a>
+        </div>
+    </aside>
 
-  <main>
-    <!-- Trending Header -->
-    <section class="section-title">
-      <h2 class="h4 mb-3" style="color: var(--muted);">🔥 Trending Now</h2>
-      <p style="color: #666;">Most popular videos right now</p>
-    </section>
+    <main id="main-content">
+        <div id="scrollProgress">
+            <div id="scrollProgressBar"></div>
+        </div>
 
-    <!-- Trending Videos Grid -->
-    <section>
-      <div class="grid mb-4">
-        <div class="tile">
-          <div class="thumb-lg"></div>
-          <div class="tmeta">
-            <p class="ttitle">New hit 2025</p>
-            <p class="tsub">Music Channel • 2M views • 1 day ago</p>
-          </div>
-        </div>
-        <div class="tile">
-          <div class="thumb-lg"></div>
-          <div class="tmeta">
-            <p class="ttitle">Football's best moments</p>
-            <p class="tsub">SportsHub • 950K views • 5 hours ago</p>
-          </div>
-        </div>
-        <div class="tile">
-          <div class="thumb-lg"></div>
-          <div class="tmeta">
-            <p class="ttitle">Review of new technologies</p>
-            <p class="tsub">Tech Today • 1.3M views • 2 days ago</p>
-          </div>
-        </div>
-        <div class="tile">
-          <div class="thumb-lg"></div>
-          <div class="tmeta">
-            <p class="ttitle">Top TV series of the season</p>
-            <p class="tsub">Cinema Life • 500K views • 10 hours ago</p>
-          </div>
-        </div>
-        <div class="tile">
-          <div class="thumb-lg"></div>
-          <div class="tmeta">
-            <p class="ttitle">Kazakh Music Festival 2025</p>
-            <p class="tsub">Music Channel • 1.8M views • 3 hours ago</p>
-          </div>
-        </div>
-        <div class="tile">
-          <div class="thumb-lg"></div>
-          <div class="tmeta">
-            <p class="ttitle">Gaming Championship Finals</p>
-            <p class="tsub">Esports Hub • 750K views • 6 hours ago</p>
-          </div>
-        </div>
-        <div class="tile">
-          <div class="thumb-lg"></div>
-          <div class="tmeta">
-            <p class="ttitle">Cooking Masterclass</p>
-            <p class="tsub">Chef's Kitchen • 450K views • 1 day ago</p>
-          </div>
-        </div>
-        <div class="tile">
-          <div class="thumb-lg"></div>
-          <div class="tmeta">
-            <p class="ttitle">Travel Kazakhstan Guide</p>
-            <p class="tsub">Travel Channel • 620K views • 8 hours ago</p>
-          </div>
-        </div>
-        <div class="tile">
-          <div class="thumb-lg"></div>
-          <div class="tmeta">
-            <p class="ttitle">Comedy Special 2025</p>
-            <p class="tsub">Comedy Central • 890K views • 4 hours ago</p>
-          </div>
-        </div>
-        <div class="tile">
-          <div class="thumb-lg"></div>
-          <div class="tmeta">
-            <p class="ttitle">Science Explained Simply</p>
-            <p class="tsub">Science Channel • 340K views • 12 hours ago</p>
-          </div>
-        </div>
-        <div class="tile">
-          <div class="thumb-lg"></div>
-          <div class="tmeta">
-            <p class="ttitle">Fashion Week Highlights</p>
-            <p class="tsub">Fashion TV • 580K views • 2 days ago</p>
-          </div>
-        </div>
-        <div class="tile">
-          <div class="thumb-lg"></div>
-          <div class="tmeta">
-            <p class="ttitle">Fitness Transformation</p>
-            <p class="tsub">Fitness Hub • 720K views • 1 day ago</p>
-          </div>
-        </div>
-      </div>
-    </section>
-  </main>
+        <section class="section-title">
+            <h2 class="h4 mb-3" style="color: var(--muted);">🔥 Trending Now</h2>
+            <p style="color: #666;">Most popular videos right now</p>
+        </section>
+
+        <section id="video-display-area">
+            <div id="video-grid-main" class="grid mb-4"></div>
+            <div id="loading-indicator" style="display: none; text-align: center; padding: 20px;">
+                <p>Loading...</p>
+            </div>
+        </section>
+    </main>
+</div>
+
+<div id="contactPopup" class="popup-overlay">
+    <div class="popup-content">
+        <button class="popup-close" data-popup-close>&times;</button>
+        <h3 class="mb-4">Contact Us</h3>
+        <form id="contactForm">
+            <div class="form-group"><label for="contact-name">Your Name *</label><input type="text" id="contact-name"
+                                                                                        name="name"
+                                                                                        placeholder="Enter your name"
+                                                                                        required></div>
+            <div class="form-group"><label for="contact-email">Email *</label><input type="email" id="contact-email"
+                                                                                     name="email"
+                                                                                     placeholder="your@email.com"
+                                                                                     required></div>
+            <div class="form-group"><label for="message">Message *</label><textarea id="message" name="message" rows="4"
+                                                                                    placeholder="Your message..."
+                                                                                    required></textarea></div>
+            <button type="submit" class="btn btn-primary w-100">Send Message</button>
+        </form>
+    </div>
 </div>
 
 <footer class="footer mt-auto">
-  <div class="footer-links mb-2">
-    <a href="#">About us</a>
-    <a href="#">Rules</a>
-    <a href="#">Privacy Policy</a>
-    <a href="#">Contacts</a>
-  </div>
-  <!-- Our Stats in Footer -->
-  <section class="jq-counter-section">
-    <h2>Our Stats</h2>
-    <div class="counter-grid">
-      <div class="counter-box">
-        <div class="counter" data-target="1000">0</div>
-        <div class="counter-label">Users</div>
-      </div>
-      <div class="counter-box">
-        <div class="counter" data-target="250">0</div>
-        <div class="counter-label">Videos</div>
-      </div>
-      <div class="counter-box">
-        <div class="counter" data-target="75">0</div>
-        <div class="counter-label">Projects</div>
-      </div>
+    <div class="footer-links mb-2">
+        <a href="#" id="aboutBtn">About us</a>
+        <a href="#" id="rulesBtn">Rules</a>
+        <a href="#" id="privacyBtn">Privacy Policy</a>
+        <a href="#" data-popup-open="contactPopup">Contact Us</a>
     </div>
-  </section>
-  <div class="footer-copy">
-    © 2025 SenQubyr. Beknur Erdembek, Alisher Bolatkhanov
-  </div>
+    <div class="footer-copy">
+        © 2025 SenQubyr. Beknur Erdembek, Alisher Bolatkhanov
+    </div>
 </footer>
 
-
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+        crossorigin="anonymous"></script>
 <script src="../js/script.js"></script>
 </body>
 </html>

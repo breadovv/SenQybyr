@@ -1007,70 +1007,391 @@ $(function() {
     $(window).on('scroll resize', lazyLoadImages);
     lazyLoadImages();
 });
-/* ========== TASK 6 ========== */
-// Dark/Light Mode Toggle with Local Storage
+
 $(document).ready(function() {
-    const toggleBtn = $("#themeToggle");
-    const savedTheme = localStorage.getItem("theme");
-    if (savedTheme) $("body").attr("data-theme", savedTheme);
+    let nextPageToken = null;
+    let currentQuery = 'new kazakh music';
+    let isLoading = false;
+    const API_KEY = 'AIzaSyAeI_U0o8VJpabxYvl7uqYqwWGwmvQtnxo';
 
-    toggleBtn.on("click", function() {
-        const current = $("body").attr("data-theme") === "dark" ? "light" : "dark";
-        $("body").attr("data-theme", current);
-        localStorage.setItem("theme", current);
+    // --- Логика для всплывающих окон (Popups) ---
+    $('[data-popup-open]').on('click', function() {
+        var popupId = $(this).data('popup-open');
+        $('#' + popupId).fadeIn();
     });
-});
 
-/* ========== TASK 7 (Toast continuation) ========== */
-function showToast(message, type="info") {
-    const toast = $(`
-      <div class="jq-toast ${type}">
-        ${message}
-        <span class="close-btn">&times;</span>
-      </div>`);
-    $("body").append(toast);
-    setTimeout(() => toast.addClass("show"), 100);
-
-    toast.find(".close-btn").click(() => toast.remove());
-    setTimeout(() => {
-        toast.css("animation", "toast-fadeout 0.5s forwards");
-        setTimeout(() => toast.remove(), 500);
-    }, 3000);
-}
-
-/* ========== TASK 8 ========== */
-// Image gallery popup
-$(document).on("click", ".image-gallery img", function() {
-    const src = $(this).attr("src");
-    const popup = $(`
-        <div class="gallery-popup">
-            <span class="close">&times;</span>
-            <img src="${src}" alt="Preview">
-        </div>
-    `);
-    $("body").append(popup);
-    setTimeout(() => popup.addClass("show"), 100);
-
-    popup.find(".close").click(() => popup.removeClass("show"));
-    popup.on("click", (e) => {
-        if ($(e.target).is(".gallery-popup")) popup.removeClass("show");
+    $('[data-popup-close]').on('click', function() {
+        $(this).closest('.popup-overlay').fadeOut();
     });
-    setTimeout(() => popup.remove(), 600);
-});
 
-/* ========== TASK 9 ========== */
-// Back to top button
-$(document).ready(function() {
-    const btn = $('<div class="back-to-top">↑</div>');
-    $("body").append(btn);
-
-    $(window).scroll(function() {
-        if ($(window).scrollTop() > 300) {
-            btn.addClass("show");
-        } else {
-            btn.removeClass("show");
+    $('.popup-overlay').on('click', function(e) {
+        if ($(e.target).is('.popup-overlay')) {
+            $(this).fadeOut();
         }
     });
 
-    btn.click(() => $("html, body").animate({ scrollTop: 0 }, "smooth"));
+    // --- Обработчики для кнопок в футере ---
+    $('#aboutBtn').on('click', function(e) {
+        e.preventDefault();
+        alert('SenQubyr is a project by Beknur Erdembek and Alisher Bolatkhanov created in 2025.');
+    });
+    $('#rulesBtn').on('click', function(e) {
+        e.preventDefault();
+        alert('Rules: Be respectful to other users. No spamming or posting inappropriate content.');
+    });
+    $('#privacyBtn').on('click', function(e) {
+        e.preventDefault();
+        alert('Privacy Policy: We value your privacy. Your data is not shared with third parties.');
+    });
+
+    // --- Функция для загрузки основных видео ---
+    function fetchMainVideos(query, isAppending = false, pageToken = null) {
+        const videoGrid = $('#video-grid-main');
+        if (isLoading) return;
+        isLoading = true;
+        $('#loading-indicator').show();
+
+        let apiUrl = `https://www.googleapis.com/youtube/v3/search?part=snippet&q=${encodeURIComponent(query)}&maxResults=8&type=video&key=${API_KEY}`;
+        if (pageToken) {
+            apiUrl += `&pageToken=${pageToken}`;
+        }
+
+        $.ajax({
+            url: apiUrl,
+            method: 'GET',
+            success: function(response) {
+                nextPageToken = response.nextPageToken || null;
+                let videoHtml = '';
+                if (response.items.length === 0 && !isAppending) {
+                    videoGrid.html('<p>No videos found.</p>');
+                    return;
+                }
+                response.items.forEach(item => {
+                    const videoId = item.id.videoId;
+                    const title = item.snippet.title;
+                    const channelTitle = item.snippet.channelTitle;
+                    const thumbnailUrl = item.snippet.thumbnails.high.url;
+                    const publishedAt = new Date(item.snippet.publishedAt).toLocaleDateString();
+                    videoHtml += `
+                        <div class="tile">
+                            <a href="https://www.youtube.com/watch?v=${videoId}" target="_blank" style="text-decoration: none;">
+                                <div class="thumb thumb-lg">
+                                    <img src="${thumbnailUrl}" alt="${title}">
+                                </div>
+                                <div class="tmeta">
+                                    <p class="ttitle">${title}</p>
+                                    <p class="tsub">${channelTitle} • ${publishedAt}</p>
+                                </div>
+                            </a>
+                        </div>
+                    `;
+                });
+
+                if (isAppending) {
+                    videoGrid.append(videoHtml);
+                } else {
+                    videoGrid.html(videoHtml);
+                }
+            },
+            error: function() {
+                videoGrid.html('<p>Error loading videos. Please check your API key or network connection.</p>');
+            },
+            complete: function() {
+                isLoading = false;
+                $('#loading-indicator').hide();
+            }
+        });
+    }
+
+    // --- Функция для загрузки "Shorts" ---
+    function fetchShorts() {
+        const shortsGrid = $('#shorts-grid');
+        const shortsQuery = 'latest #shorts';
+        const apiUrl = `https://www.googleapis.com/youtube/v3/search?part=snippet&q=${encodeURIComponent(shortsQuery)}&maxResults=4&type=video&key=${API_KEY}`;
+
+        $.ajax({
+            url: apiUrl,
+            method: 'GET',
+            success: function(response) {
+                let videoHtml = '';
+                response.items.forEach(item => {
+                    const videoId = item.id.videoId;
+                    const title = item.snippet.title;
+                    const channelTitle = item.snippet.channelTitle;
+                    const thumbnailUrl = item.snippet.thumbnails.high.url;
+                    videoHtml += `
+                        <div class="tile">
+                            <a href="https://www.youtube.com/watch?v=${videoId}" target="_blank" style="text-decoration: none;">
+                                <div class="thumb thumb-shorts">
+                                    <img src="${thumbnailUrl}" alt="${title}">
+                                </div>
+                                <div class="tmeta">
+                                    <p class="short-title">${title}</p>
+                                    <p class="tsub">${channelTitle}</p>
+                                </div>
+                            </a>
+                        </div>
+                    `;
+                });
+                shortsGrid.html(videoHtml);
+            },
+            error: function() {
+                shortsGrid.html('<p>Error loading shorts.</p>');
+            }
+        });
+    }
+
+    // --- Логика поиска ---
+    function handleSearch() {
+        const query = $('#search').val().trim();
+        $('#search-suggestions').hide();
+        if (query !== '') {
+            currentQuery = query;
+            nextPageToken = null;
+            $('#grid-title').text(`Search Results for "${query}"`);
+            fetchMainVideos(currentQuery, false, null);
+        }
+    }
+
+    $('#searchBtn').on('click', function(e) {
+        e.preventDefault();
+        handleSearch();
+    });
+
+    $('#search').on('keypress', function(e) {
+        if (e.which === 13) {
+            e.preventDefault();
+            handleSearch();
+        }
+    });
+
+    // --- Логика для подсказок поиска ---
+    $('#search').on('keyup', function() {
+        const query = $(this).val();
+        if (query.length < 2) {
+            $('#search-suggestions').hide();
+            return;
+        }
+
+        $.ajax({
+            url: 'https://suggestqueries.google.com/complete/search',
+            dataType: 'jsonp',
+            data: { client: 'youtube', ds: 'yt', q: query },
+            success: function(data) {
+                const suggestions = data[1];
+                let suggestionsHtml = '';
+                suggestions.forEach(suggestion => {
+                    suggestionsHtml += `<div class="suggestion-item">${suggestion[0]}</div>`;
+                });
+                $('#search-suggestions').html(suggestionsHtml).show();
+            }
+        });
+    });
+
+    $(document).on('click', '.suggestion-item', function() {
+        $('#search').val($(this).text());
+        $('#search-suggestions').hide();
+        handleSearch();
+    });
+
+    $(document).on('click', function(e) {
+        if (!$(e.target).closest('.search').length) {
+            $('#search-suggestions').hide();
+        }
+    });
+
+    const isLikedPage = $('body').find('.liked-tile').length > 0;
+    const isHistoryPage = $('body').find('.history-tile').length > 0;
+    const isStaticPage = isLikedPage || isHistoryPage;
+
+    if ($('#video-grid-main').length > 0 && !isStaticPage) {
+
+        // 1. Запускаем начальную загрузку видео
+        fetchMainVideos(currentQuery);
+
+        // 2. Включаем бесконечную прокрутку
+        $(window).on('scroll', function() {
+            if (!isLoading && nextPageToken && ($(window).scrollTop() + $(window).height() >= $(document).height() - 250)) {
+                fetchMainVideos(currentQuery, true, nextPageToken);
+            }
+        });
+    }
+
+    if ($('#shorts-grid').length > 0) {
+        fetchShorts();
+    }
+
+});
+
+$(document).ready(function() {
+    // --- Общая логика для всех страниц ---
+
+    // Переключение темы
+    const themeSwitch = document.getElementById('themeSwitch');
+    if (themeSwitch) {
+        // Применяем тему при загрузке
+        if (localStorage.getItem('theme') === 'dark') {
+            document.body.classList.add('dark-theme');
+            themeSwitch.checked = true;
+        }
+        // Слушатель на переключение
+        themeSwitch.addEventListener('change', function() {
+            if (this.checked) {
+                document.body.classList.add('dark-theme');
+                localStorage.setItem('theme', 'dark');
+            } else {
+                document.body.classList.remove('dark-theme');
+                localStorage.setItem('theme', 'light');
+            }
+        });
+    }
+
+    // Логика для попапов (например, "Contact Us")
+    document.querySelectorAll('[data-popup-open]').forEach(button => {
+        button.addEventListener('click', function(event) {
+            event.preventDefault();
+            const popupId = this.getAttribute('data-popup-open');
+            const popup = document.getElementById(popupId);
+            if(popup) popup.style.display = 'flex';
+        });
+    });
+
+    document.querySelectorAll('[data-popup-close]').forEach(button => {
+        button.addEventListener('click', function() {
+            this.closest('.popup-overlay').style.display = 'none';
+        });
+    });
+
+    // --- Логика Авторизации ---
+
+    const usersDBKey = 'senqubyr_users';
+    const currentUserKey = 'senqubyr_currentUser';
+
+    // Функция получения текущего пользователя
+    function getCurrentUser() {
+        const userJson = localStorage.getItem(currentUserKey);
+        return userJson ? JSON.parse(userJson) : null;
+    }
+
+    // Функция выхода из системы
+    function logout() {
+        localStorage.removeItem(currentUserKey);
+        window.location.href = 'login.html'; // Перенаправляем на страницу входа
+    }
+
+    // Проверка статуса логина и обновление UI
+    function checkLoginStatus() {
+        const user = getCurrentUser();
+        const profileLink = document.querySelector('a[href="profile.html"]');
+        const headerFlexContainer = document.querySelector('header .flex');
+
+        if (user) {
+            // Пользователь вошел
+            profileLink.style.display = 'block';
+
+            // Проверяем, нет ли уже кнопки выхода, чтобы не дублировать
+            if (!document.getElementById('logoutBtn')) {
+                const logoutButton = document.createElement('a');
+                logoutButton.href = '#';
+                logoutButton.id = 'logoutBtn';
+                logoutButton.textContent = 'Logout';
+                logoutButton.classList.add('btn', 'btn-outline-primary', 'btn-sm', 'ms-3');
+                logoutButton.onclick = function(e) {
+                    e.preventDefault();
+                    logout();
+                };
+                headerFlexContainer.insertBefore(logoutButton, document.getElementById('themeSwitchContainer'));
+            }
+        } else {
+            // Пользователь не вошел
+            profileLink.style.display = 'block'; // Оставляем иконку, она ведет на профиль, который предложит войти
+        }
+    }
+
+    // Запускаем проверку на всех страницах
+    checkLoginStatus();
+
+
+    // --- Логика для конкретных страниц ---
+
+    // Страница РЕГИСТРАЦИИ
+    if (document.getElementById('registerForm')) {
+        $('#registerForm').on('submit', function(e) {
+            e.preventDefault();
+            const username = $('#register-username').val();
+            const email = $('#register-email').val();
+            const password = $('#register-password').val();
+            const confirmPassword = $('#register-confirm-password').val();
+
+            if (password !== confirmPassword) {
+                alert('Passwords do not match.');
+                return;
+            }
+
+            let users = JSON.parse(localStorage.getItem(usersDBKey)) || [];
+
+            if (users.find(user => user.email === email)) {
+                alert('User with this email already exists.');
+                return;
+            }
+
+            const newUser = {
+                username: username,
+                email: email,
+                password: password, // В реальном приложении пароли нужно хешировать!
+                fullName: username, // По умолчанию
+                bio: "Welcome to my SenQubyr channel!"
+            };
+
+            users.push(newUser);
+            localStorage.setItem(usersDBKey, JSON.stringify(users));
+            localStorage.setItem(currentUserKey, JSON.stringify(newUser)); // Сразу логиним
+
+            window.location.href = 'profile.html';
+        });
+    }
+
+    // Страница ЛОГИНА
+    if (document.getElementById('loginForm')) {
+        $('#loginForm').on('submit', function(e) {
+            e.preventDefault();
+            const email = $('#login-email').val();
+            const password = $('#login-password').val();
+
+            let users = JSON.parse(localStorage.getItem(usersDBKey)) || [];
+            const foundUser = users.find(user => user.email === email && user.password === password);
+
+            if (foundUser) {
+                localStorage.setItem(currentUserKey, JSON.stringify(foundUser));
+                window.location.href = 'profile.html';
+            } else {
+                alert('Invalid email or password.');
+            }
+        });
+    }
+
+    // Страница ПРОФИЛЯ
+    if (document.getElementById('profile-content')) {
+        const user = getCurrentUser();
+        if (user) {
+            // Пользователь вошел, показываем данные
+            $('#profile-content').show();
+            $('#auth-prompt').hide();
+
+            // Заполняем данными
+            $('.profile-name').text(user.fullName);
+            $('.profile-username').text(`@${user.username}`);
+            $('.profile-bio').text(user.bio);
+
+            // Заполняем форму настроек
+            $('#fullName').val(user.fullName);
+            $('#username').val(user.username);
+            $('#profileBio').val(user.bio);
+
+        } else {
+            // Пользователь не вошел, показываем предложение войти
+            $('#profile-content').hide();
+            $('#auth-prompt').show();
+        }
+    }
 });
